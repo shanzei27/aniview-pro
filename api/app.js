@@ -5,12 +5,18 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
 
-app.use(cors()) 
+let corsOptions = { 
+  origin : ['http://localhost:3000'], 
+}
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testAPIRouter = require("./routes/testAPI");
 
 var app = express();
+
+ 
+app.use(cors(corsOptions)) 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
