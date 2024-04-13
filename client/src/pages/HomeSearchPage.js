@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
+import Chip from '@mui/material/Chip';
+import Paper from '@mui/material/Paper';
 
 const Search = styled(Box)(({ theme }) => ({
     position: 'relative',
@@ -58,13 +60,50 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
         width: "100%"
       }));
       
+    const StyledPaper = styled(Paper)(({ theme }) => ({
+        ...theme.typography.body2,
+        padding: theme.spacing(2),
+        backgroundColor: theme.palette.primary.main
+    }));
+
+    const ListItem = styled('li')(({ theme }) => ({
+        margin: theme.spacing(0.5),
+    }));
+
 const HomeSearchPage = (props) => {
     const [barText, setBarText] = React.useState("");
+    const [chipSelection, setChipSelection] = useState({
+        "lvh": false,
+        "recommendations": false,
+        "history": false,
+        "episodic": false
+    })
+    const [chipData, setChipData] = React.useState([
+        { key: 0, label: 'Likes & Hate vs Others', type: "lvh" },
+        { key: 1, label: 'Recommendations', type: "recommendations"  },
+        { key: 2, label: 'Historic stats', type: "history"  },
+        { key: 3, label: 'Episode trends', type: "episodic"  },
+      ]);
 
     const submitHandler = (e) => {
         e.preventDefault();
         props.handleSearchTextChange(barText);
     }
+
+    const handleOptionSelectChange = (type) => () => {
+        const bool = !chipSelection[type];
+        const newObj = {...chipSelection};
+        newObj[type] = bool;
+        setChipSelection({...newObj});
+            console.log(chipSelection);
+    };
+
+    const SelectionLabel = styled(Typography)(({ theme }) => ({
+        color: 'white',
+        fontSize: '14px',
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(1),
+      }));
 
   return (
     <>
@@ -97,6 +136,34 @@ const HomeSearchPage = (props) => {
                 </form>
             </Item>
             </Grid>
+            <StyledPaper
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    listStyle: 'none',
+                    p: 1,
+                    m: 0,
+                }}
+                component="ul"
+                >
+                <SelectionLabel>Output:</SelectionLabel>
+                {chipData.map((data) => {
+                    return (
+                    <ListItem key={data.key}>
+                        <Chip
+                        label={data.label}
+                        variant='filled'
+                      //  color={chipSelection[data.type] ? {"success"} }
+                        
+                        style={ chipSelection[data.type] ? { backgroundColor:'#333366' } : {}}
+                        onClick ={ handleOptionSelectChange(data.type)}
+                        />
+                    </ListItem>
+                    );
+                })}
+            </StyledPaper>
       </StyledGrid>
 
     </>
