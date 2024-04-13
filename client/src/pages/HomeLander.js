@@ -39,7 +39,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import List from '@mui/material/List';
 import Drawer from '@mui/material/Drawer';
 import DrawerLeft from '../components/DrawerLeft/DrawerLeft';
-import axios from 'axios';
 
 //apis
 import { fetchMALAnime, fetchMALUserAnimeList } from  '../services/MALAPIHandlers';
@@ -171,54 +170,19 @@ const Item = styled(Box)(({ theme }) => ({
   width: "100%"
 }));
 
-const HomeLander = () => {
+const HomeLander = (props) => {
   const [likeVHateArray, setLikeVHateArray] = useState([{}]);
   const [open, setOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+  
   //----API-------------------------------------------------------------------------------------
 
    // console.log("RENDER START user :: "+props.username);
-   const [userApiData, setUserApiData] = useState([]);
-   const [publicAnimeData, setPublicAnimeData] = useState({});
-   const [lvhAnimeArray, setLvhAnimeArray] = useState({
-       "data": [],
-       count: 0
-   });
-   const [loading, setLoading] = useState(true);
-   const [totalItems, setTotalItems] = useState(0);
-   const [objectsLoaded, setObjectsLoaded] = useState([]);
-   const [processedData, setProcessedData] = useState([]);
+   const [lvhAnimeArray, setLvhAnimeArray] = useState(props.lvhAnimeArray);
  
-   const fetchPublicData = () => {
- 
-   }
- 
-   useEffect( () => {
-     setLvhAnimeArray({
-       "data": [],
-       count: 0
-   });
-     // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
-   
-    if(searchText != ""){
-      async function fetchData() {
-        setLoading(true);
-     //   const url = require("url");
-        const queryParams = searchText
-       // const params = new URLSearchParams(queryParams);
-        const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setLvhAnimeArray(res.data.data)); 
-        setLoading(false);
-      }
-        console.log(userApiData);
-        if(searchText) fetchData();
-      
-      
-      }
-   }, [searchText]);
 
   //----API END-------------------------------------------------------------------------------------
 
@@ -251,16 +215,11 @@ const HomeLander = () => {
     // setLikeVHateArray(oldArray => [...oldArray,response]);
   },[])
 
-  const handleSearchTextChange = (text) => {
- //   debugger
-    setSearchText(text);
-  };
-
   return (
     <>
     <Box sx={{ display: 'flex',  width:'100%' }}>
     <CssBaseline />
-    <AppbarMain username={searchText} handleSearchTextChange={handleSearchTextChange}/>
+    <AppbarMain username={props.searchText} handleSearchTextChange={props.handleSearchTextChange}/>
     <DrawerLeft />
 
    
@@ -277,7 +236,7 @@ const HomeLander = () => {
           </Item> */}
           <Grid item xs={12} >
           <Item>
-            <MALLikeVHateDataHandler loading={loading} lvhAnimeArray={lvhAnimeArray} username={searchText} />
+            <MALLikeVHateDataHandler loading={props.loading} lvhAnimeArray={lvhAnimeArray} username={props.searchText} />
           </Item>
           </Grid>
         </StyledGrid>

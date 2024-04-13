@@ -137,7 +137,6 @@ function AppbarMain( props ) {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   
   const submitHandler = (e) => {
     e.preventDefault();
@@ -146,8 +145,8 @@ function AppbarMain( props ) {
 
   return (
     <>
-      <AppBarTop  position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B" }}>
-      <Container maxWidth='90%'>
+      <AppBarTop position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B" }}>
+      <Container maxWidth='85%'>
         <Toolbar >
         <Box
             component="img"
@@ -158,25 +157,27 @@ function AppbarMain( props ) {
             src={logo}
           />
           <VersionText>v0.1a</VersionText>
-          <form onSubmit={submitHandler}>
-          <Search component="form">
-            <StyledTextField
-              placeholder="Search and load profile…"
-              inputProps={{ 'aria-label': 'search' }}
-              value={props.searchText}
-              onChange={(e) => {
-                setBarText(e.target.value);
-              }}
-              variant="outlined"
-            />
-            <IconButton
-            type="submit"
-            variant="contained"
-          >
-            <SearchIcon />
-          </IconButton>
-          </Search>
-          </form>
+          {props.userAcquired &&
+            <form onSubmit={submitHandler}>
+            <Search component="form">
+              <StyledTextField
+                placeholder="Search and load profile…"
+                inputProps={{ 'aria-label': 'search' }}
+                value={props.searchText}
+                onChange={(e) => {
+                  setBarText(e.target.value);
+                }}
+                variant="outlined"
+              />
+              <IconButton
+              type="submit"
+              variant="contained"
+            >
+              <SearchIcon />
+            </IconButton>
+            </Search>
+            </form>
+          }
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

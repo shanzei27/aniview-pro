@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { green, purple } from '@mui/material/colors';
 
 //pages
-import Home from './pages/Home.js';
+import HomeMain from './pages/HomeMain.js';
 import About from './pages/About.js';
 import AppbarMain from './components/Appbar.js';
 
@@ -77,8 +77,8 @@ function App() {
       
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<HomeMain />} />
+          <Route path="/home" element={<HomeMain />} />
           <Route path="about" element={<About />} />
         </Routes>
       </main>
