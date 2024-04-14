@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import React, { useState, useReducer } from 'react'
 import MALIntegration from '../services/MALIntegration'
 import { styled, alpha, useTheme   } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -211,11 +211,6 @@ const HomeLander = (props) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  useEffect(() => {
-    // const response = fetchMALAnime(10357);
-    // setLikeVHateArray(oldArray => [...oldArray,response]);
-  },[])
 
   return (
     <>

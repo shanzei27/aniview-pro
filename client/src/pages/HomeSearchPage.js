@@ -9,8 +9,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
+import AlertTitle from '@mui/material/AlertTitle';
 import Alert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
+import PulseLoader from "react-spinners/PulseLoader";
 
 const Search = styled(Paper)(({ theme }) => ({
     position: 'relative',
@@ -67,6 +69,12 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
         listStyle: 'none',
     }));
 
+    const LoadingText = styled(Typography)(({ theme }) => ({
+      color: 'white',
+      fontSize: '16px',
+      marginTop: '15px'
+    }));
+
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
     }));
@@ -93,13 +101,15 @@ const HomeSearchPage = (props) => {
         "lvh": true,
         "recommendations": true,
         "history": true,
-    })
+    });
+    const [loading, setLoading ] = useState(false);
     const [chipData, setChipData] = React.useState([
         { key: 0, label: 'Recommendations', type: 'recommendations' },
         { key: 1, label: 'Likes & Hate vs Others', type: 'lvh'  },
         { key: 2, label: 'Historic stats', type: 'history'  },
       ]);
     const warningRef = React.useRef(null);
+    const errorRef = React.useRef(null);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -108,11 +118,6 @@ const HomeSearchPage = (props) => {
         } else {
           setShowSelectionWarning(true);
         }
-
-    }
-
-    const warnToSelect = () => {
-      
     }
 
     const handleOptionSelectChange = (type) => () => {
@@ -147,65 +152,75 @@ const HomeSearchPage = (props) => {
     <CssBaseline/>
 
     <StyledGrid container spacing={4}>
-            <Grid item xs={10}>
-            <Item>
-              <Typography variant='lead'>Enter MAL Username to load</Typography>  
-            </Item>
-            <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
-            </Grid>
-            <Grid item xs={10}>
-            <Item>
-                <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%"}}>
-                    <Search>
-                        <StyledTextField
-                        placeholder="Search and load profile…"
-                        inputProps={{ 'aria-label': 'search' }}
-                        value={props.searchText}
-                        sx={{
-                          "& fieldset": { border: 'none' },
-                        }}
-                        onChange={(e) => {
-                            setBarText(e.target.value);
-                        }}
-                        variant="outlined"
-                        />
-                        <IconButton 
-                        type="submit"
-                        variant="contained"
-                    >
-                    <SearchIcon sx={{height: "100%"}}/>
-                    </IconButton>
-                    </Search>
-                </form>
-            </Item>
-            </Grid>
-            <Grid item xs={10}>
-            <Item>
-            <StyledPaper component="ul" ref={warningRef}>
-                <SelectionLabel>Selected outputs:</SelectionLabel>
-                {chipData.map((data) => {
-                    return (
-                    <ListItem key={data.key}>
-                        <Chip
-                        label={data.label}
-                        variant='filled'
-                      //  color={chipSelection[data.type] ? {"success"} }
-                        
-                        style={ chipSelection[data.type] ? { backgroundColor:'#333366' } : {}}
-                        onClick ={ handleOptionSelectChange(data.type)}
-                        />
-                    </ListItem>
-                    );
-                })}
-            </StyledPaper>
-              <Slide in={showSelectionWarning} container={warningRef.current}>
-                <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
-              </Slide>
-            {fetchTimeEstimate > 0 &&
-              <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
-            }
-            </Item>
-            </Grid>
+        {loading &&
+        <Box sx={{ width: `calc(100vw - 240` }}>
+          <PulseLoader color="#36d7b7" />
+          <LoadingText>This might take about a minute (for a list with 100 titles)</LoadingText>
+        </Box>
+        }
+         {!loading &&
+                    <Grid item xs={10}>
+                    <Item>
+                      <Typography variant='lead'>Enter MAL Username to load</Typography>  
+                    </Item>
+                    <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
+        
+                    <Item>
+                        <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%", paddingBottom: 20}}>
+                            <Search ref={errorRef}>
+                                <StyledTextField
+                                placeholder="Search and load profile…"
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={props.searchText}
+                                sx={{
+                                  "& fieldset": { border: 'none' },
+                                }}
+                                onChange={(e) => {
+                                    setBarText(e.target.value);
+                                }}
+                                variant="outlined"
+                                />
+                                <IconButton 
+                                type="submit"
+                                variant="contained"
+                            >
+                            <SearchIcon sx={{height: "100%"}}/>
+                            </IconButton>
+                            </Search>
+                        </form>
+                        <Slide in={props.showError} container={errorRef.current}>
+                          <Alert sx={{width: "40%"}} severity="error">
+                            {props.error.message}. Please try later.
+                          </Alert>
+                        </Slide>
+                    </Item>
+                    <Item>
+                    <StyledPaper component="ul" ref={warningRef}>
+                        <SelectionLabel>Selected outputs:</SelectionLabel>
+                        {chipData.map((data) => {
+                            return (
+                            <ListItem key={data.key}>
+                                <Chip
+                                label={data.label}
+                                variant='filled'
+                              //  color={chipSelection[data.type] ? {"success"} }
+                                
+                                style={ chipSelection[data.type] ? { backgroundColor:'#333366' } : {}}
+                                onClick ={ handleOptionSelectChange(data.type)}
+                                />
+                            </ListItem>
+                            );
+                        })}
+                    </StyledPaper>
+                      <Slide in={showSelectionWarning} container={warningRef.current}>
+                        <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
+                      </Slide>
+                    {fetchTimeEstimate > 0 &&
+                      <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
+                    }
+                    </Item>
+                    </Grid>
+        }
       </StyledGrid>
 
     </>

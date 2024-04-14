@@ -16,13 +16,19 @@ const HomeMain = () => {
   const [userAquired, setUserAcquired] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [ showLoadError, setShowLoadError ] = useState(false);
+  const [loadError, setLoadError] = useState({
+    "message": ""
+  });
   const [responseData, setResponseData] = useState({
     "data": [],
-    count: 0
+    "count": 0
 });
 
   const handleSearchTextChange = (text) => {
-       setSearchText(text);
+      if(!loading){
+        setSearchText(text);
+      }
   };
 
   useEffect( () => {
@@ -34,11 +40,30 @@ const HomeMain = () => {
     //   const url = require("url");
        const queryParams = searchText
       // const params = new URLSearchParams(queryParams);
-       const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
-       
+      try {
+        const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
+        setLoading(false);
+        setUserAcquired(true);
+      }
+      catch(error) {
+        if(error === null){
+          setLoadError({
+            message: "Unknown error"
+          });
+        } else {
+          setLoadError(error);
+        }
+        
+        console.log(loadError);
+        setShowLoadError(true);
+        
+        setTimeout(() => {
+          setShowLoadError(false);
+          setLoading(false);
+      }, 5000);
+      }
 
-       setLoading(false);
-       setUserAcquired(true);
+    
      }
 
        if(searchText) fetchData();
@@ -51,7 +76,7 @@ const HomeMain = () => {
       
       return <HomeLander handleSearchTextChange={handleSearchTextChange} lvhAnimeArray={responseData["lvhArray"]}/>;
     } else {
-      return <HomeSearchPage handleSearchTextChange={handleSearchTextChange} />;
+      return <HomeSearchPage handleSearchTextChange={handleSearchTextChange} error={loadError} showError={showLoadError}/>;
     }
   }
   return (
