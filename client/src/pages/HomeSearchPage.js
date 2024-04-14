@@ -173,7 +173,7 @@ const HomeSearchPage = (props) => {
          {!loading &&
                     <Grid item xs={10}>
                     <Item>
-                      <Typography variant='lead'>Enter MAL Username to load</Typography>  
+                      <Typography variant='lead'>Enter MyAnimeList username</Typography>  
                     </Item>
                     <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
         
@@ -181,7 +181,7 @@ const HomeSearchPage = (props) => {
                         <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%"}}>
                             <Search ref={errorRef}>
                                 <StyledTextField
-                                placeholder="Search and load profile…"
+                                placeholder="MAL username to load…"
                                 inputProps={{ 'aria-label': 'search' }}
                                 value={props.searchText}
                                 sx={{

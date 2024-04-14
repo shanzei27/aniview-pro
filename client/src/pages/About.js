@@ -24,8 +24,8 @@ const Item = styled(Box)(({ theme }) => ({
   padding: theme.spacing(2),
   textAlign: 'center',
   display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'left',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
   justifyContent: 'left',
   width: "100%"
 }));
@@ -36,7 +36,18 @@ const About = () => {
       <CssBaseline/>
       <StyledGrid container spacing={2}>
         <Grid item xs={11} sx={{width: '100%'}}>
-          <Item><Heading variant='h1'>About</Heading></Item>
+          <Item>
+            <Heading variant='h1'>About</Heading>
+            <Typography variant='body2' sx={{textAlign: 'left', paddingTop: 1}}>
+              Aniview Pro is a companion for MyAnimeList.net, built on React-Express as a personal project. It currently shows three sets of data processed from data fetched from MAL. This is a non-commercial open source project.
+            </Typography>
+          </Item>
+          <Item>
+            <Heading variant='h1'>Contact</Heading>
+            <Typography variant='body2' sx={{textAlign: 'left', paddingTop: 1}}>
+              Email: aniview [at] shanjei.com
+            </Typography>
+          </Item>
         </Grid>
       </StyledGrid>
     </>

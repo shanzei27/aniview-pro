@@ -7,6 +7,7 @@ import { green, purple } from '@mui/material/colors';
 import HomeMain from './pages/HomeMain.js';
 import About from './pages/About.js';
 import AppbarMain from './components/Appbar.js';
+import Feedback from './pages/Feedback.js';
 
 const theme = createTheme({
   breakpoints: {
@@ -84,6 +85,7 @@ function App() {
           <Route path="/" element={<HomeMain />} />
           <Route path="/home" element={<HomeMain />} />
           <Route path="about" element={<About />} />
+          <Route path="feedback" element={<Feedback />} />
         </Routes>
       </main>
       </ThemeProvider>
