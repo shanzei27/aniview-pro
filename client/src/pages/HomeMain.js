@@ -5,8 +5,6 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import AppbarMain from '../components/Appbar';
 import MALLikeVHateDataHandler from '../components/LikeVsHateSection/MALLikeVHateDataHandler';
-import ControlRow from '../components/ControlRow';
-import CssBaseline from '@mui/material/CssBaseline';
 import DrawerLeft from '../components/DrawerLeft/DrawerLeft';
 import HomeLander from './HomeLander';
 import HomeSearchPage from './HomeSearchPage';
@@ -25,7 +23,7 @@ const HomeMain = () => {
     "count": 0
 });
 
-  const handleSearchTextChange = (text) => {
+  const handleInputFromMainSearch = (text, selections) => {
       if(!loading){
         setSearchText(text);
       }
@@ -34,9 +32,10 @@ const HomeMain = () => {
   useEffect( () => {
     // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
   
-   if(searchText != ""){
+   if(searchText != "" && !loading){
      async function fetchData() {
        setLoading(true);
+       setUserAcquired(false);
     //   const url = require("url");
        const queryParams = searchText
       // const params = new URLSearchParams(queryParams);
@@ -72,16 +71,17 @@ const HomeMain = () => {
   }, [searchText]);
 
   const HomeComponent = () => {
-        if(userAquired){
-      
-      return <HomeLander handleSearchTextChange={handleSearchTextChange} lvhAnimeArray={responseData["lvhArray"]}/>;
+    if(userAquired){
+      return <HomeLander handleInputFromMainSearch={handleInputFromMainSearch} lvhAnimeArray={responseData["lvhArray"]} loading={loading}/>;
     } else {
-      return <HomeSearchPage handleSearchTextChange={handleSearchTextChange} error={loadError} showError={showLoadError}/>;
+      return <HomeSearchPage handleInputFromMainSearch={handleInputFromMainSearch} error={loadError} showError={showLoadError} loading={loading}/>;
     }
   }
   return (
     <>
+      <AppbarMain handleInputFromMainSearch={handleInputFromMainSearch} userAcquired={userAquired}/>
       <Box sx={{ display: 'flex' }}>
+        
         <HomeComponent />
       </Box>
     </>

@@ -6,7 +6,6 @@ import { green, purple } from '@mui/material/colors';
 //pages
 import HomeMain from './pages/HomeMain.js';
 import About from './pages/About.js';
-import AppbarMain from './components/Appbar.js';
 import Feedback from './pages/Feedback.js';
 
 const theme = createTheme({
@@ -57,10 +56,10 @@ const theme = createTheme({
       fontSize: 12,
     },
     body1: {
-      fontWeight: 500,
+      fontWeight: 600,
     },
     body2: {
-      fontWeight: 400,
+      fontWeight: 500,
     },
     button: {
       fontStyle: 'bold',
@@ -77,9 +76,7 @@ function App() {
   return (
     <BrowserRouter>
     <div className='App'>
-      <ThemeProvider theme={theme}>
-      <AppbarMain />
-      
+      <ThemeProvider theme={theme}>      
       <main>
         <Routes>
           <Route path="/" element={<HomeMain />} />

@@ -26,7 +26,16 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:searchText', async (req, res, next) => {
-    //res.send('API is working properly');
+    malUserData = [];
+    publicAnimeDataObj = {};
+    lvhAnimeObject = {
+        "data": [],
+        "count": 0
+    };
+    historyData = {
+      "bar_1": {}
+    };
+
     const username = req.params.searchText;
     malUserData = await fetchData(username);
     if(malUserData["data"].length === 0 || malUserData["data"] === null){
@@ -47,11 +56,12 @@ router.get('/:searchText', async (req, res, next) => {
 
 async function fetchData(username) {
     console.log("exec start with ::"+ username);
+    const limit = 25;
     const headers = {
         'X-MAL-CLIENT-ID': process.env.REACT_APP_CLIENT_ID
     };
 
-    const responseData = await axios.get(`https://api.myanimelist.net/v2/users/${username}/animelist?status=completed&?sort=list_updated_at&fields=list_status&limit=500`, { headers });
+    const responseData = await axios.get(`https://api.myanimelist.net/v2/users/${username}/animelist?status=completed&?sort=list_updated_at&fields=list_status&limit=${limit}`, { headers });
     
    
     console.log("init end, response ::", responseData);
@@ -124,7 +134,7 @@ async function initUserDataHandling () {
           }
           console.log("rewatchAmount: "+rewatchAmount);
 
-          if(malUserData["data"][i]["list_status"]["completed"]){
+          if(malUserData["data"][i]["list_status"]["status"] === "completed"){
             historyData["bar_1"][finishYear]["animes_completed"] += 1;
           }
           

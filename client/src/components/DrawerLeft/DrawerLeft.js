@@ -75,11 +75,14 @@ export default function DrawerLeft() {
                       color: "white"
                     },
                     "&.Mui-focusVisible": {
-                      backgroundColor: "#5aa2a2",
+                      backgroundColor: "#a2dede",
                       color: "white"
                     },
-                    ":hover": {
+                    '&.Mui-selected:hover': {
                       backgroundColor: "#318B8B",
+                    },
+                    ":hover": {
+                      backgroundColor: "#40b7b7",
                       color: "white"
                     }
                   }}

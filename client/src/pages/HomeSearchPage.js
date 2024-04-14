@@ -83,13 +83,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
       color: 'white',
       fontSize: '14px',
       paddingRight: theme.spacing(2),
-      paddingLeft: theme.spacing(1),
+      paddingLeft: theme.spacing(2),
     }));
     
     const TimeEstimateText = styled(Typography)(({ theme }) => ({
-      color: theme.palette.primary.light,
-      fontSize: '16px',
-      paddingRight: theme.spacing(2),
+      fontSize: '14px',
+      paddingTop: theme.spacing(1),
+      paddingRight: theme.spacing(1),
       paddingLeft: theme.spacing(1),
     }));
 
@@ -103,7 +103,6 @@ const HomeSearchPage = (props) => {
         "recommendations": true,
         "history": true,
     });
-    const [loading, setLoading ] = useState(false);
     const [chipData, setChipData] = React.useState([
         { key: 0, label: 'Recommendations', type: 'recommendations' },
         { key: 1, label: 'Likes & Hate vs Others', type: 'lvh'  },
@@ -115,7 +114,7 @@ const HomeSearchPage = (props) => {
     const submitHandler = (e) => {
         e.preventDefault();
         if(Object.values(chipSelection).some(val => val)){
-          props.handleSearchTextChange(barText);
+          props.handleInputFromMainSearch(barText, chipSelection);
         } else {
           setShowSelectionWarning(true);
         }
@@ -164,13 +163,15 @@ const HomeSearchPage = (props) => {
     <CssBaseline/>
 
     <StyledGrid container spacing={4}>
-        {loading &&
-        <Box sx={{ width: `calc(100vw - 240` }}>
-          <PulseLoader color="#36d7b7" />
-          <LoadingText>This might take about a minute (for a list with 100 titles)</LoadingText>
-        </Box>
-        }
-         {!loading &&
+        {props.loading &&
+        <Grid item xs={10}>
+          <Item>
+            <PulseLoader color="#36d7b7" />
+            <LoadingText>This might take about a minute (for a list with 100 titles)</LoadingText>
+          </Item>
+        </Grid>
+        }       
+         {!props.loading &&
                     <Grid item xs={10}>
                     <Item>
                       <Typography variant='lead'>Enter MyAnimeList username</Typography>  
@@ -223,13 +224,13 @@ const HomeSearchPage = (props) => {
                             </ListItem>
                             );
                         })}
+                          {fetchTimeEstimate > 0 &&
+                      <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
+                    }
                     </StyledPaper>
                       <Slide in={showSelectionWarning} container={warningRef.current}>
                         <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
                       </Slide>
-                    {fetchTimeEstimate > 0 &&
-                      <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
-                    }
                     </Item>
                     </Grid>
         }

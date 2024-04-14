@@ -32,17 +32,16 @@ const LikeVsHateItem = (props) => {
     const diff = props.data["user_score"] - props.data["public_mean"];
 
     const item = (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: 300*0.5, }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: 300*0.5, overflow: 'auto'}}>
         <Typography gutterBottom variant="h5" component="div">
-            {props.data["node"]["title"]}
-            </Typography>
+            <Link style={{ textDecoration: 'none', cursor:'pointer' }} onClick={() => openInNewTab('https://myanimelist.net/anime/' + props.data["node"]["id"])}>{props.data["node"]["title"]}</Link></Typography>
             <Typography variant="body2" color="text.secondary">
             
             </Typography>
             <Box style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <StarIcon sx={{ fontSize: 'inherit' }}/>
                 <Typography variant="body2" color="text.secondary">
-                {props.data["public_mean"]}
+                MAL score: {props.data["public_mean"]}
                 </Typography>
             </Box>
             <Box style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

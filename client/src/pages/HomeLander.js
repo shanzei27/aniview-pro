@@ -219,7 +219,6 @@ const HomeLander = (props) => {
     <DrawerLeft />   
       <Main open={open}>
       <DrawerHeader />
-      <ControlRow />
         <StyledGrid>
           <Grid item xs={10} >
           <Item>

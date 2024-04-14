@@ -140,7 +140,12 @@ function AppbarMain( props ) {
   
   const submitHandler = (e) => {
     e.preventDefault();
-    props.handleSearchTextChange(barText);
+    const selections = {
+      "lvh": true,
+      "recommendations": true,
+      "history": true,
+  };
+    props.handleInputFromMainSearch(barText, selections);
   }
 
   return (
