@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import AppbarMain from '../components/Appbar';
 
 const Heading = styled(Typography)(({ theme }) => ({
   
@@ -34,6 +35,7 @@ const About = () => {
   return (
     <>
       <CssBaseline/>
+      <AppbarMain />
       <StyledGrid container spacing={2}>
         <Grid item xs={11} sx={{width: '100%'}}>
           <Item>

@@ -81,8 +81,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeMain />} />
           <Route path="/home" element={<HomeMain />} />
-          <Route path="about" element={<About />} />
-          <Route path="feedback" element={<Feedback />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </main>
       </ThemeProvider>

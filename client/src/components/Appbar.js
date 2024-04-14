@@ -1,17 +1,11 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import logo from '../assets/logo_temp.png';
 import { styled, alpha, useTheme   } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
@@ -186,7 +180,7 @@ function AppbarMain( props ) {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <NavLink to={page} style={{textDecoration:"none"}} key={page}>
+              <NavLink to={`/`+page} style={{textDecoration:"none"}} key={page}>
               <NavButton
                 key={page}
                 onClick={handleCloseNavMenu}

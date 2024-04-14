@@ -12,6 +12,7 @@ import Paper from '@mui/material/Paper';
 import AlertTitle from '@mui/material/AlertTitle';
 import Alert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
+import Grow from '@mui/material/Grow';
 import PulseLoader from "react-spinners/PulseLoader";
 
 const Search = styled(Paper)(({ theme }) => ({
@@ -197,18 +198,19 @@ const HomeSearchPage = (props) => {
                                 type="submit"
                                 variant="contained"
                             >
-                            <SearchIcon sx={{height: "100%"}}/>
+                            <SearchIcon sx={{height: "100%", color: 'white'}}/>
                             </IconButton>
                             </Search>
                         </form>
-                        <Slide in={props.showError} container={errorRef.current}>
-                          <Alert style={{width: "40%", height: errorBannerHeight, transition: `max-height 0.15s ease-out`, maxHeight: errorBannerHeight }} severity="error">
+                        <Grow in={props.showError} container={errorRef.current}>
+                          <Alert style={{width: "40%", height: errorBannerHeight, transition: `max-height 0.5s ease-out`, maxHeight: errorBannerHeight }} severity="error">
                             {props.error.message}. Please try later.
                           </Alert>
-                        </Slide>
+                        </Grow>
                     </Item>
                     <Item>
                     <StyledPaper component="ul" ref={warningRef}>
+                      <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
                         <SelectionLabel>Selected outputs:</SelectionLabel>
                         {chipData.map((data) => {
                             return (
@@ -224,9 +226,12 @@ const HomeSearchPage = (props) => {
                             </ListItem>
                             );
                         })}
-                          {fetchTimeEstimate > 0 &&
-                      <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
-                    }
+                        </Box>
+                        <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                        {fetchTimeEstimate > 0 &&
+                          <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
+                        }
+                      </Box>
                     </StyledPaper>
                       <Slide in={showSelectionWarning} container={warningRef.current}>
                         <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
