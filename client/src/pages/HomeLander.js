@@ -135,7 +135,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
+  padding: theme.spacing(2),
   transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -167,11 +167,13 @@ const Item = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  justifyContent: 'center',
   width: "100%"
 }));
 
 const HomeLander = (props) => {
-  const [likeVHateArray, setLikeVHateArray] = useState([{}]);
+
+  const [likeVHateArray, setLikeVHateArray] = useState([props.likeVHateArray]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -219,24 +221,14 @@ const HomeLander = (props) => {
     <>
     <Box sx={{ display: 'flex',  width:'100%' }}>
     <CssBaseline />
-    <AppbarMain username={props.searchText} handleSearchTextChange={props.handleSearchTextChange}/>
-    <DrawerLeft />
-
-   
-      
+    <DrawerLeft />   
       <Main open={open}>
       <DrawerHeader />
       <ControlRow />
         <StyledGrid>
-        <Item>
-          
-        </Item>
-          {/* <Item>
-          <MALIntegration />
-          </Item> */}
-          <Grid item xs={12} >
+          <Grid item xs={10} >
           <Item>
-            <MALLikeVHateDataHandler loading={props.loading} lvhAnimeArray={lvhAnimeArray} username={props.searchText} />
+              <MALLikeVHateDataHandler lvhAnimeArray={lvhAnimeArray} />
           </Item>
           </Grid>
         </StyledGrid>

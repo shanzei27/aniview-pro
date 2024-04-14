@@ -145,7 +145,7 @@ function AppbarMain( props ) {
 
   return (
     <>
-      <AppBarTop position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B" }}>
+      <AppBarTop position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
       <Container maxWidth='85%'>
         <Toolbar >
         <Box

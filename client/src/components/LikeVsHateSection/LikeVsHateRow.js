@@ -13,7 +13,6 @@ const Item = styled(Box)(({ theme }) => ({
 }));
 
 const LikeVsHateRow = (props) => {
-  debugger
   const [pageData, setPageData] = useState([...props.data["data"]]);
   console.log(pageData);
   return (

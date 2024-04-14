@@ -9,35 +9,28 @@ import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
+import Alert from '@mui/material/Alert';
+import Slide from '@mui/material/Slide';
 
-const Search = styled(Box)(({ theme }) => ({
+const Search = styled(Paper)(({ theme }) => ({
     position: 'relative',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
     backgroundColor: alpha(theme.palette.common.white, 0.15),
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
+    width: "100%",
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
+
     },
   }));
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(2, 2, 2, 0),
-      // vertical padding + font size from searchIcon
-      paddingRight: `calc(1em + ${theme.spacing(4)})`,
       transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '100%',
-      },
-    },}));
+      width: `calc(100% - ${theme.spacing(5)})`,
+  }));
     
     const StyledGrid = styled(Grid)(({ theme }) => ({
         padding: theme.spacing(1),
@@ -63,31 +56,63 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     const StyledPaper = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
         padding: theme.spacing(2),
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
+        borderRadius: 10,
+        width: "60%",
+        display: 'flex',
+        direction: "column",
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        listStyle: 'none',
     }));
 
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
     }));
+    
+    const SelectionLabel = styled(Typography)(({ theme }) => ({
+      color: 'white',
+      fontSize: '14px',
+      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+    }));
+    
+    const TimeEstimateText = styled(Typography)(({ theme }) => ({
+      color: theme.palette.primary.light,
+      fontSize: '16px',
+      paddingRight: theme.spacing(2),
+      paddingLeft: theme.spacing(1),
+    }));
 
 const HomeSearchPage = (props) => {
-    const [barText, setBarText] = React.useState("");
+    const [barText, setBarText] = useState("");
+    const [fetchTimeEstimate,setFetchTimeEstimate] = useState(1.5);
+    const [showSelectionWarning, setShowSelectionWarning] = useState(false);
     const [chipSelection, setChipSelection] = useState({
-        "lvh": false,
-        "recommendations": false,
-        "history": false,
-        "episodic": false
+        "lvh": true,
+        "recommendations": true,
+        "history": true,
     })
     const [chipData, setChipData] = React.useState([
-        { key: 0, label: 'Likes & Hate vs Others', type: "lvh" },
-        { key: 1, label: 'Recommendations', type: "recommendations"  },
-        { key: 2, label: 'Historic stats', type: "history"  },
-        { key: 3, label: 'Episode trends', type: "episodic"  },
+        { key: 0, label: 'Recommendations', type: 'recommendations' },
+        { key: 1, label: 'Likes & Hate vs Others', type: 'lvh'  },
+        { key: 2, label: 'Historic stats', type: 'history'  },
       ]);
+    const warningRef = React.useRef(null);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        props.handleSearchTextChange(barText);
+        if(Object.values(chipSelection).some(val => val)){
+          props.handleSearchTextChange(barText);
+        } else {
+          setShowSelectionWarning(true);
+        }
+
+    }
+
+    const warnToSelect = () => {
+      
     }
 
     const handleOptionSelectChange = (type) => () => {
@@ -95,60 +120,69 @@ const HomeSearchPage = (props) => {
         const newObj = {...chipSelection};
         newObj[type] = bool;
         setChipSelection({...newObj});
-            console.log(chipSelection);
+        setShowSelectionWarning(false);
     };
 
-    const SelectionLabel = styled(Typography)(({ theme }) => ({
-        color: 'white',
-        fontSize: '14px',
-        paddingRight: theme.spacing(2),
-        paddingLeft: theme.spacing(1),
-      }));
+    const calculateTimeEstimate = () => {
+      let timeEst = 0;
+      if(chipSelection["recommendations"]){
+        timeEst += 20;
+      }
+      if(chipSelection["lvh"]){
+        timeEst += 60;
+      }
+      if(chipSelection["history"]){
+        timeEst += 20;
+      }
+      timeEst = (timeEst/60).toFixed(2);
+      setFetchTimeEstimate(timeEst);
+    }
+
+    useEffect( () => {
+      calculateTimeEstimate();
+    }, [chipSelection]);
 
   return (
     <>
     <CssBaseline/>
 
-    <StyledGrid container spacing={5}>
-            <Grid item xs={12}>
-            <Item><Typography variant='h1'>Enter MAL Username to search</Typography></Item>
+    <StyledGrid container spacing={4}>
+            <Grid item xs={10}>
+            <Item>
+              <Typography variant='lead'>Enter MAL Username to load</Typography>  
+            </Item>
+            <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
             </Grid>
-            <Grid item xs={12} style={{paddingLeft: 0, paddingRight: 0}}>
-            <Item style={{width: '100%', height: "100%"}}>
-                <form onSubmit={submitHandler}>
+            <Grid item xs={10}>
+            <Item>
+                <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%"}}>
                     <Search>
                         <StyledTextField
                         placeholder="Search and load profile…"
                         inputProps={{ 'aria-label': 'search' }}
                         value={props.searchText}
+                        sx={{
+                          "& fieldset": { border: 'none' },
+                        }}
                         onChange={(e) => {
                             setBarText(e.target.value);
                         }}
                         variant="outlined"
                         />
-                        <IconButton  sx={{width: '10%', height: "100%"}}
+                        <IconButton 
                         type="submit"
                         variant="contained"
                     >
-                        <SearchIcon sx={{height: "100%"}}/>
+                    <SearchIcon sx={{height: "100%"}}/>
                     </IconButton>
                     </Search>
                 </form>
             </Item>
             </Grid>
-            <StyledPaper
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                    listStyle: 'none',
-                    p: 1,
-                    m: 0,
-                }}
-                component="ul"
-                >
-                <SelectionLabel>Output:</SelectionLabel>
+            <Grid item xs={10}>
+            <Item>
+            <StyledPaper component="ul" ref={warningRef}>
+                <SelectionLabel>Selected outputs:</SelectionLabel>
                 {chipData.map((data) => {
                     return (
                     <ListItem key={data.key}>
@@ -164,6 +198,14 @@ const HomeSearchPage = (props) => {
                     );
                 })}
             </StyledPaper>
+              <Slide in={showSelectionWarning} container={warningRef.current}>
+                <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
+              </Slide>
+            {fetchTimeEstimate > 0 &&
+              <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
+            }
+            </Item>
+            </Grid>
       </StyledGrid>
 
     </>

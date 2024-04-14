@@ -38,6 +38,10 @@ const theme = createTheme({
     }
   },
   typography: {
+    lead: {
+      fontSize: 48,
+      fontWeight: 600,
+    },
     h1: {
       fontSize: 36,
       fontWeight: 800,

@@ -4,7 +4,7 @@ import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
 
-let pageSize =  4;
+let pageSize =  6;
 
 const ContainerBox = styled(Box)(({ theme }) => ({
     textAlign: 'center',
@@ -22,9 +22,9 @@ export default function AppPagination ({ data, setPageData }) {
     });
     const theme = useTheme;
     if (window.screen.width > 1800) {
-      pageSize = 6
+      pageSize = 8
     } else {
-      pageSize = 4
+      pageSize = 6
     }
     
 

@@ -23,18 +23,7 @@ const  MALLikeVHateDataHandler = (props) => {
 
   return (
     <>
-    {props.loading &&
-    <Box sx={{ width: `calc(100vw - 240` }}>
-      <PulseLoader color="#36d7b7" />
-      <LoadingText>This might take about a minute (for a list with 100 titles)</LoadingText>
-    </Box>
-    }
-
-    {!props.loading &&
-      
       <LikeVsHateRow data={ props.lvhAnimeArray } getData = {getLikeVHateData} />
-          
-    }
     </>
   )
 }

@@ -16,7 +16,7 @@ const HomeMain = () => {
   const [userAquired, setUserAcquired] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(true);
-  const [lvhAnimeArray, setLvhAnimeArray] = useState({
+  const [responseData, setResponseData] = useState({
     "data": [],
     count: 0
 });
@@ -26,10 +26,6 @@ const HomeMain = () => {
   };
 
   useEffect( () => {
-    setLvhAnimeArray({
-      "data": [],
-      count: 0
-  });
     // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
   
    if(searchText != ""){
@@ -38,8 +34,11 @@ const HomeMain = () => {
     //   const url = require("url");
        const queryParams = searchText
       // const params = new URLSearchParams(queryParams);
-       const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setLvhAnimeArray(res.data.data)); 
+       const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
+       
+
        setLoading(false);
+       setUserAcquired(true);
      }
 
        if(searchText) fetchData();
@@ -48,8 +47,9 @@ const HomeMain = () => {
   }, [searchText]);
 
   const HomeComponent = () => {
-    if(userAquired){
-      return <HomeLander handleSearchTextChange={handleSearchTextChange} lvhAnimeArray={lvhAnimeArray}/>;
+        if(userAquired){
+      
+      return <HomeLander handleSearchTextChange={handleSearchTextChange} lvhAnimeArray={responseData["lvhArray"]}/>;
     } else {
       return <HomeSearchPage handleSearchTextChange={handleSearchTextChange} />;
     }

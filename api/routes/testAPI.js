@@ -4,7 +4,7 @@ const axios = require('axios')
 
 //score threshold vars
 const publicScoreBadThreshold = 7.25;     //score to determine worse than avg anime - anything below this value
-const likeHateThreshold = 0.5;     //score threshold to check
+const likeHateThreshold = 0.45;     //score threshold to check
 
 //storage vars
 let malUserData = [];
@@ -13,7 +13,7 @@ let lvhAnimeObject = {
     "data": [],
     "count": 0
 };
-/// history page
+// history page
 let historyData = {
   "bar_1": {}
 };
@@ -35,7 +35,7 @@ router.get('/:searchText', async (req, res, next) => {
       })
     } else {
       await initUserDataHandling();
-      // await initLVHArrayCreation();
+      await initLVHArrayCreation();
        res.send({
            lvhArray: lvhAnimeObject,
            historyPage: historyData,
@@ -51,7 +51,7 @@ async function fetchData(username) {
         'X-MAL-CLIENT-ID': process.env.REACT_APP_CLIENT_ID
     };
 
-    const responseData = await axios.get(`https://api.myanimelist.net/v2/users/${username}/animelist?status=completed&?sort=list_updated_at&fields=list_status&limit=25`, { headers });
+    const responseData = await axios.get(`https://api.myanimelist.net/v2/users/${username}/animelist?status=completed&?sort=list_updated_at&fields=list_status&limit=500`, { headers });
     
    
     console.log("init end, response ::", responseData);
@@ -67,7 +67,7 @@ async function fetchMALAnime (id) {
         'X-MAL-CLIENT-ID': process.env.REACT_APP_CLIENT_ID
     };
     
-    return axios.get(`https://api.myanimelist.net/v2/anime/${id}?fields=rank,mean,alternative_titles,average_episode_duration`, { headers })
+    return axios.get(`https://api.myanimelist.net/v2/anime/${id}?fields=rank,mean,alternative_titles,start_date,average_episode_duration`, { headers })
     .then(promise => promise.data)
     .catch(e => {
         console.error(e);
@@ -96,11 +96,12 @@ async function initUserDataHandling () {
         const animeID = malUserData["data"][i]["node"]["id"];
         const publicAnime = await fetchMALAnime(animeID);
       //  console.log(publicAnime);
-
+        let finishYear = 0;
           // history data
         if(malUserData["data"][i]["list_status"]["finish_date"] != null){
-          const finishYear = malUserData["data"][i]["list_status"]["finish_date"].split("-")[0];         // year fetched from string format : "2024-02-03"
-        
+          finishYear = malUserData["data"][i]["list_status"]["finish_date"].split("-")[0];         // year fetched from string format : "2024-02-03"
+        }
+
           if(!prevYears.includes(finishYear)){
             historyData["bar_1"][finishYear] = { 
               "oldest_title": {"node": {}, "list_status": {}},
@@ -124,11 +125,11 @@ async function initUserDataHandling () {
           console.log("rewatchAmount: "+rewatchAmount);
 
           if(malUserData["data"][i]["list_status"]["completed"]){
-            
+            historyData["bar_1"][finishYear]["animes_completed"] += 1;
           }
-          historyData["bar_1"][finishYear]["animes_completed"] += 1;
+          
           historyData["bar_1"][finishYear]["hours_watched"] += (avgEpisodeDuration * episodesWatched) * (rewatchAmount + 1);
-        }
+        
 
         //   console.log(publicAnime);
            const obj = {};
@@ -158,8 +159,7 @@ async function initUserDataHandling () {
 
          const publicScore = publicAnimeDataObj[animeID]["mean"];
          if(publicScore < publicScoreBadThreshold){
-           if(userScore > publicScore){
-             if((userScore-likeHateThreshold) > publicScore){
+             if((userScore-publicScore) >= likeHateThreshold){
                 processedObj["node"] = element["node"];
                 processedObj["public_mean"] = publicScore;
                 processedObj["user_score"] = element["list_status"]["score"]
@@ -167,9 +167,6 @@ async function initUserDataHandling () {
                 lvhAnimeObject["data"].push(processedObj);
                 lvhAnimeObject["count"] = lvhAnimeObject["data"].length;
                 console.log('MATCH FOUND :: ' + processedObj["node"]["title"]);
-               } else {
-              //console.log('NO MATCH');
-             }
          } else {
           //console.log('NO MATCH');
          }
