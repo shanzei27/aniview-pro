@@ -95,6 +95,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 
 const HomeSearchPage = (props) => {
     const [barText, setBarText] = useState("");
+    const [errorBannerHeight, setErrorBannerHeight] = useState(0);
     const [fetchTimeEstimate,setFetchTimeEstimate] = useState(1.5);
     const [showSelectionWarning, setShowSelectionWarning] = useState(false);
     const [chipSelection, setChipSelection] = useState({
@@ -147,6 +148,17 @@ const HomeSearchPage = (props) => {
       calculateTimeEstimate();
     }, [chipSelection]);
 
+    useEffect( () => {
+      if(props.showError){
+        setErrorBannerHeight("100%")
+      } else {
+        setTimeout(() => {
+          setErrorBannerHeight(0);
+          console.log("height: "+errorBannerHeight)
+        }, "1000");
+      }
+    }, [props.showError]);
+
   return (
     <>
     <CssBaseline/>
@@ -166,7 +178,7 @@ const HomeSearchPage = (props) => {
                     <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
         
                     <Item>
-                        <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%", paddingBottom: 20}}>
+                        <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%"}}>
                             <Search ref={errorRef}>
                                 <StyledTextField
                                 placeholder="Search and load profile…"
@@ -189,7 +201,7 @@ const HomeSearchPage = (props) => {
                             </Search>
                         </form>
                         <Slide in={props.showError} container={errorRef.current}>
-                          <Alert sx={{width: "40%"}} severity="error">
+                          <Alert style={{width: "40%", height: errorBannerHeight, transition: `max-height 0.15s ease-out`, maxHeight: errorBannerHeight }} severity="error">
                             {props.error.message}. Please try later.
                           </Alert>
                         </Slide>

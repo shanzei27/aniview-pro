@@ -15,7 +15,7 @@ import axios from 'axios';
 const HomeMain = () => {
   const [userAquired, setUserAcquired] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [ showLoadError, setShowLoadError ] = useState(false);
   const [loadError, setLoadError] = useState({
     "message": ""
@@ -56,10 +56,10 @@ const HomeMain = () => {
         
         console.log(loadError);
         setShowLoadError(true);
-        
+        setLoading(false);
         setTimeout(() => {
           setShowLoadError(false);
-          setLoading(false);
+          
       }, 5000);
       }
 
