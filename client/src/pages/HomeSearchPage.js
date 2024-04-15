@@ -68,6 +68,9 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
         alignItems: 'center',
         flexWrap: 'wrap',
         listStyle: 'none',
+        [theme.breakpoints.down('md')]: {
+          width: "100%",
+        },
     }));
 
     const LoadingText = styled(Typography)(({ theme }) => ({
@@ -163,7 +166,7 @@ const HomeSearchPage = (props) => {
     <>
     <CssBaseline/>
 
-    <StyledGrid container spacing={4}>
+    <StyledGrid container spacing={{xs: 0, md: 2, lg: 4}}>
         {props.loading &&
         <Grid item xs={10}>
           <Item>
@@ -173,14 +176,18 @@ const HomeSearchPage = (props) => {
         </Grid>
         }       
          {!props.loading &&
-                    <Grid item xs={10}>
+              <Grid item xs={12} sm={10}>
                     <Item>
                       <Typography variant='lead'>Enter MyAnimeList username</Typography>  
                     </Item>
                     <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
         
                     <Item>
-                        <form className="main-search-form" onSubmit={submitHandler} style={{width: "65%"}}>
+                        <form className="main-search-form" onSubmit={submitHandler} 
+                              sx={{
+                              width: {xs: "100%", md: "70%"}
+                              }}
+                        >
                             <Search ref={errorRef}>
                                 <StyledTextField
                                 placeholder="MAL username to load…"
@@ -210,7 +217,7 @@ const HomeSearchPage = (props) => {
                     </Item>
                     <Item>
                     <StyledPaper component="ul" ref={warningRef}>
-                      <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                      {/* <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> */}
                         <SelectionLabel>Selected outputs:</SelectionLabel>
                         {chipData.map((data) => {
                             return (
@@ -226,18 +233,18 @@ const HomeSearchPage = (props) => {
                             </ListItem>
                             );
                         })}
-                        </Box>
+                        {/* </Box> */}
                         <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
                         {fetchTimeEstimate > 0 &&
                           <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
                         }
-                      </Box>
+                     </Box>
                     </StyledPaper>
                       <Slide in={showSelectionWarning} container={warningRef.current}>
                         <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
                       </Slide>
                     </Item>
-                    </Grid>
+              </Grid>
         }
       </StyledGrid>
 

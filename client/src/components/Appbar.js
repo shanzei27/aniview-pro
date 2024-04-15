@@ -56,6 +56,12 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
+const LogoContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
 const SearchIconWrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: '100%',
@@ -146,19 +152,22 @@ function AppbarMain( props ) {
     <>
       <AppBarTop position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
       <Container maxWidth='85%'>
-        <Toolbar >
-        <Box
-            component="img"
-            sx={{
-              width: 240,
-            }}
-            alt="logo"
-            src={logo}
-          />
-          <VersionText>v0.1a</VersionText>
+        <Toolbar sx={{display: 'flex', justifyContent: 'space-evenly'}}>
+        <LogoContainer>
+          <Box
+              component="img"
+              sx={{
+                width: 240,
+                
+              }}
+              alt="logo"
+              src={logo}
+            />
+            <VersionText>v0.1a</VersionText>
+            </LogoContainer>
           {props.userAcquired &&
             <form onSubmit={submitHandler}>
-            <Search component="form">
+            <Search component="form" sx={{display:{sm: 'none', md: 'block'}}}>
               <StyledTextField
                 placeholder="Search and load profile…"
                 inputProps={{ 'aria-label': 'search' }}
