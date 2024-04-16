@@ -24,7 +24,7 @@ const LikeVsHateRow = (props) => {
             //console.log(animeItem)
               return (
                 <Grid item xs={6} lg={4} xl={3} key={i}>
-                  <Item key={i}><LikeVsHateItem data = {animeItem}/></Item>
+                  <Item key={i}><LikeVsHateItem data = {animeItem} type={props.type}/></Item>
                 </Grid>
               )
             })

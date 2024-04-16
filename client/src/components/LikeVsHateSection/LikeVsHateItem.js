@@ -14,23 +14,25 @@ import Fade from '@mui/material/Fade';
 import { openInNewTab } from '../../utils/utils';
 import { styled  } from '@mui/material/styles';
 
-const DiffText = styled(Typography)(({ theme }) => ({
-    color:theme.palette.positive.main
-}));
-
 const LikeVsHateItem = (props) => {
     const [checked, setChecked] = useState(false);        //grow animation
-    
+    const [diffSign, setDiffSign] = useState("");
+
     const startAnim = () => {
         setChecked((prev) => !prev);
       };
 
     useEffect(() => {
-        startAnim()
+        if(props.type === "lvhUserLikes"){
+            setDiffSign("+");
+        } else {
+            setDiffSign("-");
+        }
+        startAnim();
      },[]);
 
-    const diff = props.data["user_score"] - props.data["public_mean"];
-
+    const diff = Math.abs(props.data["user_score"] - props.data["public_mean"]);
+    
     const item = (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: 300*0.5, overflow: 'auto'}}>
         <Typography gutterBottom variant="h5" component="div">
@@ -52,9 +54,9 @@ const LikeVsHateItem = (props) => {
             </Box>
             <Box style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <DifferenceIcon sx={{ fontSize: 'inherit' }}/>
-                <DiffText variant="body2">
-                Diff: +{diff.toFixed(2)}
-                </DiffText>
+                <Typography variant="body2" style={ diffSign==="+" ? {color:'green'} : {color:'red'}}>
+                Diff: {diffSign + diff.toFixed(2)}
+                </Typography>
             </Box>
         </Box>
       );

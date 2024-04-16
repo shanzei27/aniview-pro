@@ -8,18 +8,18 @@ import axios from 'axios';
 import testData from '../config/test_data';
 
 const HomeMain = () => {
-  const [userAquired, setUserAcquired] = useState(false);      // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
+  const [userAquired, setUserAcquired] = useState(true);      // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
   const [ showLoadError, setShowLoadError ] = useState(false);
   const [loadError, setLoadError] = useState({
     "message": ""
   });
-  const [responseData, setResponseData] = useState({           // !! TESTING WITH MOCK DATA / SWITCH BACK TO API !!
-    "data": [],
-    "count": 0
-});
-// const [responseData, setResponseData] = useState({...testData});      // temp test data
+//   const [responseData, setResponseData] = useState({           // !! TESTING WITH MOCK DATA / SWITCH BACK TO API !!
+//     "data": [],
+//     "count": 0
+// });
+const [responseData, setResponseData] = useState({...testData});      // temp test data
 
   const handleInputFromMainSearch = (text, selections) => {
       if(!loading){
@@ -27,47 +27,47 @@ const HomeMain = () => {
       }
   };
 
-  useEffect( () => {
-    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
+  // useEffect( () => {
+  //   // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
   
-   if(searchText != "" && !loading){
-     async function fetchData() {
-       setLoading(true);
-       setUserAcquired(false);
-    //   const url = require("url");
-       const queryParams = searchText
-      // const params = new URLSearchParams(queryParams);
-      try {
-        const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
-        setLoading(false);
-        setUserAcquired(true);
-      }
-      catch(error) {
-        if(error === null){
-          setLoadError({
-            message: "Unknown error"
-          });
-        } else {
-          setLoadError(error);
-        }
+  //  if(searchText != "" && !loading){
+  //    async function fetchData() {
+  //      setLoading(true);
+  //      setUserAcquired(false);
+  //   //   const url = require("url");
+  //      const queryParams = searchText
+  //     // const params = new URLSearchParams(queryParams);
+  //     try {
+  //       const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
+  //       setLoading(false);
+  //       setUserAcquired(true);
+  //     }
+  //     catch(error) {
+  //       if(error === null){
+  //         setLoadError({
+  //           message: "Unknown error"
+  //         });
+  //       } else {
+  //         setLoadError(error);
+  //       }
         
-        console.log(loadError);
-        setShowLoadError(true);
-        setLoading(false);
+  //       console.log(loadError);
+  //       setShowLoadError(true);
+  //       setLoading(false);
         
-        setTimeout(() => {
-          setShowLoadError(false);
-          setUserAcquired(false);
-      }, 5000);
-      }
+  //       setTimeout(() => {
+  //         setShowLoadError(false);
+  //         setUserAcquired(false);
+  //     }, 5000);
+  //     }
 
     
-     }
+  //    }
 
-       if(searchText) fetchData();
+  //      if(searchText) fetchData();
       
-     }
-  }, [searchText]);
+  //    }
+  // }, [searchText]);
 
   const HomeComponent = () => {
     if(userAquired){

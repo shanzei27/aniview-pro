@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -43,13 +43,12 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   }),
 );
 
-export default function DrawerLeft() {
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+export default function DrawerLeft(props) {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const theme = useTheme();
 
   const buttonProps = (value) => ({
-    selected: selectedIndex === value,
-    onClick: () => setSelectedIndex(value),
+    selected: selectedIndex === value
   });
 
   
@@ -85,6 +84,11 @@ export default function DrawerLeft() {
                       backgroundColor: "#40b7b7",
                       color: "white"
                     }
+                  }}
+                  id = {data.key}
+                  onClick={(e) => {
+                    props.handleSidebarLinkClick(e);
+                    setSelectedIndex(index)
                   }}
                 >
                   <ListItemIcon sx={{marginRight:-1}}>

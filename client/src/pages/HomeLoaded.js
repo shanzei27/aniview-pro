@@ -56,7 +56,7 @@ const Item = styled(Box)(({ theme }) => ({
 }));
 
 const HomeLander = (props) => {
-  const [openWindow, setOpenWindow] = useState("lvh");
+  const [openWindow, setOpenWindow] = useState("lvhUserLikes");
   const [likeVHateArray, setLikeVHateArray] = useState([props.likeVHateArray]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -72,7 +72,10 @@ const HomeLander = (props) => {
  
 
   //----API END-------------------------------------------------------------------------------------
-
+  const handleSidebarLinkClick = (event) => {
+    setOpenWindow(event.currentTarget.id);
+    console.log(openWindow);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -100,11 +103,11 @@ const HomeLander = (props) => {
   const WindowComponent = () => {
     switch(openWindow){
       case "lvhUserLikes":
-        return <LikeVsHateRow data={ userLikesArray } />
+        return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
       case "lvhUserHates":
-        return <LikeVsHateRow data={ userHatesArray } />
+        return <LikeVsHateRow data={ userHatesArray } type={ openWindow }/>
       default:
-        return <LikeVsHateRow data={ userLikesArray } />
+       // return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
     }
   }
 
@@ -112,7 +115,7 @@ const HomeLander = (props) => {
     <>
     <Box sx={{ display: 'flex',  width:'100%' }}>
     <CssBaseline />
-    <DrawerLeft />   
+    <DrawerLeft handleSidebarLinkClick = {handleSidebarLinkClick}/>   
       <Main open={open}>
         <StyledGrid>
           <Grid item xs={10} >
