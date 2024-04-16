@@ -36,31 +36,62 @@ const testData = {
                 },
                 "public_mean": 7.2,
                 "user_score": 8
-            }
-        ],
-        "count": 3
-    },
-    "userHates": {
-        "data": [
+            },
             {
                 "node": {
-                    "id": 33475,
-                    "title": "Busou Shoujo Machiavellianism",
+                    "id": 48239,
+                    "title": "Leadale no Daichi nite",
                     "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/3/83995.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/3/83995l.jpg"
+                        "medium": "https://cdn.myanimelist.net/images/anime/1671/120628.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1671/120628l.jpg"
                     }
                 },
-                "public_mean": 6.88,
+                "public_mean": 6.95,
                 "user_score": 8
             },
             {
                 "node": {
-                    "id": 15109,
-                    "title": "Cuticle Tantei Inaba",
+                    "id": 20033,
+                    "title": "Miss Monochrome The Animation",
                     "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/10/73934.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/10/73934l.jpg"
+                        "medium": "https://cdn.myanimelist.net/images/anime/11/56165.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/11/56165l.jpg"
+                    }
+                },
+                "public_mean": 6.37,
+                "user_score": 7
+            },
+            {
+                "node": {
+                    "id": 34148,
+                    "title": "Nyanko Days",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/10/83933.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/10/83933l.jpg"
+                    }
+                },
+                "public_mean": 6.62,
+                "user_score": 8
+            },
+            {
+                "node": {
+                    "id": 40586,
+                    "title": "Slime Taoshite 300-nen, Shiranai Uchi ni Level Max ni Nattemashita",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1888/133089.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1888/133089l.jpg"
+                    }
+                },
+                "public_mean": 6.92,
+                "user_score": 8
+            },
+            {
+                "node": {
+                    "id": 52962,
+                    "title": "Tearmoon Teikoku Monogatari: Dantoudai kara Hajimaru, Hime no Tensei Gyakuten Story",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1901/139910.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1901/139910l.jpg"
                     }
                 },
                 "public_mean": 7.24,
@@ -68,18 +99,275 @@ const testData = {
             },
             {
                 "node": {
-                    "id": 16592,
-                    "title": "Danganronpa: Kibou no Gakuen to Zetsubou no Koukousei The Animation",
+                    "id": 36511,
+                    "title": "Tokyo Ghoul:re",
                     "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/4/51463.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/4/51463l.jpg"
+                        "medium": "https://cdn.myanimelist.net/images/anime/1063/95086.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1063/95086l.jpg"
                     }
                 },
-                "public_mean": 7.2,
+                "public_mean": 6.37,
+                "user_score": 7
+            },
+            {
+                "node": {
+                    "id": 16742,
+                    "title": "Watashi ga Motenai no wa Dou Kangaetemo Omaera ga Warui!",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/12/51619.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/12/51619l.jpg"
+                    }
+                },
+                "public_mean": 6.99,
+                "user_score": 8
+            },
+            {
+                "node": {
+                    "id": 20449,
+                    "title": "Watashi ga Motenai no wa Dou Kangaetemo Omaera ga Warui!: Motenaishi, Nazomeite Miru",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/7/60743.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/7/60743l.jpg"
+                    }
+                },
+                "public_mean": 6.96,
                 "user_score": 8
             }
         ],
-        "count": 3
+        "count": 11
+    },
+    "userHates": {
+        "data": [
+            {
+                "node": {
+                    "id": 47,
+                    "title": "Akira",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1408/114012.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1408/114012l.jpg"
+                    }
+                },
+                "public_mean": 8.16,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 56671,
+                    "title": "Burn the Witch #0.8",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1522/139282.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1522/139282l.jpg"
+                    }
+                },
+                "public_mean": 7.48,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 44511,
+                    "title": "Chainsaw Man",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1806/126216.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1806/126216l.jpg"
+                    }
+                },
+                "public_mean": 8.51,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 25183,
+                    "title": "Gangsta.",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/8/74415.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/8/74415l.jpg"
+                    }
+                },
+                "public_mean": 7.41,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 268,
+                    "title": "Golden Boy",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/3/62867.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/3/62867l.jpg"
+                    }
+                },
+                "public_mean": 8.04,
+                "user_score": 5
+            },
+            {
+                "node": {
+                    "id": 5630,
+                    "title": "Higashi no Eden",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/9/15033.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/9/15033l.jpg"
+                    }
+                },
+                "public_mean": 7.74,
+                "user_score": 4
+            },
+            {
+                "node": {
+                    "id": 40938,
+                    "title": "Hige wo Soru. Soshite Joshikousei wo Hirou.",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1146/113477.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1146/113477l.jpg"
+                    }
+                },
+                "public_mean": 7.28,
+                "user_score": 5
+            },
+            {
+                "node": {
+                    "id": 37614,
+                    "title": "Hitoribocchi no Marumaru Seikatsu",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1130/99458.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1130/99458l.jpg"
+                    }
+                },
+                "public_mean": 7.48,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 5680,
+                    "title": "K-On!",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/10/76120.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/10/76120l.jpg"
+                    }
+                },
+                "public_mean": 7.86,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 8525,
+                    "title": "Kami nomi zo Shiru Sekai",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/2/43361.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/2/43361l.jpg"
+                    }
+                },
+                "public_mean": 7.65,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 45486,
+                    "title": "Kuma Kuma Kuma Bear Punch!",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1132/134608.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1132/134608l.jpg"
+                    }
+                },
+                "public_mean": 7.28,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 40496,
+                    "title": "Maou Gakuin no Futekigousha: Shijou Saikyou no Maou no Shiso, Tensei shite Shison-tachi no Gakkou e Kayou",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1126/108573.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1126/108573l.jpg"
+                    }
+                },
+                "public_mean": 7.36,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 39535,
+                    "title": "Mushoku Tensei: Isekai Ittara Honki Dasu",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1530/117776.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1530/117776l.jpg"
+                    }
+                },
+                "public_mean": 8.37,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 45576,
+                    "title": "Mushoku Tensei: Isekai Ittara Honki Dasu Part 2",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1028/117777.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1028/117777l.jpg"
+                    }
+                },
+                "public_mean": 8.67,
+                "user_score": 7
+            },
+            {
+                "node": {
+                    "id": 53590,
+                    "title": "Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita.",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1280/138474.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1280/138474l.jpg"
+                    }
+                },
+                "public_mean": 7.56,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 36470,
+                    "title": "Tada-kun wa Koi wo Shinai",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1446/91841.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1446/91841l.jpg"
+                    }
+                },
+                "public_mean": 7.57,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 41487,
+                    "title": "Tensei shitara Slime Datta Ken 2nd Season Part 2",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1033/118296.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1033/118296l.jpg"
+                    }
+                },
+                "public_mean": 8.33,
+                "user_score": 7
+            },
+            {
+                "node": {
+                    "id": 37786,
+                    "title": "Yagate Kimi ni Naru",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1783/96153.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1783/96153l.jpg"
+                    }
+                },
+                "public_mean": 7.89,
+                "user_score": 6
+            },
+            {
+                "node": {
+                    "id": 54112,
+                    "title": "Zom 100: Zombie ni Naru made ni Shitai 100 no Koto",
+                    "main_picture": {
+                        "medium": "https://cdn.myanimelist.net/images/anime/1384/136408.jpg",
+                        "large": "https://cdn.myanimelist.net/images/anime/1384/136408l.jpg"
+                    }
+                },
+                "public_mean": 7.84,
+                "user_score": 6
+            }
+        ],
+        "count": 19
     },
     "historyPage": {
         "bar_1": {
@@ -93,8 +381,8 @@ const testData = {
                     "list_status": {}
                 },
                 "year": 0,
-                "hours_watched": 4412,
-                "animes_completed": 17
+                "hours_watched": 32744,
+                "animes_completed": 124
             },
             "2023": {
                 "oldest_title": {
@@ -106,8 +394,8 @@ const testData = {
                     "list_status": {}
                 },
                 "year": "2023",
-                "hours_watched": 288,
-                "animes_completed": 1
+                "hours_watched": 2302,
+                "animes_completed": 8
             },
             "2024": {
                 "oldest_title": {
@@ -119,454 +407,11 @@ const testData = {
                     "list_status": {}
                 },
                 "year": "2024",
-                "hours_watched": 2052,
-                "animes_completed": 7
+                "hours_watched": 7589,
+                "animes_completed": 29
             }
         }
     },
-    "rawData": {
-        "data": [
-            {
-                "node": {
-                    "id": 29513,
-                    "title": "Aki no Kanade",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1839/123300.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1839/123300l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 7,
-                    "num_episodes_watched": 1,
-                    "is_rewatching": false,
-                    "updated_at": "2023-12-17T06:35:28+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 47,
-                    "title": "Akira",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1408/114012.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1408/114012l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 1,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-23T07:07:07+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 54837,
-                    "title": "Akuyaku Reijou Level 99: Watashi wa Ura-Boss desu ga Maou dewa Arimasen",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1150/140028.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1150/140028l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 5,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-27T10:54:57+00:00",
-                    "finish_date": "2024-03-27"
-                }
-            },
-            {
-                "node": {
-                    "id": 49979,
-                    "title": "Akuyaku Reijou nanode Last Boss wo Kattemimashita",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1648/126110.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1648/126110l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-27T10:57:21+00:00",
-                    "finish_date": "2024-01-06"
-                }
-            },
-            {
-                "node": {
-                    "id": 6547,
-                    "title": "Angel Beats!",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1244/111115.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1244/111115l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-25T13:32:33+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 7647,
-                    "title": "Arakawa Under the Bridge",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1019/98620.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1019/98620l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 9,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-12T13:46:23+00:00",
-                    "start_date": "2024-01-21",
-                    "finish_date": "2024-01-21"
-                }
-            },
-            {
-                "node": {
-                    "id": 6347,
-                    "title": "Baka to Test to Shoukanjuu",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/3/50389.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/3/50389l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-18T07:48:13+00:00",
-                    "finish_date": "2024-03-18"
-                }
-            },
-            {
-                "node": {
-                    "id": 9471,
-                    "title": "Baka to Test to Shoukanjuu: Matsuri",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/3/67303.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/3/67303l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 2,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-18T11:49:08+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 49596,
-                    "title": "Blue Lock",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1258/126929.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1258/126929l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 24,
-                    "is_rewatching": false,
-                    "updated_at": "2023-12-29T15:13:43+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 31964,
-                    "title": "Boku no Hero Academia",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/10/78745.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/10/78745l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 7,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-04-07T06:18:35+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 10719,
-                    "title": "Boku wa Tomodachi ga Sukunai",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/8/32873.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/8/32873l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-28T09:49:11+00:00",
-                    "start_date": "2024-02-02"
-                }
-            },
-            {
-                "node": {
-                    "id": 21405,
-                    "title": "Bokura wa Minna Kawai-sou",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/6/64629.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/6/64629l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 9,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-12T13:47:15+00:00",
-                    "finish_date": "2024-01-09"
-                }
-            },
-            {
-                "node": {
-                    "id": 24913,
-                    "title": "Bokura wa Minna Kawai-sou: Hajimete no",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/12/71613.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/12/71613l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 9,
-                    "num_episodes_watched": 1,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-12T13:42:58+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 53439,
-                    "title": "Boushoku no Berserk",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1951/138462.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1951/138462l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-25T10:21:28+00:00",
-                    "finish_date": "2024-01-01"
-                }
-            },
-            {
-                "node": {
-                    "id": 41468,
-                    "title": "Burn the Witch",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1993/108967.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1993/108967l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 7,
-                    "num_episodes_watched": 3,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-12T13:46:31+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 56671,
-                    "title": "Burn the Witch #0.8",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1522/139282.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1522/139282l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 1,
-                    "is_rewatching": false,
-                    "updated_at": "2024-01-01T12:07:41+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 33475,
-                    "title": "Busou Shoujo Machiavellianism",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/3/83995.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/3/83995l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-18T05:10:30+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 44511,
-                    "title": "Chainsaw Man",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1806/126216.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1806/126216l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-02-25T13:32:41+00:00",
-                    "finish_date": "2023-12-26"
-                }
-            },
-            {
-                "node": {
-                    "id": 49613,
-                    "title": "Chiyu Mahou no Machigatta Tsukaikata",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1733/140802.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1733/140802l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 7,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-30T09:35:57+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 1575,
-                    "title": "Code Geass: Hangyaku no Lelouch",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1032/135088.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1032/135088l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 25,
-                    "is_rewatching": false,
-                    "updated_at": "2024-01-02T13:16:48+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 2904,
-                    "title": "Code Geass: Hangyaku no Lelouch R2",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1088/135089.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1088/135089l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 9,
-                    "num_episodes_watched": 25,
-                    "is_rewatching": false,
-                    "updated_at": "2023-12-29T15:09:55+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 15109,
-                    "title": "Cuticle Tantei Inaba",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/10/73934.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/10/73934l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-04-01T03:08:28+00:00",
-                    "start_date": "2024-02-12"
-                }
-            },
-            {
-                "node": {
-                    "id": 16592,
-                    "title": "Danganronpa: Kibou no Gakuen to Zetsubou no Koukousei The Animation",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/4/51463.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/4/51463l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 8,
-                    "num_episodes_watched": 13,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-27T12:46:48+00:00",
-                    "finish_date": "2024-03-27"
-                }
-            },
-            {
-                "node": {
-                    "id": 32901,
-                    "title": "Eromanga-sensei",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/2/86468.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/2/86468l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 3,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2024-03-09T08:19:20+00:00"
-                }
-            },
-            {
-                "node": {
-                    "id": 48760,
-                    "title": "Gaikotsu Kishi-sama, Tadaima Isekai e Odekakechuu",
-                    "main_picture": {
-                        "medium": "https://cdn.myanimelist.net/images/anime/1361/120706.jpg",
-                        "large": "https://cdn.myanimelist.net/images/anime/1361/120706l.jpg"
-                    }
-                },
-                "list_status": {
-                    "status": "completed",
-                    "score": 6,
-                    "num_episodes_watched": 12,
-                    "is_rewatching": false,
-                    "updated_at": "2023-11-06T13:17:02+00:00"
-                }
-            }
-        ],
-        "paging": {
-            "next": "https://api.myanimelist.net/v2/users/zednine/animelist?offset=25&status=completed&%3Fsort=list_updated_at&fields=list_status&limit=25"
-        }
-    }
 }
 
 export default testData

@@ -4,7 +4,9 @@ const axios = require('axios')
 
 //score threshold vars
 const publicScoreBadThreshold = 7.25;     //score to determine worse than avg anime - anything below this value
-const likeHateThreshold = 0.45;     //score threshold to check
+const likeHateThreshold = 0.45;           //score threshold to check
+const publicScoreGoodThreshold = 7.25;
+const hateLikeThreshold = 1.25;
 
 //storage vars
 let malUserData = [];
@@ -12,6 +14,10 @@ let publicAnimeDataObj = {};
 let lvhAnimeObject = {
     "data": [],
     "count": 0
+};
+let hvlAnimeObject = {
+  "data": [],
+  "count": 0
 };
 // history page
 let historyData = {
@@ -32,6 +38,10 @@ router.get('/:searchText', async (req, res, next) => {
         "data": [],
         "count": 0
     };
+    hvlAnimeObject = {
+      "data": [],
+      "count": 0
+    };
     historyData = {
       "bar_1": {}
     };
@@ -47,9 +57,10 @@ router.get('/:searchText', async (req, res, next) => {
       await initLVHArrayCreation();
        res.send({
            userLikes: lvhAnimeObject,
-           userHates: [],
+           userHates: hvlAnimeObject,
            historyPage: historyData,
-           rawData: malUserData
+           rawData: malUserData,
+          // rawDataPub: publicAnimeDataObj
        });
     }
 
@@ -57,7 +68,7 @@ router.get('/:searchText', async (req, res, next) => {
 
 async function fetchData(username) {
     console.log("exec start with ::"+ username);
-    const limit = 25;
+    const limit = 200;
     const headers = {
         'X-MAL-CLIENT-ID': process.env.REACT_APP_CLIENT_ID
     };
@@ -124,16 +135,21 @@ async function initUserDataHandling () {
             prevYears.push(finishYear);
         
           }
-          
-          let avgEpisodeDuration = Math.floor(publicAnime["average_episode_duration"] / 60);
-          console.log("ep duration: "+avgEpisodeDuration);
+          let avgEpisodeDuration = 0;
+          if(publicAnime.hasOwnProperty("average_episode_duration")){
+            avgEpisodeDuration = Math.floor(publicAnime["average_episode_duration"] / 60);
+          } else {
+            avgEpisodeDuration = Math.floor(23 / 60);     //placeholder default value old 23 mins in case there is no return value
+          }
+           
+          //console.log("ep duration: "+avgEpisodeDuration);
           let episodesWatched = malUserData["data"][i]["list_status"]["num_episodes_watched"];
-          console.log("episodesWatched: "+episodesWatched);
+          //console.log("episodesWatched: "+episodesWatched);
           let rewatchAmount = malUserData["data"][i]["list_status"]["num_times_rewatched"];
           if(rewatchAmount === null || rewatchAmount === undefined){
             rewatchAmount = 0;
           }
-          console.log("rewatchAmount: "+rewatchAmount);
+          //console.log("rewatchAmount: "+rewatchAmount);
 
           if(malUserData["data"][i]["list_status"]["status"] === "completed"){
             historyData["bar_1"][finishYear]["animes_completed"] += 1;
@@ -165,23 +181,47 @@ async function initUserDataHandling () {
 
     malUserData["data"].forEach(async (element) => {
        const animeID = element["node"]["id"];
-       let processedObj = {};
+       let processedObjLVH = {};
+       let processedObjHVL = {};
        const userScore = element["list_status"]["score"];
+       const publicScore = publicAnimeDataObj[animeID]["mean"];
 
-         const publicScore = publicAnimeDataObj[animeID]["mean"];
-         if(publicScore < publicScoreBadThreshold){
+        if(publicScore <= publicScoreBadThreshold){
              if((userScore-publicScore) >= likeHateThreshold){
-                processedObj["node"] = element["node"];
-                processedObj["public_mean"] = publicScore;
-                processedObj["user_score"] = element["list_status"]["score"]
+              processedObjLVH["node"] = element["node"];
+              processedObjLVH["public_mean"] = publicScore;
+              processedObjLVH["user_score"] = element["list_status"]["score"];
 
-                lvhAnimeObject["data"].push(processedObj);
+                lvhAnimeObject["data"].push(processedObjLVH);
                 lvhAnimeObject["count"] = lvhAnimeObject["data"].length;
-                console.log('MATCH FOUND :: ' + processedObj["node"]["title"]);
+               // console.log('MATCH FOUND :: ' + processedObjLVH["node"]["title"]);
          } else {
           //console.log('NO MATCH');
          }
-       }
+         
+         
+        }
+        // console.log('anime : '+ element["node"]["title"]);
+
+        //  console.log('cmp 1: '+publicScore + " >= " + publicScoreGoodThreshold);
+        //  console.log('result 1: '+ (publicScore >= publicScoreGoodThreshold));
+        //  console.log('cmp 2: '+(publicScore-userScore) + " >= " + hateLikeThreshold);
+        //  console.log('result 2: '+ ((publicScore-userScore) >= hateLikeThreshold));
+        //  console.log('____________________________________________________________');
+
+         if(publicScore >= publicScoreGoodThreshold){
+          
+            if((publicScore-userScore) >= hateLikeThreshold){
+              processedObjHVL["node"] = element["node"];
+              processedObjHVL["public_mean"] = publicScore;
+              processedObjHVL["user_score"] = element["list_status"]["score"];
+
+              hvlAnimeObject["data"].push(processedObjHVL);
+              hvlAnimeObject["count"] = hvlAnimeObject["data"].length;
+              console.log('MATCH FOUND :: ' + processedObjHVL["node"]["title"]);
+            }
+            //hvlAnimeObject
+          }
      });
      console.log("end of LVH array creation");
    }
