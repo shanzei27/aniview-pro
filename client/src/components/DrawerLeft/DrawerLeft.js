@@ -45,6 +45,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 export default function DrawerLeft(props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [open, setOpen] = React.useState(true);
   const theme = useTheme();
 
   const buttonProps = (value) => ({
@@ -55,8 +56,11 @@ export default function DrawerLeft(props) {
   return (
     <>
         <Drawer
-        variant="permanent"
+        variant="persistent"
+        anchor="left"
+        open={open}
         sx={{
+          display: { xs: 'none', sm: 'block' },
           width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },

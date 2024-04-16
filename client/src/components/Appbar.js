@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -101,16 +102,7 @@ function AppbarMain( props ) {
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [open, setOpen] = React.useState(true);
   const [barText, setBarText] = React.useState("");
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -139,9 +131,19 @@ function AppbarMain( props ) {
 
   return (
     <>
-      <AppBarTop position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
+      <AppBarTop position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
+        
       <Container maxWidth='85%'>
         <Toolbar sx={{display: 'flex', justifyContent: 'space-evenly'}}>
+        <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={props.handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(props.drawerOpen && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
         <LogoContainer>
           <Box
               component="img"
@@ -156,7 +158,7 @@ function AppbarMain( props ) {
             </LogoContainer>
           {props.userAcquired &&
             <form onSubmit={submitHandler}>
-            <Search component="form" sx={{display:{sm: 'none', md: 'block'}}}>
+            <Search component="form" sx={{ display: { xs: 'none', sm: 'block' }}}>
               <StyledTextField
                 placeholder="Search and load profile…"
                 inputProps={{ 'aria-label': 'search' }}
@@ -193,7 +195,7 @@ function AppbarMain( props ) {
         </Toolbar>
       </Container>
     </AppBarTop>
-   
+    <Toolbar />
     </>  
   );
 }

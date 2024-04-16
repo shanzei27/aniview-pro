@@ -46,7 +46,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 
 const Item = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
-  padding: theme.spacing(2),
+  padding: theme.spacing(1),
   textAlign: 'center',
   display: 'flex',
   flexDirection: 'column',
@@ -117,13 +117,9 @@ const HomeLander = (props) => {
     <CssBaseline />
     <DrawerLeft handleSidebarLinkClick = {handleSidebarLinkClick}/>   
       <Main open={open}>
-        <StyledGrid>
-          <Grid item xs={10} >
-          <Item>
-              <WindowComponent />
-          </Item>
-          </Grid>
-        </StyledGrid>
+        <Item>
+          <WindowComponent />
+        </Item>
       </Main>
       </Box>
     </>

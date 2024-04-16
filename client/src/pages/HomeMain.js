@@ -9,6 +9,7 @@ import testData from '../config/test_data';
 
 const HomeMain = () => {
   const [userAquired, setUserAcquired] = useState(true);      // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
+  const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
   const [ showLoadError, setShowLoadError ] = useState(false);
@@ -69,6 +70,14 @@ const [responseData, setResponseData] = useState({...testData});      // temp te
   //    }
   // }, [searchText]);
 
+  const handleDrawerOpen = () => {
+    setSideDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setSideDrawerOpen(false);
+  };
+
   const HomeComponent = () => {
     if(userAquired){
       return <HomeLoaded handleInputFromMainSearch={handleInputFromMainSearch} lvhAnimeArray={responseData} loading={loading}/>;
@@ -78,7 +87,7 @@ const [responseData, setResponseData] = useState({...testData});      // temp te
   }
   return (
     <>
-      <AppbarMain handleInputFromMainSearch={handleInputFromMainSearch} userAcquired={userAquired}/>
+      <AppbarMain handleInputFromMainSearch={handleInputFromMainSearch} userAcquired={userAquired} drawerOpen={sideDrawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose}/>
       <Box sx={{ display: 'flex' }}>        
         <HomeComponent />
       </Box>

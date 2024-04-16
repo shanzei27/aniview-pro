@@ -32,9 +32,7 @@ export default function AppPagination ({ data, setPageData }) {
     useEffect(() => {
         setPagination({...pagination, count: data.count });
         const newPageData = getPaginationData(data["data"],pagination.from, pagination.to);
-        setPageData(newPageData);
-        console.log(newPageData);
-        
+        setPageData(newPageData); 
     }, [pagination.from, pagination.to]);
 
     const handlePageChange = (event, page) => {

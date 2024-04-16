@@ -24,7 +24,7 @@ const LikeVsHateRow = (props) => {
           paginatedData.map((animeItem, i) => {
             //console.log(animeItem)
               return (
-                <Grid item xs={6} lg={4} xl={3} key={i}>
+                <Grid item xs={12} sm={10} md={6} lg={4} xl={3} key={i}>
                   <Item key={i}><LikeVsHateItem data = {animeItem} type={props.type}/></Item>
                 </Grid>
               )
