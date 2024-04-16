@@ -46,7 +46,8 @@ router.get('/:searchText', async (req, res, next) => {
       await initUserDataHandling();
       await initLVHArrayCreation();
        res.send({
-           lvhArray: lvhAnimeObject,
+           userLikes: lvhAnimeObject,
+           userHates: [],
            historyPage: historyData,
            rawData: malUserData
        });
