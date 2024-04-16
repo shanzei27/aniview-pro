@@ -17,7 +17,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 const Search = styled(Paper)(({ theme }) => ({
     position: 'relative',
-    borderRadius: 20,
+    borderRadius: 10,
     display: "flex",
     justifyContent: "center",
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -183,12 +183,12 @@ const HomeSearchPage = (props) => {
                     <Item><Typography variant='body1'>Aniview Pro is a MyAnimeList.net companion which fetches and shows your anime stats and recommendations.</Typography></Item>
         
                     <Item>
-                        <form className="main-search-form" onSubmit={submitHandler} 
+                            <Search ref={errorRef}  
+                              component="form"
+                              onSubmit={submitHandler}    
                               sx={{
-                              width: {xs: "100%", md: "70%"}
-                              }}
-                        >
-                            <Search ref={errorRef}>
+                              width: {xs: "100%", md: "60%"}
+                              }}>              
                                 <StyledTextField
                                 placeholder="MAL username to load…"
                                 inputProps={{ 'aria-label': 'search' }}
@@ -208,7 +208,6 @@ const HomeSearchPage = (props) => {
                             <SearchIcon sx={{height: "100%", color: 'white'}}/>
                             </IconButton>
                             </Search>
-                        </form>
                         <Grow in={props.showError} container={errorRef.current}>
                           <Alert style={{width: "40%", height: errorBannerHeight, transition: `max-height 0.5s ease-out`, maxHeight: errorBannerHeight }} severity="error">
                             {props.error.message}. Please try later.
