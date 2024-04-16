@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
 import React, { useState, useEffect } from 'react';
+import { getPaginationData } from '../../utils/utils';
 
 let pageSize =  6;
 
@@ -30,7 +31,7 @@ export default function AppPagination ({ data, setPageData }) {
 
     useEffect(() => {
         setPagination({...pagination, count: data.count });
-        const newPageData = data["data"].slice(pagination.from,pagination.to);
+        const newPageData = getPaginationData(data["data"],pagination.from, pagination.to);
         setPageData(newPageData);
         console.log(newPageData);
         

@@ -14,13 +14,14 @@ const Item = styled(Box)(({ theme }) => ({
 
 const LikeVsHateRow = (props) => {
   const [pageData, setPageData] = useState([...props.data["data"]]);
-  console.log(pageData);
+  const [paginatedData, setPaginatedData] = useState([]);
+
   return (
    <>
    <Grid container spacing={2}>
         {pageData != undefined &&
           
-           pageData.map((animeItem, i) => {
+          paginatedData.map((animeItem, i) => {
             //console.log(animeItem)
               return (
                 <Grid item xs={6} lg={4} xl={3} key={i}>
@@ -31,7 +32,7 @@ const LikeVsHateRow = (props) => {
         }
     </Grid>
     <Box sx={{display:'flex', direction: 'column', justifyContent: 'center', width: `calc(100vw - 240` }}>
-      <AppPagination data={props.data} setPageData={(d) => setPageData(d)} getData={props.getData}/>
+      <AppPagination data={props.data} setPageData={(d) => setPaginatedData(d)} getData={props.getData}/>
     </Box>
    </>
   )
