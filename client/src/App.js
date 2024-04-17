@@ -58,6 +58,10 @@ const theme = createTheme({
     body1: {
       fontWeight: 600,
     },
+    body1Dark: {
+      fontWeight: 600,
+      color: "#000",
+    },
     body2: {
       fontWeight: 500,
     },

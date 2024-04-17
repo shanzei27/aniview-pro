@@ -20,6 +20,7 @@ import StarHalfIcon from '@mui/icons-material/StarHalf';
 import StarIcon from '@mui/icons-material/Star';
 import HistoryIcon from '@mui/icons-material/History';
 import RecommendIcon from '@mui/icons-material/Recommend';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import drawerLeftTabs from '../../config/drawer_left_tabs';
 
 const drawerWidth = 240;
@@ -94,15 +95,17 @@ export default function DrawerLeft(props) {
                     props.handleSidebarLinkClick(e);
                     setSelectedIndex(index)
                   }}
-                >
+                >                     
                   <ListItemIcon sx={{marginRight:-1}}>
                     { data.icon == "starFull" ? <StarIcon/> : null }
                     { data.icon == "starHalf" ? <StarHalfIcon/> : null }
                     { data.icon == "history" ? <HistoryIcon/> : null }
                     { data.icon == "recommend" ? <RecommendIcon/> : null }
+                    { data.icon == "overview" ? <AccountCircleIcon/> : null }
                   </ListItemIcon>
                   <ListItemText primary={data.text} />
                 </ListItemButton>
+                
               </ListItem>
             ))}
           </List>

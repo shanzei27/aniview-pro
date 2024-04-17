@@ -412,6 +412,16 @@ const testData = {
             }
         }
     },
+    "profilePage": {
+        "username": "zednine",
+        "profile_url": "https://myanimelist.net/profile/zednine/",
+        "image_url": "https://cdn.myanimelist.net/s/common/userimages/8b67ee41-e0db-41c1-8617-4190606aa0e5_225w?s=82548047c091728adde5be82258e9497",
+        "top_row": {"total_completed": 160, "total_watchtime": "42 days", "mean_score": 6.42},
+        "oldest_newest_watched": {},
+        "oldest_newest_liked": {},
+        "genre_pie": {},
+        
+    }
 }
 
 export default testData

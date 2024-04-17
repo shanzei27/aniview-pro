@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import DrawerLeft from '../components/DrawerLeft/DrawerLeft';
 import LikeVsHateRow from '../components/LikeVsHateSection/LikeVsHateRow';
+import Profile from '../components/Profile';
 
 const drawerWidth = 200;
 
@@ -56,7 +57,7 @@ const Item = styled(Box)(({ theme }) => ({
 }));
 
 const HomeLander = (props) => {
-  const [openWindow, setOpenWindow] = useState("lvhUserLikes");
+  const [openWindow, setOpenWindow] = useState("overview");
   const [likeVHateArray, setLikeVHateArray] = useState([props.likeVHateArray]);
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -69,6 +70,7 @@ const HomeLander = (props) => {
    // console.log("RENDER START user :: "+props.username);
    const [userLikesArray, setUserLikesArray] = useState(props.lvhAnimeArray["userLikes"]);
    const [userHatesArray, setUserHatesArray] = useState(props.lvhAnimeArray["userHates"]);
+   const [profileData, setProfileData] = useState(props.lvhAnimeArray["profilePage"]);
  
 
   //----API END-------------------------------------------------------------------------------------
@@ -102,6 +104,8 @@ const HomeLander = (props) => {
 
   const WindowComponent = () => {
     switch(openWindow){
+      case "overview":
+        return <Profile data={ profileData } type={ openWindow } />
       case "lvhUserLikes":
         return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
       case "lvhUserHates":
