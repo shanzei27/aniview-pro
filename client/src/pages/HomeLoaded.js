@@ -14,7 +14,8 @@ import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import DrawerLeft from '../components/DrawerLeft/DrawerLeft';
 import LikeVsHateRow from '../components/LikeVsHateSection/LikeVsHateRow';
-import Profile from '../components/Profile';
+import ProfilePage from '../components/Profile';
+import HistoryPage from '../components/History';
 
 const drawerWidth = 200;
 
@@ -70,8 +71,26 @@ const HomeLander = (props) => {
    // console.log("RENDER START user :: "+props.username);
    const [userLikesArray, setUserLikesArray] = useState(props.lvhAnimeArray["userLikes"]);
    const [userHatesArray, setUserHatesArray] = useState(props.lvhAnimeArray["userHates"]);
+   const [historyData, setHistoryData] = useState([]);
    const [profileData, setProfileData] = useState(props.lvhAnimeArray["profilePage"]);
- 
+   
+  React.useEffect( () => {
+    const preProcessData = props.lvhAnimeArray["historyPage"];
+    let bar1Array = [];
+    
+    Object.keys(preProcessData["bar_1"]).forEach(key => {
+      const value = preProcessData["bar_1"][key];
+      if(key != "0"){
+        bar1Array.push({
+          "year": key,
+          "hours_watched": value["hours_watched"],
+          "animes_completed": value["animes_completed"],
+        });
+      }
+      setHistoryData(bar1Array);
+      console.log(bar1Array);
+  });
+  }, []);
 
   //----API END-------------------------------------------------------------------------------------
   const handleSidebarLinkClick = (event) => {
@@ -105,7 +124,9 @@ const HomeLander = (props) => {
   const WindowComponent = () => {
     switch(openWindow){
       case "overview":
-        return <Profile data={ profileData } type={ openWindow } />
+        return <ProfilePage data={ profileData } type={ openWindow } />
+      case "history":
+        return <HistoryPage data={ historyData } type={ openWindow } />
       case "lvhUserLikes":
         return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
       case "lvhUserHates":

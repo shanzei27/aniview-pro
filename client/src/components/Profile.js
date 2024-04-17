@@ -39,7 +39,6 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 
 const Profile = (props) => {
   const [pageData, setPageData] = useState({...props.data});
-  const [paginatedData, setPaginatedData] = useState([]);
 
 
   const userImage = (
@@ -62,9 +61,9 @@ const Profile = (props) => {
             </Box>
             <BodyContainerTop>
                 <Box style={{display: 'flex', justifyContent:'space-between', padding: '10px', width: '100%'}}>
-                   <Typography variant='body1'>Total completed: {pageData.top_row["total_completed"]}</Typography>
-                   <Typography variant='body1'>Total watchtime: {pageData.top_row["total_watchtime"]}</Typography>
-                   <Typography variant='body1'>Total completed: {pageData.top_row["mean_score"]}</Typography>
+                   <Typography variant='body1' sx={{color:"#fff"}}>Total completed: {pageData.top_row["total_completed"]}</Typography>
+                   <Typography variant='body1' sx={{color:"#fff"}}>Total watchtime: {pageData.top_row["total_watchtime"]}</Typography>
+                   <Typography variant='body1' sx={{color:"#fff"}}>Total completed: {pageData.top_row["mean_score"]}</Typography>
                 </Box>
             </BodyContainerTop>
         </Grid>

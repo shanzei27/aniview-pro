@@ -34,7 +34,8 @@ const theme = createTheme({
       main: green[800],
     },
     text: {
-      primary: "#ffffff"
+     // primary: "#ffffff",     ???
+      dark: "#000"
     }
   },
   typography: {
@@ -44,7 +45,11 @@ const theme = createTheme({
     },
     h1: {
       fontSize: 36,
+      color: "#fff",
       fontWeight: 800,
+    },
+    h2: {
+      color: "#fff",
     },
     h5: {
       padding: 4,
@@ -71,9 +76,7 @@ const theme = createTheme({
       fontWeight: 600,
     },
     fontFamily: "Roboto",
-    color: '#fff'
   },
-  color: '#fff'
 });
 
 function App() {
