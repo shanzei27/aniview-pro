@@ -14,19 +14,20 @@ import Alert from '@mui/material/Alert';
 import Slide from '@mui/material/Slide';
 import Grow from '@mui/material/Grow';
 import PulseLoader from "react-spinners/PulseLoader";
+import { light } from '@mui/material/styles/createPalette';
 
 const Search = styled(Paper)(({ theme }) => ({
     position: 'relative',
     borderRadius: 10,
     display: "flex",
     justifyContent: "center",
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: theme.palette.mode === "light" ? alpha(theme.palette.common.black, 0.2) : alpha(theme.palette.common.white, 0.25),
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
+      backgroundColor: theme.palette.mode === "light" ? alpha(theme.palette.common.black, 0.25) : alpha(theme.palette.common.white, 0.3),
     },
     width: "100%",
     [theme.breakpoints.up('sm')]: {
-
+     
     },
   }));
 
@@ -100,56 +101,12 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
 const HomeSearchPage = (props) => {
     const [barText, setBarText] = useState("");
     const [errorBannerHeight, setErrorBannerHeight] = useState(0);
-    const [fetchTimeEstimate,setFetchTimeEstimate] = useState(1.5);
-    const [showSelectionWarning, setShowSelectionWarning] = useState(false);
-    const [chipSelection, setChipSelection] = useState({
-        "lvh": true,
-        "recommendations": true,
-        "history": true,
-    });
-    const [chipData, setChipData] = React.useState([
-        { key: 0, label: 'Recommendations', type: 'recommendations' },
-        { key: 1, label: 'Likes & Hate vs Others', type: 'lvh'  },
-        { key: 2, label: 'Historic stats', type: 'history'  },
-      ]);
-    const warningRef = React.useRef(null);
     const errorRef = React.useRef(null);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        if(Object.values(chipSelection).some(val => val)){
-          props.handleInputFromMainSearch(barText, chipSelection);
-        } else {
-          setShowSelectionWarning(true);
-        }
+        props.handleInputFromMainSearch(barText);
     }
-
-    const handleOptionSelectChange = (type) => () => {
-        const bool = !chipSelection[type];
-        const newObj = {...chipSelection};
-        newObj[type] = bool;
-        setChipSelection({...newObj});
-        setShowSelectionWarning(false);
-    };
-
-    const calculateTimeEstimate = () => {
-      let timeEst = 0;
-      if(chipSelection["recommendations"]){
-        timeEst += 20;
-      }
-      if(chipSelection["lvh"]){
-        timeEst += 60;
-      }
-      if(chipSelection["history"]){
-        timeEst += 20;
-      }
-      timeEst = (timeEst/60).toFixed(2);
-      setFetchTimeEstimate(timeEst);
-    }
-
-    useEffect( () => {
-      calculateTimeEstimate();
-    }, [chipSelection]);
 
     useEffect( () => {
       if(props.showError){
@@ -213,35 +170,6 @@ const HomeSearchPage = (props) => {
                             {props.error.message}. Please try later.
                           </Alert>
                         </Grow>
-                    </Item>
-                    <Item>
-                    <StyledPaper component="ul" ref={warningRef}>
-                      {/* <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}> */}
-                        <SelectionLabel>Selected outputs:</SelectionLabel>
-                        {chipData.map((data) => {
-                            return (
-                            <ListItem key={data.key}>
-                                <Chip
-                                label={data.label}
-                                variant='filled'
-                              //  color={chipSelection[data.type] ? {"success"} }
-                                
-                                style={ chipSelection[data.type] ? { backgroundColor:'#333366' } : {}}
-                                onClick ={ handleOptionSelectChange(data.type)}
-                                />
-                            </ListItem>
-                            );
-                        })}
-                        {/* </Box> */}
-                        <Box sx={{display:'flex', width: '100%', justifyContent: 'center', alignItems: 'center'}}>
-                        {fetchTimeEstimate > 0 &&
-                          <TimeEstimateText>Estimated process time: {fetchTimeEstimate} minutes</TimeEstimateText>
-                        }
-                     </Box>
-                    </StyledPaper>
-                      <Slide in={showSelectionWarning} container={warningRef.current}>
-                        <Alert sx={{width: "60%"}} severity="warning" variant="filled">Please select at least one to continue.</Alert>
-                      </Slide>
                     </Item>
               </Grid>
         }

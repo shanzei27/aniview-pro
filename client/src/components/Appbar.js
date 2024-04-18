@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
 import mainPages from '../config/main_pages';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { config } from '../config/config';
 
 const pages = [...mainPages];
 const drawerWidth = 240;
@@ -50,6 +51,7 @@ const LogoContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  width: '15%'
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -76,9 +78,18 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+const LogoText = styled(Typography)(({ theme }) => ({
+  color: 'white',
+  fontSize: '36px',
+  fontFamily: "Permanent Marker"
+}));
+
   const VersionText = styled(Typography)(({ theme }) => ({
     color: 'white',
-    fontSize: '10px'
+    fontSize: '10px',
+    position: 'absolute',
+    bottom: 5,
+    right: -25
   }));
 
   const AppBarTop = styled(MuiAppBar, {
@@ -145,16 +156,11 @@ function AppbarMain( props ) {
             <MenuIcon />
           </IconButton>
         <LogoContainer>
-          <Box
-              component="img"
-              sx={{
-                width: 240,
-                
-              }}
-              alt="logo"
-              src={logo}
-            />
-            <VersionText>v0.1a</VersionText>
+          <Box sx={{position: 'relative'}}>
+            <LogoText>{config.site_name}</LogoText>
+            <VersionText>v{config.version}</VersionText>
+          </Box>
+            
             </LogoContainer>
           {props.userAcquired &&
             <form onSubmit={submitHandler}>

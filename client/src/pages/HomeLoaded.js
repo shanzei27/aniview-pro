@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useEffect, useReducer } from 'react';
 import MALIntegration from '../services/MALIntegration'
 import { styled, alpha, useTheme   } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -64,7 +64,6 @@ const HomeLander = (props) => {
   const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
   
   //----API-------------------------------------------------------------------------------------
 
@@ -74,7 +73,7 @@ const HomeLander = (props) => {
    const [historyData, setHistoryData] = useState([]);
    const [profileData, setProfileData] = useState(props.lvhAnimeArray["profilePage"]);
    
-  React.useEffect( () => {
+  useEffect( () => {
     const preProcessData = props.lvhAnimeArray["historyPage"];
     let bar1Array = [];
     

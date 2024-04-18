@@ -31,7 +31,7 @@ const Item = styled(Box)(({ theme }) => ({
   width: "100%"
 }));
 
-const About = () => {
+const About = (props) => {
   return (
     <>
       <CssBaseline/>

@@ -45,7 +45,7 @@ const FormStyledContainer = styled(Paper)(({ theme }) => ({
   justifyContent: 'left',
 }));
 
-const Feedback = () => {
+const Feedback = (props) => {
   return (
     <>
       <CssBaseline/>

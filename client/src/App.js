@@ -7,8 +7,38 @@ import { green, purple } from '@mui/material/colors';
 import HomeMain from './pages/HomeMain.js';
 import About from './pages/About.js';
 import Feedback from './pages/Feedback.js';
+import { useState } from 'react';
 
-const theme = createTheme({
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: "#282c34",
+    },
+  },
+  typography: {
+    lead: {
+      fontSize: 48,
+      fontWeight: 600,
+    },
+    h1: {
+      fontSize: 36,
+  
+      fontWeight: 800,
+    },
+    h2: {
+  
+    },
+    h5: {
+      padding: 4,
+      fontSize: 16,
+      fontWeight: 500,
+    },
+  },
+
+});
+
+const lightTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -19,8 +49,10 @@ const theme = createTheme({
     },
   },
   palette: {
+    mode: 'light',
     background: {
-      default: "#282c34"
+      default: "#fff",
+      dark: "#282c34"
     },
     primary: {
       main: "#315E8B",
@@ -45,11 +77,11 @@ const theme = createTheme({
     },
     h1: {
       fontSize: 36,
-      color: "#fff",
+
       fontWeight: 800,
     },
     h2: {
-      color: "#fff",
+
     },
     h5: {
       padding: 4,
@@ -80,10 +112,12 @@ const theme = createTheme({
 });
 
 function App() {
+  const [light, setLight] = useState(false);
+
   return (
     <BrowserRouter>
     <div className='App'>
-      <ThemeProvider theme={theme}>      
+      <ThemeProvider theme={light ? lightTheme : darkTheme}>      
       <main>
         <Routes>
           <Route path="/" element={<HomeMain />} />

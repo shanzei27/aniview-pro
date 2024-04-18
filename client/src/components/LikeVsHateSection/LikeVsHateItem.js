@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import DifferenceIcon from '@mui/icons-material/Difference';
 import Box from '@mui/material/Box';
 import api from '../../config/temp_anime_api';
@@ -34,14 +35,14 @@ const LikeVsHateItem = (props) => {
     const diff = Math.abs(props.data["user_score"] - props.data["public_mean"]);
     
     const item = (
-        <Box sx={{ display: 'flex', flexDirection: 'column', width: 300*0.5, overflow: 'auto'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: 300*0.5, overflow: 'auto', color: 'text.secondary'}}>
         <Typography gutterBottom variant="h5" component="div">
             <Link style={{ textDecoration: 'none', cursor:'pointer' }} onClick={() => openInNewTab('https://myanimelist.net/anime/' + props.data["node"]["id"])}>{props.data["node"]["title"]}</Link></Typography>
             <Typography variant="body2" color="text.secondary">
             
             </Typography>
             <Box style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                <StarIcon sx={{ fontSize: 'inherit' }}/>
+                <StarOutlineIcon sx={{ fontSize: 'inherit' }}/>
                 <Typography variant="body2" color="text.secondary">
                 MAL score: {props.data["public_mean"]}
                 </Typography>

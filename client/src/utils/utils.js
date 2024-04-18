@@ -6,3 +6,7 @@ export const openInNewTab = (url) => {
 export const getPaginationData = (data, from, to) => {
   return data.slice(from,to);
 }
+
+export const getRandomLogoIcon = () => {
+  return "";
+}
