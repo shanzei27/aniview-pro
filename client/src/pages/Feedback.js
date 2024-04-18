@@ -49,7 +49,7 @@ const Feedback = (props) => {
   return (
     <>
       <CssBaseline/>
-      <AppbarMain />
+      <AppbarMain handleLightModeChange={(value) => props.handleLightModeChange(value)}/>
       <StyledGrid container spacing={2}>
         <Grid item xs={11} sx={{width: '100%'}}>
           <Item>

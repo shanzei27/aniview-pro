@@ -31,8 +31,27 @@ const darkTheme = createTheme({
     },
     h5: {
       padding: 4,
+      color: "#000",
       fontSize: 16,
       fontWeight: 500,
+    },
+    subtitle1: {
+      fontSize: 12,
+    },
+    body1: {
+      fontWeight: 600,
+    },
+    body1Dark: {
+      fontWeight: 600,
+      color: "#000",
+    },
+    body2: {
+      fontWeight: 500,
+    },
+    button: {
+      fontStyle: 'bold',
+      fontSize: 16,
+      fontWeight: 600,
     },
   },
 
@@ -126,9 +145,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
-          <Route path="/home" element={<HomeMain />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/feedback" element={<Feedback />} />
+          <Route path="/home" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
+          <Route path="/about" element={<About handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
+          <Route path="/feedback" element={<Feedback handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
         </Routes>
       </main>
       </ThemeProvider>
