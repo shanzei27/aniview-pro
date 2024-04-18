@@ -114,13 +114,18 @@ const lightTheme = createTheme({
 function App() {
   const [light, setLight] = useState(false);
 
+  const handleLightModeChange = (value) => {
+    debugger
+    setLight(prevMode => !prevMode);
+  }
+
   return (
     <BrowserRouter>
     <div className='App'>
       <ThemeProvider theme={light ? lightTheme : darkTheme}>      
       <main>
         <Routes>
-          <Route path="/" element={<HomeMain />} />
+          <Route path="/" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
           <Route path="/home" element={<HomeMain />} />
           <Route path="/about" element={<About />} />
           <Route path="/feedback" element={<Feedback />} />

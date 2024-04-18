@@ -87,7 +87,7 @@ const [responseData, setResponseData] = useState({...testData});      // temp te
   }
   return (
     <>
-      <AppbarMain handleInputFromMainSearch={handleInputFromMainSearch} userAcquired={userAquired} drawerOpen={sideDrawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose}/>
+      <AppbarMain handleLightModeChange={(value) => props.handleLightModeChange(value)} handleInputFromMainSearch={handleInputFromMainSearch} userAcquired={userAquired} drawerOpen={sideDrawerOpen} handleDrawerOpen={handleDrawerOpen} handleDrawerClose={handleDrawerClose}/>
       <Box sx={{ display: 'flex' }}>        
         <HomeComponent />
       </Box>
