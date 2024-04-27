@@ -69,7 +69,7 @@ export default function DrawerLeft(props) {
       >
         <Toolbar />
         <Box sx={{ overflow: 'auto' }}>
-          <List sx={{color: '#000'}}>
+          <List>
             {drawerLeftTabs.map((data, index) => (
               <ListItem key={data.text} disablePadding>
                 <ListItemButton {...buttonProps(index)}

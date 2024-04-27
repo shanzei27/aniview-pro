@@ -33,7 +33,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
     alignItems: 'flex-start',
     justifyContent: 'left',
     width: "100%",
-    backgroundColor: "#fff"
+  
   }));
 
 const History = (props) => {

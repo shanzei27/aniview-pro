@@ -8,7 +8,7 @@ import axios from 'axios';
 import testData from '../config/test_data';
 
 const HomeMain = (props) => {
-  const [userAquired, setUserAcquired] = useState(false);      // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
+  const [userAquired, setUserAcquired] = useState(true);      // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
   const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const [responseData, setResponseData] = useState({...testData});      // temp te
   //      const queryParams = searchText
   //     // const params = new URLSearchParams(queryParams);
   //     try {
-  //       const responseData = await axios.get(`http://localhost:9000/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
+  //       const responseData = await axios.get(`http://localhost:9000/v1/testAPI/${queryParams}`).then((res) => setResponseData(res.data)); 
   //       setLoading(false);
   //       setUserAcquired(true);
   //     }

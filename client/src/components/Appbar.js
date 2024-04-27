@@ -179,7 +179,9 @@ function AppbarMain( props ) {
   };
   
   const handleSwitchClick = (e) => {
-    props.handleLightModeChange("tesxzt");
+    e.preventDefault()
+    e.stopPropagation()
+    props.handleLightModeChange();
   }
 
   const submitHandler = (e) => {

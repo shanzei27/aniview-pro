@@ -144,10 +144,10 @@ function App() {
       <ThemeProvider theme={light ? lightTheme : darkTheme}>      
       <main>
         <Routes>
-          <Route path="/" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
-          <Route path="/home" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
-          <Route path="/about" element={<About handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
-          <Route path="/feedback" element={<Feedback handleLightModeChange={(value) => handleLightModeChange(value)}/>} />
+          <Route path="/" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange()}/>} />
+          <Route path="/home" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange()}/>} />
+          <Route path="/about" element={<About handleLightModeChange={(value) => handleLightModeChange()}/>} />
+          <Route path="/feedback" element={<Feedback handleLightModeChange={(value) => handleLightModeChange()}/>} />
         </Routes>
       </main>
       </ThemeProvider>
