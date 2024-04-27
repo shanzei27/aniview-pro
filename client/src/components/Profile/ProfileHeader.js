@@ -44,8 +44,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
   flexDirection: "row",
   alignItems: "flex-start",
   justifyContent: "center",
-  width: "100%",
-  height: "100%",
+  width: "84vw",
 }));
 
 const ProgressLine = styled(LinearProgress)(({ theme }) => ({
@@ -64,7 +63,7 @@ const ProfileHeader = ({ pageData }) => {
     <Link onClick={() => openInNewTab(pageData.profile_url)}>
       <CardMedia
         component="img"
-        sx={{ height: "320px", cursor: "pointer" }}
+        style={{ display: "block", height: `min(20vw, 100%)`, cursor: "pointer" }}
         image={pageData.image_url}
         alt={pageData.username}
       />
@@ -73,128 +72,141 @@ const ProfileHeader = ({ pageData }) => {
 
   return (
     <>
-      <StyledGrid container spacing={2}>
-        <Grid
+      <StyledGrid container spacing={2} alignItems="stretch">
+        <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            width: "75%",
             height: "100%",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+
           }}
         >
-          <Box
-            style={{
+          <Grid
+            sx={{
               display: "flex",
-              width: "100%",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              width: "62vw",
+              height: "100%",
             }}
           >
-            <Box style={{ height: "80px" }}>
-              <Typography variant="h2">{pageData.username}</Typography>
-            </Box>
             <Box
               style={{
                 display: "flex",
+                width: "100%",
                 justifyContent: "space-between",
-              }}
-            >
-              <StatContainer
-                style={{
-                  backgroundColor: "#5aa2a2",
-                }}
-              >
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <CheckCircleOutlineIcon />{" "}
-                  <Typography variant="body1" sx={{ color: "#fff" }}>
-                    Total completed:
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ color: "#fff" }}>
-                  {pageData.top_row["total_completed"]}
-                </Typography>
-              </StatContainer>
-              <StatContainer
-                style={{
-                  backgroundColor: "#5aa2a2",
-                }}
-              >
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <AccessTimeIcon />{" "}
-                  <Typography variant="body1" sx={{ color: "#fff" }}>
-                    Total watchtime:
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ color: "#fff" }}>
-                  {pageData.top_row["total_watchtime"]}
-                </Typography>
-              </StatContainer>
-              <StatContainer
-                style={{
-                  backgroundColor: "#5aa2a2",
-                }}
-              >
-                <Box
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <GradeIcon />{" "}
-                  <Typography variant="body1" sx={{ color: "#fff" }}>
-                    Mean score:
-                  </Typography>
-                </Box>
-                <Typography variant="body1" sx={{ color: "#fff" }}>
-                  {pageData.top_row["mean_score"]}
-                </Typography>
-              </StatContainer>
-            </Box>
-          </Box>
-          <BodyContainerTop variant="outlined">
-            <Box
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
                 alignItems: "center",
-                padding: "10px",
-                width: "50%",
               }}
             >
-              {pageData.recent_lines.map((item) => (
-                <Box
-                  sx={{
-                    width: "100%",
-                    height: "45px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "left",
-                    textAlign: "left"
+              <Box style={{ height: "80px" }}>
+                <Typography variant="h2">{pageData.username}</Typography>
+              </Box>
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <StatContainer
+                  style={{
+                    backgroundColor: "#5aa2a2",
                   }}
                 >
-                  <Typography variant="caption" sx={{ color: "#fff" }}>
-                    <b>{item.name}</b> ({item.progress}/{item.total_episodes})
+                  <Box
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CheckCircleOutlineIcon />{" "}
+                    <Typography variant="body1" sx={{ color: "#fff" }}>
+                      Total completed:
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: "#fff" }}>
+                    {pageData.top_row["total_completed"]}
                   </Typography>
-                  <ProgressLine variant="determinate" value={item.progress/item.total_episodes*100} />
-                </Box>
-              ))}
+                </StatContainer>
+                <StatContainer
+                  style={{
+                    backgroundColor: "#5aa2a2",
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AccessTimeIcon />{" "}
+                    <Typography variant="body1" sx={{ color: "#fff" }}>
+                      Total watchtime:
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: "#fff" }}>
+                    {pageData.top_row["total_watchtime"]}
+                  </Typography>
+                </StatContainer>
+                <StatContainer
+                  style={{
+                    backgroundColor: "#5aa2a2",
+                  }}
+                >
+                  <Box
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <GradeIcon />{" "}
+                    <Typography variant="body1" sx={{ color: "#fff" }}>
+                      Mean score:
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: "#fff" }}>
+                    {pageData.top_row["mean_score"]}
+                  </Typography>
+                </StatContainer>
+              </Box>
             </Box>
-          </BodyContainerTop>
-        </Grid>
-        <Grid style={{ marginLeft: "auto" }}>{userImage}</Grid>
+            <BodyContainerTop variant="outlined">
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "10px",
+                  width: "50%",
+                }}
+              >
+                {pageData.recent_lines.map((item) => (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      height: "45px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "left",
+                      textAlign: "left",
+                    }}
+                  >
+                    <Typography variant="caption" sx={{ color: "#fff" }}>
+                      <b>{item.name}</b> ({item.progress}/{item.total_episodes})
+                    </Typography>
+                    <ProgressLine
+                      variant="determinate"
+                      value={(item.progress / item.total_episodes) * 100}
+                    />
+                  </Box>
+                ))}
+              </Box>
+            </BodyContainerTop>
+          </Grid>
+          <Grid sx={{margin: 'auto'}} >{userImage}</Grid>
+        </Box>
       </StyledGrid>
     </>
   );
