@@ -39,7 +39,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
 const History = (props) => {
   const [pageData, setPageData] = useState([...props.data]);
 
-  const valueFormatter = (value) => `${value}mm`;
+  const valueFormatter = (value) => `${value}hrs`;
   const chartSetting = {
     yAxis: [
       {

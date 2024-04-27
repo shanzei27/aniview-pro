@@ -196,7 +196,7 @@ function AppbarMain( props ) {
 
   return (
     <>
-      <AppBarTop position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
+      <AppBarTop  maxWidth='95%' position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: "#315E8B", marginBottom: '20px'}}>
         
       <Container maxWidth='85%'>
         <Toolbar sx={{display: 'flex', justifyContent: 'space-evenly'}}>

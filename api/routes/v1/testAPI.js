@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const axios = require('axios')
+const axios = require('axios');
 
 //score threshold vars
 const publicScoreBadThreshold = 7.25;     //score to determine worse than avg anime - anything below this value

@@ -9,9 +9,8 @@ let corsOptions = {
   origin : ['http://localhost:3000'], 
 }
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var testAPIRouter = require("./routes/testAPI");
+var testAPIRouter = require("./routes/v1/testAPI");
+var jikanUsersRouter = require("./routes/v1/jikan/users");
 
 var app = express();
 
@@ -28,9 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use("/testAPI", testAPIRouter);
+app.use("/v1/testAPI", testAPIRouter);
+app.use("/v1/jikan/users", jikanUsersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
