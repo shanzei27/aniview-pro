@@ -420,7 +420,33 @@ const testData = {
         "oldest_newest_watched": {},
         "oldest_newest_liked": {},
         "genre_pie": {},
-        
+        "recent_lines": [
+            {
+                "name": "Mashle",
+                "progress": 12,
+                "total_episodes": 12
+            },
+            {
+                "name": "Eiyuuou, Bu wo Kiwameru Tame Tenseisu: Soshite, Sekai Saikyou no Minarai Kishi♀",
+                "progress": 8,
+                "total_episodes": 12
+            },
+            {
+                "name": "Hibike! Euphonium",
+                "progress": 11,
+                "total_episodes": 13
+            },
+            {
+                "name": "Yoru no Kurage wa Oyogenai",
+                "progress": 1,
+                "total_episodes": 12
+            },
+            {
+                "name": "Re:Monster",
+                "progress": 3,
+                "total_episodes": 12
+            }
+        ],
     }
 }
 
