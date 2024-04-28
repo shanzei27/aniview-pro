@@ -1,8 +1,0 @@
-# React frontend /w Express server for an MAL profile companion
-
-The companion aims to serve authorized users with following features:
-    1. My likes vs Others' dislikes
-    2. Others' likes vs my dislikes
-    3. Watched anime episode trend (maybe)
-    4. MAL heatmap
-    5. Misc. stats
