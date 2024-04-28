@@ -179,8 +179,6 @@ function AppbarMain( props ) {
   };
   
   const handleSwitchClick = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
     props.handleLightModeChange();
   }
 

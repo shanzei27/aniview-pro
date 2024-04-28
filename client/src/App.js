@@ -23,7 +23,6 @@ const darkTheme = createTheme({
     },
     h1: {
       fontSize: 36,
-  
       fontWeight: 800,
     },
     h2: {
@@ -96,7 +95,6 @@ const lightTheme = createTheme({
     },
     h1: {
       fontSize: 36,
-
       fontWeight: 800,
     },
     h2: {

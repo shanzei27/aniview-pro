@@ -71,7 +71,7 @@ const HomeLander = (props) => {
    const [userLikesArray, setUserLikesArray] = useState(props.lvhAnimeArray["userLikes"]);
    const [userHatesArray, setUserHatesArray] = useState(props.lvhAnimeArray["userHates"]);
    const [historyData, setHistoryData] = useState([]);
-   const [profileData, setProfileData] = useState(props.lvhAnimeArray["profilePage"]);
+   const [profileData, setProfileData] = useState(props.profileData);
    
   useEffect( () => {
     const preProcessData = props.lvhAnimeArray["historyPage"];

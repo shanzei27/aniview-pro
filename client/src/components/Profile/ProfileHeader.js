@@ -54,7 +54,7 @@ const ProgressLine = styled(LinearProgress)(({ theme }) => ({
   backgroundColor: "#2c3495", //521f95
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    background: `linear-gradient(to top, #007adf 0%, #00ecbc 100%);`,
+    background: `linear-gradient(to right, #007adf 0%, #00ecbc 100%);`,
   },
 }));
 
@@ -125,7 +125,7 @@ const ProfileHeader = ({ pageData }) => {
                     </Typography>
                   </Box>
                   <Typography variant="body1" sx={{ color: "#fff" }}>
-                    {pageData.top_row["total_completed"]}
+                    {pageData.top_row["num_completed"]}
                   </Typography>
                 </StatContainer>
                 <StatContainer
@@ -145,7 +145,7 @@ const ProfileHeader = ({ pageData }) => {
                     </Typography>
                   </Box>
                   <Typography variant="body1" sx={{ color: "#fff" }}>
-                    {pageData.top_row["total_watchtime"]}
+                    {pageData.top_row["days_watched"]}
                   </Typography>
                 </StatContainer>
                 <StatContainer
@@ -181,7 +181,7 @@ const ProfileHeader = ({ pageData }) => {
                   width: "50%",
                 }}
               >
-                {pageData.recent_lines.map((item) => (
+                {pageData.recent_activity.map((item) => (
                   <Box
                     sx={{
                       width: "100%",

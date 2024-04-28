@@ -10,7 +10,7 @@ let corsOptions = {
 }
 
 var testAPIRouter = require("./routes/v1/testAPI");
-var jikanUsersRouter = require("./routes/v1/jikan/users");
+var jikanUsersRouter = require("./routes/v1/profile/users");
 
 var app = express();
 
@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/v1/testAPI", testAPIRouter);
-app.use("/v1/jikan/users", jikanUsersRouter);
+app.use("/v1/profile/users", jikanUsersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
