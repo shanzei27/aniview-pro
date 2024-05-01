@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "env-cmd -f .env.dev node ./bin/www.js",
+    "deploy": "node ./bin/www.js",
     "dev": "nodemon env-cmd -f .env.dev node ./bin/www.js"
   },
   "dependencies": {
