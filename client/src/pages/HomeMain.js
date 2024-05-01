@@ -119,6 +119,10 @@ const HomeMain = (props) => {
       console.log(profileData);
     }
   }, [profileData]);
+  
+  const handleUserForget = () => {
+    setSearchText("");
+  };
 
   const handleDrawerOpen = () => {
     setSideDrawerOpen(true);
@@ -156,6 +160,8 @@ const HomeMain = (props) => {
         handleInputFromMainSearch={handleInputFromMainSearch}
         userAcquired={userAquired}
         drawerOpen={sideDrawerOpen}
+        searchText={searchText}
+        handleUserForget={handleUserForget}
         handleDrawerOpen={handleDrawerOpen}
         handleDrawerClose={handleDrawerClose}
       />

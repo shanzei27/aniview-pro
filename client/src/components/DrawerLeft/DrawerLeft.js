@@ -75,18 +75,18 @@ export default function DrawerLeft(props) {
                 <ListItemButton {...buttonProps(index)}
                    sx={{
                     "&.Mui-selected": {
-                      backgroundColor: "#5aa2a2",
+                      backgroundColor: theme.palette.secondary.main,
                       color: "white"
                     },
                     "&.Mui-focusVisible": {
-                      backgroundColor: "#a2dede",
+                      backgroundColor: theme.palette.secondary.dark,
                       color: "white"
                     },
                     '&.Mui-selected:hover': {
-                      backgroundColor: "#318B8B",
+                      backgroundColor: theme.palette.secondary.light,
                     },
                     ":hover": {
-                      backgroundColor: "#40b7b7",
+                      backgroundColor:theme.palette.secondary.light,
                       color: "white"
                     }
                   }}

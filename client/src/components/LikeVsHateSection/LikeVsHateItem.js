@@ -16,12 +16,8 @@ import { openInNewTab } from "../../utils/utils";
 import { styled } from "@mui/material/styles";
 
 const LikeVsHateItem = (props) => {
-  const [checked, setChecked] = useState(false); //grow animation
+  const [checked, setChecked] = useState(false); //fade animation
   const [diffSign, setDiffSign] = useState("");
-
-  const startAnim = () => {
-    setChecked((prev) => !prev);
-  };
 
   useEffect(() => {
     if (props.type === "lvhUserLikes") {
