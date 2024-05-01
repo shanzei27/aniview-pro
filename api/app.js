@@ -6,7 +6,7 @@ var logger = require('morgan');
 var cors = require('cors')
 
 let corsOptions = { 
-  origin : ['http://localhost:3000'], 
+  origin : ['http://localhost:3000', 'https://aniview-pro.netlify.app/'], 
 }
 
 var lvhRouter = require("./routes/v1/lvh");

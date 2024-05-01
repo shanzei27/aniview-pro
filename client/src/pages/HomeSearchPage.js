@@ -114,7 +114,6 @@ const HomeSearchPage = (props) => {
       } else {
         setTimeout(() => {
           setErrorBannerHeight(0);
-          console.log("height: "+errorBannerHeight)
         }, "1000");
       }
     }, [props.showError]);
