@@ -15,7 +15,8 @@ import Slide from "@mui/material/Slide";
 import Grow from "@mui/material/Grow";
 import PulseLoader from "react-spinners/PulseLoader";
 import { light } from "@mui/material/styles/createPalette";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
+import { config } from "../config/config";
 
 const Search = styled(Paper)(({ theme }) => ({
   position: "relative",
@@ -89,6 +90,12 @@ const LoadingText = styled(Typography)(({ theme }) => ({
   marginTop: "15px",
 }));
 
+const getRandomCoverImage = () => {
+  return config["cover_images"][
+    Math.floor(Math.random() * config["cover_images"].length)
+  ];
+};
+
 const HomeSearchPage = (props) => {
   const [barText, setBarText] = useState("");
   const [errorBannerHeight, setErrorBannerHeight] = useState(0);
@@ -126,58 +133,90 @@ const HomeSearchPage = (props) => {
 
       {!props.loading && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
-          <Grid sx={{ height: "100%"}} item xs={5.5}>
+          <Grid sx={{ height: {xs:"50%", sm:"100%"} }} item xs={12} sm={5.5}>
             <Item>
-              <Typography variant="lead" sx={{paddingBottom: 2}}>Enter MyAnimeList username</Typography>
+              <Typography variant="lead" sx={{ paddingBottom: 2 }}>
+                Enter MyAnimeList username
+              </Typography>
               <Typography variant="body1">
                 Aniview is a MyAnimeList.net companion which fetches and shows
                 your MAL anime stats and curated recommendations.
               </Typography>
             </Item>
           </Grid>
-          <Divider orientation="vertical" flexItem sx={{ borderRightWidth: 2, boxShadow: '0 1em 0em -1em  #00ecbc', transform: `rotate(-8deg)`}} />
-          <Grid sx={{ height: "100%" }} item xs={5.5}>
+          <Divider
+            orientation="vertical"
+            flexItem
+            sx={{
+              borderRightWidth: 2,
+              boxShadow: "0 1em 0em -1em  #00ecbc",
+              transform: `rotate(-8deg)`,
+            }}
+          />
+          <Grid sx={{  height: {xs:"50%", sm:"100%"} }} item xs={12} sm={5.5}>
             <Item>
-              <Box sx={{position: "relative", width: "100%", display: 'flex', justifyContent: 'center'}}>
-              <Search
-                ref={errorRef}
-                component="form"
-                onSubmit={submitHandler}
+              <Box
                 sx={{
-                  width: { xs: "100%", md: "85%", lg: "70%" },
+                  position: "relative",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <StyledTextField
-                  placeholder="MAL username to load…"
-                  inputProps={{ "aria-label": "search" }}
-                  value={props.searchText}
+                <Box
+                  component="img"
                   sx={{
-                    "& fieldset": { border: "none" },
-                  }}
-                  onChange={(e) => {
-                    setBarText(e.target.value);
-                  }}
-                  variant="outlined"
-                />
-                <IconButton type="submit" variant="contained">
-                  <SearchIcon sx={{ height: "100%", color: "white" }} />
-                </IconButton>
-              </Search>
-              <Grow in={props.showError} container={errorRef.current}>
-                <Alert
-                  style={{
                     position: "absolute",
-                    bottom: -75,
-                    width: "40%",
-                    height: errorBannerHeight,
-                    transition: `max-height 0.5s ease-out`,
-                    maxHeight: errorBannerHeight,
+                    objectFit: "cover",
+                    height: "175px",
+                    bottom: 55,
+                    right: 0,
+                    display: { xs: "none", sm: "block" },
                   }}
-                  severity="error"
+                  alt="The house from the offer."
+                  src={getRandomCoverImage()}
+                />
+                <Search
+                  ref={errorRef}
+                  component="form"
+                  onSubmit={submitHandler}
+                  sx={{
+                    width: { xs: "100%" },
+                  }}
                 >
-                  {props.error.message}. Please try later.
-                </Alert>
-              </Grow>
+                  <StyledTextField
+                    placeholder="MAL username to load…"
+                    inputProps={{ "aria-label": "search" }}
+                    value={props.searchText}
+                    sx={{
+                      "& fieldset": { border: "none" },
+                    }}
+                    onChange={(e) => {
+                      setBarText(e.target.value);
+                    }}
+                    variant="outlined"
+                  />
+                  <IconButton type="submit" variant="contained">
+                    <SearchIcon sx={{ height: "100%", color: "white" }} />
+                  </IconButton>
+                </Search>
+                <Grow in={props.showError} container={errorRef.current}>
+                  <Alert
+                    style={{
+                      position: "absolute",
+                      bottom: -75,
+                      width: "40%",
+                      height: errorBannerHeight,
+                      transition: `max-height 0.5s ease-out`,
+                      maxHeight: errorBannerHeight,
+                    }}
+                    severity="error"
+                  >
+                    {props.error.message}. Please try later.
+                  </Alert>
+                </Grow>
               </Box>
             </Item>
           </Grid>
