@@ -149,11 +149,13 @@ function AppbarMain(props) {
         position="fixed"
         sx={{
           backgroundImage:
-            pathname === "/" || pathname === "/home"
+            pathname === "/" || pathname === "/home" || props.userAcquired
               ? theme.palette.primary.nav
               : `radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% )`,
           backgroundColor:
-            pathname === "/" || pathname === "/home" ? theme.palette.primary.nav : "#005e78",
+            pathname === "/" || pathname === "/home" || props.userAcquired
+              ? theme.palette.primary.nav
+              : "#005e78",
           zIndex: (theme) => theme.zIndex.drawer + 1,
           marginBottom: "20px",
         }}

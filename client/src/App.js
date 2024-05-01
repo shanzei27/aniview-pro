@@ -34,7 +34,7 @@ const darkTheme = createTheme({
     lead: {
       fontSize: 52,
       fontWeight: 700,
-      fontFamily: "Raleway"
+      fontFamily: "Oxygen"
     },
     h1: {
       fontSize: 36,
@@ -107,7 +107,7 @@ const lightTheme = createTheme({
     lead: {
       fontSize: 52,
       fontWeight: 700,
-      fontFamily: "Raleway"
+      fontFamily: "Oxygen"
     },
     h1: {
       fontSize: 36,

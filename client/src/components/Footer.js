@@ -66,39 +66,31 @@ const Footer = (props) => {
           bottom: 0,
         }}
       >
-        <Box
-          style={{
-            width: "75px",
-            height: "100%",
-            backgroundColor:
-              theme.palette.mode === "dark" ? "lightgrey" : "darkgrey",
-            borderTopLeftRadius: "20px",
-            position: "absolute",
-            bottom: "0%",
-            right: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <center>
-            {" "}
-            <LightModeSwitch onChange={props.handleLightModeChange} />
-          </center>
-        </Box>
+        {props.userAcquired && (
+          <Box
+            style={{
+              width: "75px",
+              height: "100%",
+              backgroundColor:
+                theme.palette.mode === "dark" ? "lightgrey" : "darkgrey",
+              borderTopLeftRadius: "20px",
+              position: "absolute",
+              bottom: "0%",
+              right: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <center>
+              {" "}
+              <LightModeSwitch onChange={props.handleLightModeChange} />
+            </center>
+          </Box>
+        )}
+
         <Typography>Copyright © 2024 Aniview</Typography>
       </footer>
-      {/* <Grid container spacing={3}>
-            <Grid item xs>
-                <Item>xs</Item>
-            </Grid>
-            <Grid item xs={6}>
-                <Item>xs=6</Item>
-            </Grid>
-            <Grid item xs>
-                <Item>xs</Item>
-            </Grid>
-        </Grid> */}
     </>
   );
 };
