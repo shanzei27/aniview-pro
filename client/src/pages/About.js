@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppbarMain from '../components/Appbar';
+import textUtils from "../utils/textUtils";
 
 const Heading = styled(Typography)(({ theme }) => ({
   
@@ -41,7 +42,7 @@ const About = (props) => {
           <Item>
             <Heading variant='h1'>About</Heading>
             <Typography variant='body2' sx={{textAlign: 'left', paddingTop: 1}}>
-              Aniview Pro is a companion for MyAnimeList.net, built on React-Express as a personal project. It currently shows three sets of data processed from data fetched from MAL. This is a non-commercial open source project.
+              {textUtils.about}
             </Typography>
           </Item>
           <Item>

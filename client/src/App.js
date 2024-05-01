@@ -15,6 +15,12 @@ const darkTheme = createTheme({
     background: {
       default: "#282c34",
     },
+    secondary: {
+      main: "#5aa1a1",
+    },
+    positive: {
+      main: green[800],
+    },
   },
   typography: {
     lead: {
@@ -78,7 +84,7 @@ const lightTheme = createTheme({
       contrastText: "#fff"
     },
     secondary: {
-      main: "#5aa2a2",
+      main: "#5aa1a1",
     },
     positive: {
       main: green[800],
@@ -132,7 +138,6 @@ function App() {
   const [light, setLight] = useState(false);
 
   const handleLightModeChange = (value) => {
-    debugger
     setLight(prevMode => !prevMode);
   }
 

@@ -16,6 +16,7 @@ var app = express();
 
  
 app.use(cors(corsOptions)) 
+app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

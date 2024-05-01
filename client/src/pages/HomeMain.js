@@ -73,10 +73,10 @@ const HomeMain = (props) => {
 
           try {
             const responseData = await axios
-              .get(`http://localhost:9000/v1/lvh/${queryParams}`)
+              .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`)
               .then((res) => setMainData(res.data));
             const profileResponseData = await axios
-              .get(`http://localhost:9000/v1/profile/users/${queryParams}`)
+              .get(`${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`)
               .then((res) => setProfileData(res.data));
             setLoading(false);
             setUserAcquired(true);
