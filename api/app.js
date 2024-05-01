@@ -6,17 +6,16 @@ var logger = require('morgan');
 var cors = require('cors')
 
 let corsOptions = { 
-  origin : ['http://localhost:3000', 'https://aniview-pro.netlify.app/'], 
+  origin: "*",
+  methods: "GET,PUT,POST,DELETE",
 }
 
 var lvhRouter = require("./routes/v1/lvh");
 var jikanUsersRouter = require("./routes/v1/profile/users");
 
 var app = express();
-
  
 app.use(cors(corsOptions)) 
-app.options('*', cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

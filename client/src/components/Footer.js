@@ -3,6 +3,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
+import { Typography } from "@mui/material";
 
 const LightModeSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -69,7 +70,8 @@ const Footer = (props) => {
           style={{
             width: "75px",
             height: "100%",
-            backgroundColor: theme.palette.mode === "dark" ? "lightgrey" : "darkgrey",
+            backgroundColor:
+              theme.palette.mode === "dark" ? "lightgrey" : "darkgrey",
             borderTopLeftRadius: "20px",
             position: "absolute",
             bottom: "0%",
@@ -84,8 +86,7 @@ const Footer = (props) => {
             <LightModeSwitch onChange={props.handleLightModeChange} />
           </center>
         </Box>
-
-        <center>Copyright ...</center>
+        <Typography>Copyright © 2024 Aniview</Typography>
       </footer>
       {/* <Grid container spacing={3}>
             <Grid item xs>

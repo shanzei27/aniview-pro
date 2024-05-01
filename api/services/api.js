@@ -39,6 +39,21 @@ async function fetchMALAnime(id) {
     });
 }
 
+async function fetchMALUserCompletedList(username) {
+  console.log("exec start with ::" + username);
+  const limit = 200;
+  const headers = {
+    "X-MAL-CLIENT-ID": process.env.REACT_APP_CLIENT_ID,
+  };
+
+  const responseData = await axios.get(
+    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status,rank,mean,alternative_titles,start_date,average_episode_duration&status=completed&sort=list_updated_at&limit=${limit}`,
+    { headers }
+  );
+  console.log("init end, response ::", responseData);
+  return responseData.data;
+}
+
 // async function fetchMALAnimeViaJikan(animeID) {
 //   console.log("fetch exec start with :: " + animeID);
 
@@ -54,4 +69,5 @@ module.exports = {
   fetchUserStatsViaJikan,
   fetchUserHistory,
   fetchMALAnime,
+  fetchMALUserCompletedList,
 };

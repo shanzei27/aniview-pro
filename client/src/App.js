@@ -17,6 +17,7 @@ const darkTheme = createTheme({
     },
     primary: {
       main: "#009688",
+      nav:  "#262626",
     },
     secondary: {
       main: "#00989B",
@@ -24,11 +25,16 @@ const darkTheme = createTheme({
     positive: {
       main: green[800],
     },
+    text: {
+      // primary: "#ffffff",     ???
+       dark: "#000"
+     }
   },
   typography: {
     lead: {
-      fontSize: 48,
-      fontWeight: 600,
+      fontSize: 52,
+      fontWeight: 700,
+      fontFamily: "Raleway"
     },
     h1: {
       fontSize: 36,
@@ -47,10 +53,10 @@ const darkTheme = createTheme({
       fontSize: 12,
     },
     body1: {
-      fontWeight: 600,
+      fontWeight: 500,
     },
     body1Dark: {
-      fontWeight: 600,
+      fontWeight: 500,
       color: "#000",
     },
     body2: {
@@ -61,6 +67,7 @@ const darkTheme = createTheme({
       fontSize: 16,
       fontWeight: 600,
     },
+    fontFamily: "Roboto",
   },
 
 });
@@ -79,10 +86,11 @@ const lightTheme = createTheme({
     mode: 'light',
     background: {
       default: "#fff",
-      dark: "#282c34"
+      dark: "#fff"
     },
     primary: {
       main: "#009688",
+      nav:  "#005e78",
     },
     secondary: {
       main: "#00989B",
@@ -97,8 +105,9 @@ const lightTheme = createTheme({
   },
   typography: {
     lead: {
-      fontSize: 48,
-      fontWeight: 600,
+      fontSize: 52,
+      fontWeight: 700,
+      fontFamily: "Raleway"
     },
     h1: {
       fontSize: 36,
@@ -117,10 +126,10 @@ const lightTheme = createTheme({
       fontSize: 12,
     },
     body1: {
-      fontWeight: 600,
+      fontWeight: 500,
     },
     body1Dark: {
-      fontWeight: 600,
+      fontWeight: 500,
       color: "#000",
     },
     body2: {

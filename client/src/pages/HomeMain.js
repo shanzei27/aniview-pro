@@ -168,7 +168,7 @@ const HomeMain = (props) => {
       <Box sx={{ display: "flex" }}>
         <HomeComponent />
       </Box>
-      <Footer  handleLightModeChange={(value) => props.handleLightModeChange(value)}/>
+      {userAquired && <Footer handleLightModeChange={(value) => props.handleLightModeChange(value)}/>}
     </>
   );
 };

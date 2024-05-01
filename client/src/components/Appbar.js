@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -33,6 +33,9 @@ const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.primary.main,
   fontSize: "12px",
   width: "fit-content",
+  "&:hover": {
+    background: theme.palette.secondary.light,
+  },
 }));
 
 const Search = styled("div")(({ theme }) => ({
@@ -103,9 +106,9 @@ const AppBarTop = styled(MuiAppBar, {
   }),
 }));
 
-
 function AppbarMain(props) {
   const theme = useTheme();
+  const { pathname } = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [barText, setBarText] = React.useState(props.searchText);
@@ -145,9 +148,13 @@ function AppbarMain(props) {
         maxWidth="95%"
         position="fixed"
         sx={{
+          backgroundImage:
+            pathname === "/" || pathname === "/home"
+              ? theme.palette.primary.nav
+              : `radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% )`,
+          backgroundColor:
+            pathname === "/" || pathname === "/home" ? theme.palette.primary.nav : "#005e78",
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: "#315E8B",
-          backgroundImage: `radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% )`,
           marginBottom: "20px",
         }}
       >
@@ -164,7 +171,9 @@ function AppbarMain(props) {
             </IconButton>
             <LogoContainer>
               <Box sx={{ position: "relative" }}>
-                <LogoText>{config.site_name}</LogoText>
+                <NavLink style={{ textDecoration: "none" }} to={"/home"}>
+                  <LogoText>{config.site_name}</LogoText>
+                </NavLink>
                 <VersionText>v{config.version}</VersionText>
               </Box>
             </LogoContainer>
@@ -205,7 +214,7 @@ function AppbarMain(props) {
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
                 <NavLink
-                  to={`/` + page}
+                  to={`/` + page.toLowerCase()}
                   style={{ textDecoration: "none" }}
                   key={page}
                 >
