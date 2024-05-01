@@ -42,7 +42,7 @@ const HomeMain = (props) => {
         // const params = new URLSearchParams(queryParams);
         try {
           const responseData = await axios
-            .get(`http://localhost:9000/v1/testAPI/${queryParams}`)
+            .get(`http://localhost:9000/v1/lvh/${queryParams}`)
             .then((res) => setResponseData(res.data));
           const profileResponseData = await axios
             .get(`http://localhost:9000/v1/profile/users/${queryParams}`)

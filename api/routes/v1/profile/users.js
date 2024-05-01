@@ -49,7 +49,7 @@ async function processHistory(userHistoryData) {
         progress: entries["increment"],
         total_episodes: animeData["num_episodes"],
       };
-      console.log(animeObj);
+      //console.log(animeObj);
       //pushing the mal_id to visited array to ignore it from now on
       processedData.push(animeObj);
       visitedArray.push(entries["entry"]["mal_id"]);

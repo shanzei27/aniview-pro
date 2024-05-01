@@ -10,7 +10,7 @@ const hateLikeThreshold = 1.25;
 
 //storage vars
 let malUserData = [];
-let publicAnimeDataObj = {};
+let animeGeneralStatsDataObj = {};
 let lvhAnimeObject = {
   data: [],
   count: 0,
@@ -33,7 +33,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:searchText", async (req, res, next) => {
   malUserData = [];
-  publicAnimeDataObj = {};
+  animeGeneralStatsDataObj = {};
   lvhAnimeObject = {
     data: [],
     count: 0,
@@ -60,23 +60,22 @@ router.get("/:searchText", async (req, res, next) => {
       userHates: hvlAnimeObject,
       historyPage: historyData,
       rawData: malUserData,
-      // rawDataPub: publicAnimeDataObj
+      // rawDataPub: animeGeneralStatsDataObj
     });
   }
 });
 
 async function fetchData(username) {
   console.log("exec start with ::" + username);
-  const limit = 20;
+  const limit = 200;
   const headers = {
     "X-MAL-CLIENT-ID": process.env.REACT_APP_CLIENT_ID,
   };
 
   const responseData = await axios.get(
-    `https://api.myanimelist.net/v2/users/${username}/animelist?status=completed&?sort=list_updated_at&fields=list_status&limit=${limit}`,
+    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status,rank,mean,alternative_titles,start_date,average_episode_duration&status=completed&sort=list_updated_at&limit=${limit}`,
     { headers }
   );
-
   console.log("init end, response ::", responseData);
   return responseData.data;
 }
@@ -118,8 +117,8 @@ async function initUserDataHandling() {
   // public data storage
   for (let i = 0; i < malUserData["data"].length; i++) {
     const animeID = malUserData["data"][i]["node"]["id"];
-    const publicAnime = await fetchMALAnime(animeID);
-    //  console.log(publicAnime);
+    const animeGeneralStats = malUserData["data"][i]["node"]          //await fetchMALAnime(animeID);
+    //  console.log(animeGeneralStats);
     let finishYear = 0;
     // history data
     if (malUserData["data"][i]["list_status"]["finish_date"] != null) {
@@ -138,42 +137,48 @@ async function initUserDataHandling() {
       prevYears.push(finishYear);
     }
     let avgEpisodeDuration = 0;
-    if (publicAnime.hasOwnProperty("average_episode_duration")) {
-      avgEpisodeDuration = Math.floor(
-        publicAnime["average_episode_duration"]
-      );
+    if (animeGeneralStats.hasOwnProperty("average_episode_duration")) {
+      avgEpisodeDuration = animeGeneralStats["average_episode_duration"];
     } else {
-      avgEpisodeDuration = 23; //placeholder default value old 23 mins in case there is no return value
+      avgEpisodeDuration = 1440; //placeholder default value old 23 mins in case there is no return value
     }
 
-    //console.log("ep duration: "+avgEpisodeDuration);
-    let episodesWatched =
-      malUserData["data"][i]["list_status"]["num_episodes_watched"];
-    //console.log("episodesWatched: "+episodesWatched);
-    let rewatchAmount =
-      malUserData["data"][i]["list_status"]["num_times_rewatched"];
+
+    let episodesWatched = 0;
+    if(malUserData["data"][i]["list_status"]["num_episodes_watched"] != null &&  malUserData["data"][i]["list_status"]["num_episodes_watched"] != undefined){
+      episodesWatched = malUserData["data"][i]["list_status"]["num_episodes_watched"];
+    }
+    let rewatchAmount = 0;
+    if(malUserData["data"][i]["list_status"]["num_times_rewatched"] != null &&  malUserData["data"][i]["list_status"]["num_times_rewatched"] != undefined){
+      rewatchAmount = malUserData["data"][i]["list_status"]["num_times_rewatched"];
+    }
+
+    
     if (rewatchAmount === null || rewatchAmount === undefined) {
       rewatchAmount = 0;
     }
-    //console.log("rewatchAmount: "+rewatchAmount);
+
+    console.log("ep duration: "+avgEpisodeDuration);
+    console.log("episodesWatched: "+episodesWatched);
+    console.log("rewatchAmount: "+rewatchAmount);
 
     if (malUserData["data"][i]["list_status"]["status"] === "completed") {
       historyData["bar_1"][finishYear]["animes_completed"] += 1;
     }
 
     historyData["bar_1"][finishYear]["hours_watched"] +=
-      Math.floor((avgEpisodeDuration) / 60) * episodesWatched * (rewatchAmount + 1);
+      Math.floor((avgEpisodeDuration) / 3600) * episodesWatched * (rewatchAmount + 1);
 
-    //   console.log(publicAnime);
+       console.log(historyData["bar_1"][finishYear]["hours_watched"]);
     const obj = {};
-    obj[animeID] = publicAnime;
+    obj[animeID] = animeGeneralStats;
     // console.log(prevIDs);
 
     if (!prevIDs.includes(animeID)) {
       prevIDs.push(animeID);
       const newObj = {};
-      newObj[animeID] = publicAnime;
-      publicAnimeDataObj[animeID] = publicAnime;
+      newObj[animeID] = animeGeneralStats;
+      animeGeneralStatsDataObj[animeID] = animeGeneralStats;
       // console.log("fetched 1 public anime");
     }
   }
@@ -189,7 +194,7 @@ async function initLVHArrayCreation() {
     let processedObjLVH = {};
     let processedObjHVL = {};
     const userScore = element["list_status"]["score"];
-    const publicScore = publicAnimeDataObj[animeID]["mean"];
+    const publicScore = animeGeneralStatsDataObj[animeID]["mean"];
 
     if (publicScore <= publicScoreBadThreshold) {
       if (userScore - publicScore >= likeHateThreshold) {
@@ -199,7 +204,7 @@ async function initLVHArrayCreation() {
 
         lvhAnimeObject["data"].push(processedObjLVH);
         lvhAnimeObject["count"] = lvhAnimeObject["data"].length;
-        // console.log('MATCH FOUND :: ' + processedObjLVH["node"]["title"]);
+        // console.log('MATCH FOUND :: ' + processedObjL.VH["node"]["title"]);
       } else {
         //console.log('NO MATCH');
       }
