@@ -32,7 +32,7 @@ const darkTheme = createTheme({
     },
     h1: {
       fontSize: 36,
-      fontWeight: 800,
+      fontWeight: 600,
     },
     h2: {
   

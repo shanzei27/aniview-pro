@@ -127,7 +127,7 @@ const HomeSearchPage = (props) => {
         <Grid item xs={10}>
           <Item>
             <PulseLoader color="#36d7b7" />
-            <LoadingText>This might take about a minute (for a list with 100 titles)</LoadingText>
+            <LoadingText>This will take a few seconds</LoadingText>
           </Item>
         </Grid>
         }       

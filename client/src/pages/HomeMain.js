@@ -6,6 +6,7 @@ import HomeLoaded from "./HomeLoaded";
 import HomeSearchPage from "./HomeSearchPage";
 import axios from "axios";
 import testData from "../config/test_data";
+import Footer from "../components/Footer";
 
 const HomeMain = (props) => {
   const [userAquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
@@ -156,7 +157,6 @@ const HomeMain = (props) => {
   return (
     <>
       <AppbarMain
-        handleLightModeChange={(value) => props.handleLightModeChange(value)}
         handleInputFromMainSearch={handleInputFromMainSearch}
         userAcquired={userAquired}
         drawerOpen={sideDrawerOpen}
@@ -168,6 +168,7 @@ const HomeMain = (props) => {
       <Box sx={{ display: "flex" }}>
         <HomeComponent />
       </Box>
+      <Footer  handleLightModeChange={(value) => props.handleLightModeChange(value)}/>
     </>
   );
 };
