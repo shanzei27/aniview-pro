@@ -117,16 +117,19 @@ async function initUserDataHandling() {
   // public data storage
   for (let i = 0; i < malUserData["data"].length; i++) {
     const animeID = malUserData["data"][i]["node"]["id"];
-    const animeGeneralStats = malUserData["data"][i]["node"]          //await fetchMALAnime(animeID);
+    const animeGeneralStats = malUserData["data"][i]["node"];          //await fetchMALAnime(animeID);
+    let unknownFinishData = 0;
     //  console.log(animeGeneralStats);
     let finishYear = 0;
     // history data
-    if (malUserData["data"][i]["list_status"]["finish_date"] != null) {
+    if (malUserData["data"][i]["list_status"]["finish_date"] != null && malUserData["data"][i]["list_status"]["finish_date"] != undefined) {
       finishYear =
         malUserData["data"][i]["list_status"]["finish_date"].split("-")[0]; // year fetched from string format : "2024-02-03"
+    } else {
+      unknownFinishData += 1;
     }
-
-    if (!prevYears.includes(finishYear)) {
+    console.log("fy: "+finishYear);
+    if (finishYear != 0 && !prevYears.includes(finishYear)) {
       historyData["bar_1"][finishYear] = {
         oldest_title: { node: {}, list_status: {} },
         newest_title: { node: {}, list_status: {} },
@@ -142,7 +145,6 @@ async function initUserDataHandling() {
     } else {
       avgEpisodeDuration = 1440; //placeholder default value old 23 mins in case there is no return value
     }
-
 
     let episodesWatched = 0;
     if(malUserData["data"][i]["list_status"]["num_episodes_watched"] != null &&  malUserData["data"][i]["list_status"]["num_episodes_watched"] != undefined){
@@ -161,15 +163,17 @@ async function initUserDataHandling() {
     console.log("ep duration: "+avgEpisodeDuration);
     console.log("episodesWatched: "+episodesWatched);
     console.log("rewatchAmount: "+rewatchAmount);
-
-    if (malUserData["data"][i]["list_status"]["status"] === "completed") {
-      historyData["bar_1"][finishYear]["animes_completed"] += 1;
+    if(historyData["bar_1"].hasOwnProperty(finishYear)){
+      if (malUserData["data"][i]["list_status"]["status"] === "completed") {
+        historyData["bar_1"][finishYear]["animes_completed"] += 1;
+      }
+      const watchTimeInSeconds = Math.floor(avgEpisodeDuration) * episodesWatched *(rewatchAmount + 1);
+      historyData["bar_1"][finishYear]["hours_watched"] += Math.round(((watchTimeInSeconds/3600)* 100) / 100);
+        ;
+  
+         console.log(historyData["bar_1"][finishYear]["hours_watched"]);
     }
-
-    historyData["bar_1"][finishYear]["hours_watched"] +=
-      Math.floor((avgEpisodeDuration) / 3600) * episodesWatched * (rewatchAmount + 1);
-
-       console.log(historyData["bar_1"][finishYear]["hours_watched"]);
+   
     const obj = {};
     obj[animeID] = animeGeneralStats;
     // console.log(prevIDs);

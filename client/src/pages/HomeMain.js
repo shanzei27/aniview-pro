@@ -16,13 +16,13 @@ const HomeMain = (props) => {
   const [loadError, setLoadError] = useState({
     message: "",
   });
-  const [responseData, setResponseData] = useState({
+  const [mainData, setMainData] = useState({
     // !! TESTING WITH MOCK DATA / SWITCH BACK TO API !!
     data: [],
     count: 0,
   });
   const [profileData, setProfileData] = useState({});
-  // const [responseData, setResponseData] = useState({...testData});      // temp test data
+  // const [mainData, setMainData] = useState({...testData});      // temp test data
 
   const handleInputFromMainSearch = (text) => {
     if (!loading) {
@@ -31,47 +31,94 @@ const HomeMain = (props) => {
   };
 
   useEffect(() => {
-    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
+    
+    if(searchText === ""){
+      const lastUser = localStorage.getItem("lastuser");
+      if(lastUser != null){
+        setSearchText(lastUser);
+      }
+    }
+  }, [])
 
+  useEffect(() => {
+    
+    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!    
     if (searchText != "" && !loading) {
       async function fetchData() {
         setLoading(true);
         setUserAcquired(false);
+        localStorage.setItem("lastuser", searchText);
         //   const url = require("url");
         const queryParams = searchText;
         // const params = new URLSearchParams(queryParams);
-        try {
-          const responseData = await axios
-            .get(`http://localhost:9000/v1/lvh/${queryParams}`)
-            .then((res) => setResponseData(res.data));
-          const profileResponseData = await axios
-            .get(`http://localhost:9000/v1/profile/users/${queryParams}`)
-            .then((res) => setProfileData(res.data));
-          setLoading(false);
-          setUserAcquired(true);
-        } catch (error) {
-          if (error === null) {
-            setLoadError({
-              message: "Unknown error",
-            });
-          } else {
-            setLoadError(error);
-          }
+        if (
+          localStorage.getItem(`${queryParams}_main`) != null ||
+          localStorage.getItem(`${queryParams}_main`) != null
+        ) {
+          console.log("retrieving localStorage data");
 
-          console.log(loadError);
-          setShowLoadError(true);
-          setLoading(false);
+          const storedMain = localStorage.getItem(`${queryParams}_main`);
+          const storedProfile = localStorage.getItem(`${queryParams}_profile`);
+
+          console.log(storedMain);
+          setMainData(JSON.parse(storedMain));
+          setProfileData(JSON.parse(storedProfile));
 
           setTimeout(() => {
-            setShowLoadError(false);
-            setUserAcquired(false);
-          }, 5000);
+            setLoading(false);
+            setUserAcquired(true);
+          }, 500);
+        } else {
+          console.log("fetching API data");
+
+          try {
+            const responseData = await axios
+              .get(`http://localhost:9000/v1/lvh/${queryParams}`)
+              .then((res) => setMainData(res.data));
+            const profileResponseData = await axios
+              .get(`http://localhost:9000/v1/profile/users/${queryParams}`)
+              .then((res) => setProfileData(res.data));
+            setLoading(false);
+            setUserAcquired(true);
+          } catch (error) {
+            if (error === null) {
+              setLoadError({
+                message: "Unknown error",
+              });
+            } else {
+              setLoadError(error);
+
+              console.log(loadError);
+              setShowLoadError(true);
+              setLoading(false);
+
+              setTimeout(() => {
+                setShowLoadError(false);
+                setUserAcquired(false);
+                setSearchText("");
+              }, 5000);
+            }
+          }
         }
       }
 
       if (searchText) fetchData();
     }
   }, [searchText]);
+
+  useEffect(() => {
+    if(searchText != "" && searchText != null){
+      localStorage.setItem(`${searchText}_main`, JSON.stringify(mainData));
+      console.log(mainData);
+    }
+  }, [mainData]);
+
+  useEffect(() => {
+    if(searchText != "" && searchText != null){
+      localStorage.setItem(`${searchText}_profile`, JSON.stringify(profileData));
+      console.log(profileData);
+    }
+  }, [profileData]);
 
   const handleDrawerOpen = () => {
     setSideDrawerOpen(true);
@@ -86,7 +133,7 @@ const HomeMain = (props) => {
       return (
         <HomeLoaded
           handleInputFromMainSearch={handleInputFromMainSearch}
-          lvhAnimeArray={responseData}
+          lvhAnimeArray={mainData}
           profileData={profileData}
           loading={loading}
         />
