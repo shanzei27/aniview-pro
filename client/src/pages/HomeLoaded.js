@@ -16,6 +16,7 @@ import DrawerLeft from '../components/DrawerLeft/DrawerLeft';
 import LikeVsHateRow from '../components/LikeVsHateSection/LikeVsHateRow';
 import ProfilePage from '../components/Profile';
 import HistoryPage from '../components/History';
+import Recommendations from '../components/Recommendations';
 
 const drawerWidth = 200;
 
@@ -130,6 +131,8 @@ const HomeLander = (props) => {
         return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
       case "lvhUserHates":
         return <LikeVsHateRow data={ userHatesArray } type={ openWindow }/>
+      case "recommendations":
+        return <Recommendations data={ props.lvhAnimeArray["recommendations"] } type={ openWindow }/>
       default:
        // return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
     }

@@ -1,14 +1,20 @@
 var express = require("express");
 var router = express.Router();
-const { fetchMALUserCompletedList } = require("../../services/api");
+const { fetchMALUserCompletedList, getTopMALAnimes } = require("../../services/api");
 
 //score threshold vars
 const publicScoreBadThreshold = 7.25; //score to determine worse than avg anime - anything below this value
 const likeHateThreshold = 0.45; //score threshold to check
 const publicScoreGoodThreshold = 7.25;
 const hateLikeThreshold = 1.25;
+const userPrefThreshold = 8;    // to determine which are user preferences - to derive recommendations
 
 //storage vars
+let userWatchedIDs = [];
+let userPrefAnimes = [];
+let userPrefGenres = [];
+let mostPreferredGenres = [];
+let popularUnwatchedMatches = [];
 let malUserData = [];
 let animeGeneralStatsDataObj = {};
 let lvhAnimeObject = {
@@ -55,22 +61,44 @@ router.get("/:searchText", async (req, res, next) => {
   } else {
     await initUserDataHandling();
     await initLVHArrayCreation();
+    await initRecommendationGen();
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
       historyPage: historyData,
       rawData: malUserData,
+      recommendations: {
+        r1: popularUnwatchedMatches
+      },
+      userPrefs: {
+        genres: userPrefGenres,
+        topRatedGenres: mostPreferredGenres
+      },
       // rawDataPub: animeGeneralStatsDataObj
     });
   }
 });
 
-async function initHistoryDataCreation() {}
+async function initRecommendationGen() {
+  const topMALAnimes = await getTopMALAnimes();
+
+  for (anime of topMALAnimes["data"]) {
+    const animeGenres = anime["genres"].map((e) => e.name);
+    if (animeGenres.filter(value => mostPreferredGenres.includes(value)).length > 0) {
+      if(!userWatchedIDs.includes(anime["mal_id"])){
+        popularUnwatchedMatches.push(anime);
+        console.log(anime["title"]);
+      }
+    }
+  }
+}
 
 // ------------ API Process -------------------
 
 async function initUserDataHandling() {
   console.log("init UserDataHandling");
+  // let userPrefAnimes = [];
+  // let userPrefGenres = [];
 
   // let historyItem = {
   //   "oldest_title": {"node": {}, "list_status": {}},
@@ -83,10 +111,16 @@ async function initUserDataHandling() {
   let prevIDs = [];
   let prevYears = [];
 
-  // public data storage
   for (let i = 0; i < malUserData["data"].length; i++) {
     const animeID = malUserData["data"][i]["node"]["id"];
+    userWatchedIDs.push(animeID);     // stored for later use in recommendation gen
     const animeGeneralStats = malUserData["data"][i]["node"]; //await fetchMALAnime(animeID);
+
+    if(malUserData["data"][i]["list_status"]["score"] >= userPrefThreshold){
+      userPrefAnimes.push(animeID);
+      userPrefGenres.push(animeGeneralStats["genres"]);
+    }
+
     let unknownFinishData = 0;
     //  console.log(animeGeneralStats);
     let finishYear = 0;
@@ -100,7 +134,7 @@ async function initUserDataHandling() {
     } else {
       unknownFinishData += 1;
     }
-    console.log("fy: " + finishYear);
+
     if (finishYear != 0 && !prevYears.includes(finishYear)) {
       historyData["bar_1"][finishYear] = {
         oldest_title: { node: {}, list_status: {} },
@@ -115,7 +149,7 @@ async function initUserDataHandling() {
     if (animeGeneralStats.hasOwnProperty("average_episode_duration")) {
       avgEpisodeDuration = animeGeneralStats["average_episode_duration"];
     } else {
-      avgEpisodeDuration = 1440; //placeholder default value old 23 mins in case there is no return value
+      avgEpisodeDuration = 1440; //placeholder default value of 23 mins in case there is no return value
     }
 
     let episodesWatched = 0;
@@ -139,9 +173,6 @@ async function initUserDataHandling() {
       rewatchAmount = 0;
     }
 
-    console.log("ep duration: " + avgEpisodeDuration);
-    console.log("episodesWatched: " + episodesWatched);
-    console.log("rewatchAmount: " + rewatchAmount);
     if (historyData["bar_1"].hasOwnProperty(finishYear)) {
       if (malUserData["data"][i]["list_status"]["status"] === "completed") {
         historyData["bar_1"][finishYear]["animes_completed"] += 1;
@@ -151,7 +182,6 @@ async function initUserDataHandling() {
       historyData["bar_1"][finishYear]["hours_watched"] += Math.round(
         ((watchTimeInSeconds / 3600) * 100) / 100
       );
-      console.log(historyData["bar_1"][finishYear]["hours_watched"]);
     }
 
     const obj = {};
@@ -166,7 +196,9 @@ async function initUserDataHandling() {
       // console.log("fetched 1 public anime");
     }
   }
-
+  userPrefGenres = userPrefGenres.flat();
+  userPrefGenres = userPrefGenres.map((e) => e.name);
+  mostPreferredGenres = getMostFoundElFromArr(userPrefGenres, 6);
   console.log("end of UserDataHandling");
 }
 
@@ -188,18 +220,8 @@ async function initLVHArrayCreation() {
 
         lvhAnimeObject["data"].push(processedObjLVH);
         lvhAnimeObject["count"] = lvhAnimeObject["data"].length;
-        // console.log('MATCH FOUND :: ' + processedObjL.VH["node"]["title"]);
-      } else {
-        //console.log('NO MATCH');
       }
     }
-    // console.log('anime : '+ element["node"]["title"]);
-
-    //  console.log('cmp 1: '+publicScore + " >= " + publicScoreGoodThreshold);
-    //  console.log('result 1: '+ (publicScore >= publicScoreGoodThreshold));
-    //  console.log('cmp 2: '+(publicScore-userScore) + " >= " + hateLikeThreshold);
-    //  console.log('result 2: '+ ((publicScore-userScore) >= hateLikeThreshold));
-    //  console.log('____________________________________________________________');
 
     if (publicScore >= publicScoreGoodThreshold) {
       if (publicScore - userScore >= hateLikeThreshold) {
@@ -209,14 +231,31 @@ async function initLVHArrayCreation() {
 
         hvlAnimeObject["data"].push(processedObjHVL);
         hvlAnimeObject["count"] = hvlAnimeObject["data"].length;
-        console.log("MATCH FOUND :: " + processedObjHVL["node"]["title"]);
+       // console.log("MATCH FOUND :: " + processedObjHVL["node"]["title"]);
       }
-      //hvlAnimeObject
     }
   });
   console.log("end of LVH array creation");
 }
 
 //----API PROCESS END-------------------------------------------------------------------------------------
+
+function getMostFoundElFromArr(arr, n) {
+  const count = {};
+
+  // Count occurrences of each string
+  arr.forEach(str => {
+      count[str] = (count[str] || 0) + 1;
+  });
+
+  // Convert the object into an array of [string, count] pairs
+  const countArray = Object.entries(count);
+
+  // Sort the array based on the count in descending order
+  countArray.sort((a, b) => b[1] - a[1]);
+  const topN = countArray.slice(0, n);
+
+  return topN.map(pair => pair[0]);
+}
 
 module.exports = router;

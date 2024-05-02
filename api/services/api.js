@@ -24,6 +24,14 @@ async function fetchUserHistory(username) {
   return responseData.data;
 }
 
+async function getTopMALAnimes() {
+  const responseData = await axios.get(
+    'https://api.jikan.moe/v4/top/anime?sfw'
+  );
+
+  return responseData.data;
+}
+
 async function fetchMALAnime(id) {
   const headers = {
     "X-MAL-CLIENT-ID": process.env.REACT_APP_CLIENT_ID,
@@ -47,7 +55,7 @@ async function fetchMALUserCompletedList(username) {
   };
 
   const responseData = await axios.get(
-    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status,rank,mean,alternative_titles,start_date,average_episode_duration&status=completed&sort=list_updated_at&limit=${limit}`,
+    `https://api.myanimelist.net/v2/users/${username}/animelist?fields=list_status,rank,mean,genres,start_date,average_episode_duration&status=completed&sort=list_updated_at&limit=${limit}`,
     { headers }
   );
   console.log("init end, response ::", responseData);
@@ -68,6 +76,7 @@ module.exports = {
   fetchUserGeneralsViaJikan,
   fetchUserStatsViaJikan,
   fetchUserHistory,
+  getTopMALAnimes,
   fetchMALAnime,
   fetchMALUserCompletedList,
 };

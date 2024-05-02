@@ -97,6 +97,7 @@ const getRandomCoverImage = () => {
 };
 
 const HomeSearchPage = (props) => {
+  let [coverImage, setCoverImage] = useState("");
   const [barText, setBarText] = useState("");
   const [errorBannerHeight, setErrorBannerHeight] = useState(0);
   const errorRef = React.useRef(null);
@@ -105,6 +106,10 @@ const HomeSearchPage = (props) => {
     e.preventDefault();
     props.handleInputFromMainSearch(barText);
   };
+
+  useEffect(() => {
+    setCoverImage(getRandomCoverImage());
+  }, []);
 
   useEffect(() => {
     if (props.showError) {
@@ -176,7 +181,7 @@ const HomeSearchPage = (props) => {
                     display: { xs: "none", sm: "block" },
                   }}
                   alt="The house from the offer."
-                  src={getRandomCoverImage()}
+                  src={coverImage}
                 />
                 <Search
                   ref={errorRef}
