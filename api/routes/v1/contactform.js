@@ -20,7 +20,7 @@ router.post("/form", async (req, res, next) => {
   validatedFormData["message"] = validator.escape(body["message"]);
 
   writeDataToGoogleSheets(validatedFormData);
-
+  console.log(validatedFormData);
   res.send({
     status: "success!",
     errors: errors,
