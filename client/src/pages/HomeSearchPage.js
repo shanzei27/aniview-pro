@@ -13,7 +13,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 import Grow from "@mui/material/Grow";
-import PulseLoader from "react-spinners/PulseLoader";
+import Loader from "react-spinners/MoonLoader";
 import { light } from "@mui/material/styles/createPalette";
 import Divider from "@mui/material/Divider";
 import { config } from "../config/config";
@@ -129,7 +129,7 @@ const HomeSearchPage = (props) => {
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
           <Grid item xs={10}>
             <Item>
-              <PulseLoader color="#36d7b7" />
+              <Loader color="#36d7b7" />
               <LoadingText>This will take a few seconds</LoadingText>
             </Item>
           </Grid>

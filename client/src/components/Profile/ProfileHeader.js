@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { Grid, Typography, dividerClasses } from "@mui/material";
 import Link from "@mui/material/Link";
+import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
 import { openInNewTab } from "../../utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -26,6 +27,17 @@ const BodyContainerTop = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#53565c" : "darkgrey",
 }));
 
+const BarAnimeName = styled(Typography)(({ theme }) => ({
+  textAlign: "center",
+  overflow: "hidden",
+  color: "#fff",
+}));
+
+const BarAnimeScore = styled(Typography)(({ theme }) => ({
+  textAlign: "right",
+  color: "#fff",
+}));
+
 const StatContainer = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   display: "flex",
@@ -43,18 +55,19 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
   textAlign: "center",
   display: "flex",
   flexDirection: "row",
-  alignItems: "flex-start",
-  justifyContent: "center",
-  width: "84vw",
+  alignItems: "center",
+  justifyContent: "space-between",
 }));
 
 const ProgressLine = styled(LinearProgress)(({ theme }) => ({
-  height: 5,
+  height: 6,
   width: "100%",
-  borderRadius: 5,
+  borderTopLeftRadius: 5,
+  borderBottomLeftRadius: 5,
   backgroundColor: "#2c3495",
   [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
     background: `linear-gradient(to right, #007adf 0%, #00ecbc 100%);`,
   },
 }));
@@ -72,7 +85,7 @@ const ProfileHeader = ({ pageData }) => {
         component="img"
         style={{
           display: "block",
-          height: `min(20vw, 100%)`,
+          height: "25%",
           cursor: "pointer",
         }}
         image={pageData.image_url}
@@ -84,129 +97,192 @@ const ProfileHeader = ({ pageData }) => {
   return (
     <>
       <Fade in={checked}>
-        <StyledGrid container spacing={2} alignItems="stretch">
-          <Box
-            sx={{
-              height: "100%",
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+        <StyledGrid container spacing={2}>
+          <Grid item xs={10}>
             <Grid
+              container
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                width: "62vw",
+                width: "100%",
                 height: "100%",
+                marginBottom: "10px",
               }}
             >
-              <Box
+              <Grid
+                item
+                sm={10}
+                md={6}
                 style={{
                   display: "flex",
-                  width: "100%",
-                  justifyContent: "space-between",
+                  width: "fit-content",
+                  justifyContent: "flex-start",
                   alignItems: "center",
                 }}
               >
                 <Box style={{ height: "80px" }}>
                   <Typography variant="h2">{pageData.username}</Typography>
                 </Box>
+              </Grid>
+              <Grid
+                item
+                sm={10}
+                md={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: { sm: "flex-start", md: "flex-end" },
+                  alignItems: "center",
+                }}
+              >
                 <Box
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                   }}
                 >
-                  <StatContainer>
-                    <Box
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <CheckCircleOutlineIcon />{" "}
+                  <Tooltip title="Total animes completed">
+                    <StatContainer>
+                      <Box
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <CheckCircleOutlineIcon />{" "}
+                        <Typography variant="body1" sx={{ color: "#fff" }}>
+                          Total completed:
+                        </Typography>
+                      </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        Total completed:
+                        {pageData.top_row["num_completed"]}
                       </Typography>
-                    </Box>
-                    <Typography variant="body1" sx={{ color: "#fff" }}>
-                      {pageData.top_row["num_completed"]}
-                    </Typography>
-                  </StatContainer>
-                  <StatContainer>
-                    <Box
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <AccessTimeIcon />{" "}
+                    </StatContainer>
+                  </Tooltip>
+                  <Tooltip
+                    title={(() =>
+                      (pageData.top_row["days_watched"] * 24).toFixed(2) +
+                      " hours")()}
+                  >
+                    <StatContainer>
+                      <Box
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <AccessTimeIcon />{" "}
+                        <Typography variant="body1" sx={{ color: "#fff" }}>
+                          Total watchtime:
+                        </Typography>
+                      </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        Total watchtime:
+                        {pageData.top_row["days_watched"]} days
                       </Typography>
-                    </Box>
-                    <Typography variant="body1" sx={{ color: "#fff" }}>
-                      {pageData.top_row["days_watched"]}
-                    </Typography>
-                  </StatContainer>
-                  <StatContainer>
-                    <Box
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <GradeIcon />{" "}
+                    </StatContainer>
+                  </Tooltip>
+                  <Tooltip title="Your MAL mean score">
+                    <StatContainer>
+                      <Box
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <GradeIcon />{" "}
+                        <Typography variant="body1" sx={{ color: "#fff" }}>
+                          Mean score:
+                        </Typography>
+                      </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        Mean score:
+                        {pageData.top_row["mean_score"]}
                       </Typography>
-                    </Box>
-                    <Typography variant="body1" sx={{ color: "#fff" }}>
-                      {pageData.top_row["mean_score"]}
-                    </Typography>
-                  </StatContainer>
+                    </StatContainer>
+                  </Tooltip>
                 </Box>
-              </Box>
-              <BodyContainerTop variant="outlined">
-                <Box
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "10px",
-                    width: "50%",
-                  }}
-                >
-                  {pageData.recent_activity.map((item) => (
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: "45px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "left",
-                        textAlign: "left",
-                      }}
-                    >
-                      <Typography variant="caption" sx={{ color: "#fff" }}>
-                        <b>{item.name}</b> ({item.progress}/
-                        {item.total_episodes})
-                      </Typography>
-                      <ProgressLine
-                        variant="determinate"
-                        value={(item.progress / item.total_episodes) * 100}
-                      />
-                    </Box>
-                  ))}
-                </Box>
-              </BodyContainerTop>
+              </Grid>
             </Grid>
-            <Grid sx={{ margin: "auto" }}>{userImage}</Grid>
-          </Box>
+            <Grid
+              container
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <Grid
+                item
+                md={12}
+                sx={{
+                  display: "flex",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <BodyContainerTop variant="outlined">
+                  <Box
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      padding: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    {pageData.recent_activity.map((item) => (
+                      <Box
+                        sx={{
+                          width: {sm:"100%", md:"50%"},
+                          height: "45px",
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "flex-start",
+                          textAlign: "left",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: "25px",
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <BarAnimeName variant="caption">
+                            {item.name}{" "}
+                          </BarAnimeName>
+                          <Box  sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            borderTopLeftRadius: 8,
+                            justifyContent: "flex-end",
+                            width:"10%",
+                            backgroundColor: "#2c3495",
+                            paddingRight: "4px"
+                          }}>       <Tooltip title="Episode progress">
+                            <BarAnimeScore variant="caption">
+                              ({item.progress}/{item.total_episodes === 0 ? "?" : item.total_episodes})
+                            </BarAnimeScore>  </Tooltip>
+                          </Box>
+                        </Box>
+                        <ProgressLine
+                          variant="determinate"
+                          value={(item.progress / item.total_episodes) * 100}
+                        />
+                      
+                      </Box>
+                    ))}
+                  </Box>
+                </BodyContainerTop>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={2}>
+            {userImage}
+          </Grid>
         </StyledGrid>
       </Fade>
     </>

@@ -7,6 +7,7 @@ import HomeSearchPage from "./HomeSearchPage";
 import axios from "axios";
 import testData from "../config/test_data";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet-async";
 
 const HomeMain = (props) => {
   const [userAquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
@@ -30,6 +31,10 @@ const HomeMain = (props) => {
       setSearchText(text);
     }
   };
+
+  const clearCurrentlyLoadedProfile = () => {
+    setUserAcquired(false);
+  }
 
   useEffect(() => {
     
@@ -156,7 +161,13 @@ const HomeMain = (props) => {
   };
   return (
     <>
+    <Helmet>
+      <title>Aniview - Home</title>
+      <meta name="description" content="Aniview is a MyAnimeList.net companion which fetches and shows your MAL anime stats and curated recommendations."></meta>
+      <link rel="canonical" href="/home" />
+    </Helmet>
       <AppbarMain
+        clearCurrentlyLoadedProfile={clearCurrentlyLoadedProfile}
         handleInputFromMainSearch={handleInputFromMainSearch}
         userAcquired={userAquired}
         drawerOpen={sideDrawerOpen}

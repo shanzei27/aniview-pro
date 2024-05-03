@@ -3,6 +3,7 @@ import RecommendItem from './Recommendations/RecommendAnimeItem'
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
+import { Typography } from '@mui/material';
 
 const Item = styled(Box)(({ theme }) => ({
     ...theme.typography.body2,
@@ -10,14 +11,29 @@ const Item = styled(Box)(({ theme }) => ({
     textAlign: "center",
     width: "calc(80vw - 240px)",
     display: "flex",
-    alignItems: "center",
+    alignItems: "left",
     justifyContent: "center",
+  }));
+  
+  const HeadingContainer = styled(Box)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    width: "calc(80vw - 240px)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "left",
   }));
 
 const Recommendations = (props) => {
   return (
     <>
+    <Box>
+
+
+        <HeadingContainer><Typography variant="h3">Popular animes you might enjoy</Typography></HeadingContainer>
      <Grid container spacing={2}>
+
         {props.data.r1 != undefined &&
           props.data.r1.map((animeItem, i) => {
             //console.log(animeItem)
@@ -43,7 +59,7 @@ const Recommendations = (props) => {
             );
           })}
       </Grid>
-        
+      </Box>
     </>
   )
 }

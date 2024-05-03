@@ -1,0 +1,4 @@
+https://aniview-pro.netlify.app/
+https://aniview-pro.netlify.app/home
+https://aniview-pro.netlify.app/about
+https://aniview-pro.netlify.app/feedback

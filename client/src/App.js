@@ -37,11 +37,15 @@ const darkTheme = createTheme({
       fontFamily: "Oxygen"
     },
     h1: {
-      fontSize: 36,
+      fontSize: 44,
       fontWeight: 600,
     },
     h2: {
-  
+      fontSize: 48,
+    },
+    h3: {
+      fontSize: 32,
+      fontFamily: "Oxygen"
     },
     h5: {
       padding: 4,
@@ -114,7 +118,11 @@ const lightTheme = createTheme({
       fontWeight: 800,
     },
     h2: {
-
+      fontSize: 36,
+    },
+    h3: {
+      fontSize: 32,
+      fontFamily: "Oxygen"
     },
     h5: {
       padding: 4,

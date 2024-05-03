@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Paper from "@mui/material/Paper";
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
-import Link from '@mui/material/Link';
-import CardMedia from '@mui/material/CardMedia';
-import { openInNewTab } from '../utils/utils';
 import ProfileHeader from './Profile/ProfileHeader';
 
 const Item = styled(Box)(({ theme }) => ({

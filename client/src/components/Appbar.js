@@ -16,6 +16,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import mainPages from "../config/main_pages";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { config } from "../config/config";
+import { Tooltip } from "@mui/material";
 
 const pages = [...mainPages];
 const drawerWidth = 240;
@@ -130,6 +131,7 @@ function AppbarMain(props) {
 
   const handleSearchBarClear = (e) => {
     setBarText("");
+   // props.clearCurrentlyLoadedProfile();
   };
 
   const submitHandler = (e) => {
@@ -181,35 +183,37 @@ function AppbarMain(props) {
             </LogoContainer>
             {props.userAcquired && (
               <form onSubmit={submitHandler}>
-                <Search
-                  component="form"
-                  sx={{ display: { xs: "none", sm: "block" } }}
-                >
-                  <StyledTextField
-                    placeholder="Load another profile…"
-                    inputProps={{ "aria-label": "search" }}
-                    value={barText}
-                    onChange={(e) => {
-                      setBarText(e.target.value);
-                    }}
-                    variant="outlined"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={(e) => {
-                            handleSearchBarClear();
-                          }}
-                          variant="contained"
-                        >
-                          <CloseIcon />
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                  <IconButton type="submit" variant="contained">
-                    <SearchIcon />
-                  </IconButton>
-                </Search>
+                <Tooltip title="Search a new MAL profile">
+                  <Search
+                    component="form"
+                    sx={{ display: { xs: "none", sm: "block" } }}
+                  >
+                    <StyledTextField
+                      placeholder="Load another profile…"
+                      inputProps={{ "aria-label": "search" }}
+                      value={barText}
+                      onChange={(e) => {
+                        setBarText(e.target.value);
+                      }}
+                      variant="outlined"
+                      endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                              onClick={(e) => {
+                                handleSearchBarClear();
+                              }}
+                              variant="contained"
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                        </InputAdornment>
+                      }
+                    />{" "}
+                    <IconButton type="submit" variant="contained">
+                      <SearchIcon />
+                    </IconButton>
+                  </Search>
+                </Tooltip>
               </form>
             )}
             <Box sx={{ flexGrow: 1 }} />

@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const { fetchMALUserCompletedList, getTopMALAnimes } = require("../../services/api");
+const { shuffleArray } = require("../../utils");
 
 //score threshold vars
 const publicScoreBadThreshold = 7.25; //score to determine worse than avg anime - anything below this value
@@ -81,13 +82,17 @@ router.get("/:searchText", async (req, res, next) => {
 
 async function initRecommendationGen() {
   const topMALAnimes = await getTopMALAnimes();
+  shuffleArray(topMALAnimes["data"]);
 
   for (anime of topMALAnimes["data"]) {
     const animeGenres = anime["genres"].map((e) => e.name);
     if (animeGenres.filter(value => mostPreferredGenres.includes(value)).length > 0) {
       if(!userWatchedIDs.includes(anime["mal_id"])){
         popularUnwatchedMatches.push(anime);
-        console.log(anime["title"]);
+
+        if(popularUnwatchedMatches.length >= 5){
+          break;
+        }
       }
     }
   }

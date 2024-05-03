@@ -29,6 +29,7 @@ const LikeVsHateRow = (props) => {
               <Grid
                 sx={{
                   display: "flex",
+
                   alignItems: "center",
                   justifyContent: "center",
                 }}
@@ -46,21 +47,21 @@ const LikeVsHateRow = (props) => {
               </Grid>
             );
           })}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            justifyContent: "center",
+          }}
+        >
+          <AppPagination
+            data={props.data}
+            setPageData={(d) => setPaginatedData(d)}
+            getData={props.getData}
+          />
+        </Box>
       </Grid>
-      <Box
-        sx={{
-          display: "flex",
-          direction: "column",
-          justifyContent: "center",
-          width: `calc(100vw - 240`,
-        }}
-      >
-        <AppPagination
-          data={props.data}
-          setPageData={(d) => setPaginatedData(d)}
-          getData={props.getData}
-        />
-      </Box>
     </>
   );
 };
