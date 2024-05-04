@@ -188,6 +188,7 @@ function App() {
               searchText={searchText}
               handleDrawerOpen={handleDrawerOpen}
               handleDrawerClose={handleDrawerClose}
+              handleLightModeChange={handleLightModeChange}
             />
             <Routes>
               <Route
