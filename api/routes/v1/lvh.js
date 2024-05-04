@@ -89,7 +89,7 @@ async function initRecommendationGen() {
       if(!userWatchedIDs.includes(anime["mal_id"])){
         popularUnwatchedMatches.push(anime);      
       }
-      if(popularUnwatchedMatches.length === 5){
+      if(popularUnwatchedMatches.length >= 5){
         break;
       }
     }

@@ -31,8 +31,6 @@ const HomeMain = ({
   const [loaded, setLoaded] = useState(false);
   const [mainDataLoaded, setMainDataLoaded] = useState(false);
   const [profileDataLoaded, setProfileDataLoaded] = useState(false);
-  const [pageMainLoad, setPageMainLoading] = useState(true);
-  const [pageProfileLoad, setPageProfileLoading] = useState(true);
   const [showLoadError, setShowLoadError] = useState(false);
   const [loadError, setLoadError] = useState({
     message: "",
@@ -65,16 +63,10 @@ const HomeMain = ({
   };
 
   useEffect(() => {
-    setPageMainLoading(true);
-    setPageProfileLoading(true);
     if (searchText === "") {
       const lastUser = localStorage.getItem("lastuser");
       if (lastUser != null) {
         setSearchText(lastUser);
-      } else {
-        console.log("set false 1")
-        setPageMainLoading(false);
-        setPageProfileLoading(false);
       }
     }
   }, []);
@@ -107,8 +99,6 @@ const HomeMain = ({
               )
               .then((res) => setProfileData(res.data));
             setLoading(false);
-            setPageMainLoading(false);
-            setPageProfileLoading(false);
             setUserAcquired(true);
           } catch (error) {
             if (error === null) {
@@ -122,8 +112,6 @@ const HomeMain = ({
               setShowLoadError(true);
               clearLocalStorage();
               setLoading(false);
-              setPageMainLoading(false);
-              setPageProfileLoading(false);
               setTimeout(() => {
                 setShowLoadError(false);
                 setUserAcquired(false);
@@ -142,14 +130,10 @@ const HomeMain = ({
     if (localStorage.getItem(`${searchText}_main`) === null) {
       if (searchText != "" && searchText != null) {
         localStorage.setItem(`${searchText}_main`, JSON.stringify(mainData));
-        setPageMainLoading(false);
         setMainDataLoaded(true);
-        console.log("set false ACTUAL")
-        console.log("LOAD 1 DONE");
       }
     } else {
       console.log("set false 2")
-      setPageMainLoading(false);
       setMainDataLoaded(true);
     }
 
@@ -162,14 +146,9 @@ const HomeMain = ({
           `${searchText}_profile`,
           JSON.stringify(profileData)
         );
-        console.log("set false ACTUAL")
-        setPageProfileLoading(false);
         setProfileDataLoaded(true);
-        console.log("LOAD 2 DONE");
       }
     } else {
-      console.log("set false 2")
-      setPageProfileLoading(false);
       setProfileDataLoaded(true);
     }
     
@@ -202,8 +181,6 @@ const HomeMain = ({
           loading={loading}
           userAcquired={userAcquired}
           loaded={loaded}
-          pageMainLoad={pageMainLoad}
-          pageProfileLoad={pageProfileLoad}
         />
       );
     } else {
