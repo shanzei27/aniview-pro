@@ -1,54 +1,86 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import AppbarMain from "../components/Appbar";
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import HomeLoaded from "./HomeLoaded";
 import HomeSearchPage from "./HomeSearchPage";
 import axios from "axios";
 import testData from "../config/test_data";
 import Footer from "../components/Footer";
+import Loader from "react-spinners/MoonLoader";
 import { Helmet } from "react-helmet-async";
+import CssBaseline from "@mui/material/CssBaseline";
 
-const HomeMain = (props) => {
-  const [userAquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
-  const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
-  const [searchText, setSearchText] = useState("");
-  const [loading, setLoading] = useState(false);
+const LoadingText = styled(Typography)(({ theme }) => ({
+  color: "white",
+  fontSize: "16px",
+  marginTop: "15px",
+}));
+
+const HomeMain = ({
+  searchText,
+  setSearchText,
+  loading,
+  setLoading,
+  userAcquired,
+  setUserAcquired,
+  handleLightModeChange,
+  handleInputFromMainSearch,
+}) => {
+  // const [searchText, setSearchText] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [mainDataLoaded, setMainDataLoaded] = useState(false);
+  const [profileDataLoaded, setProfileDataLoaded] = useState(false);
+  const [pageMainLoad, setPageMainLoading] = useState(true);
+  const [pageProfileLoad, setPageProfileLoading] = useState(true);
   const [showLoadError, setShowLoadError] = useState(false);
   const [loadError, setLoadError] = useState({
     message: "",
   });
   const [mainData, setMainData] = useState({
-    // !! TESTING WITH MOCK DATA / SWITCH BACK TO API !!
     data: [],
     count: 0,
   });
   const [profileData, setProfileData] = useState({});
   // const [mainData, setMainData] = useState({...testData});      // temp test data
 
-  const handleInputFromMainSearch = (text) => {
-    if (!loading) {
-      setSearchText(text);
-    }
+  // const handleInputFromMainSearch = (text) => {
+  //   if (!loading) {
+  //     setSearchText(text);
+  //   }
+  // };
+
+  const clearLocalStorage = () => {
+    console.log("CLEARED LOCAL DATA!");
+    localStorage.clear();
   };
 
-  const clearCurrentlyLoadedProfile = () => {
-    setUserAcquired(false);
-  }
+  const retrieveDataFromLocal = () => {
+    console.log("retrieving localStorage data");
+    const storedMain = localStorage.getItem(`${searchText}_main`);
+    const storedProfile = localStorage.getItem(`${searchText}_profile`);
+    setMainData(JSON.parse(storedMain));
+    setProfileData(JSON.parse(storedProfile));
+    setUserAcquired(true);
+  };
 
   useEffect(() => {
-    
-    if(searchText === ""){
+    setPageMainLoading(true);
+    setPageProfileLoading(true);
+    if (searchText === "") {
       const lastUser = localStorage.getItem("lastuser");
-      if(lastUser != null){
+      if (lastUser != null) {
         setSearchText(lastUser);
+      } else {
+        console.log("set false 1")
+        setPageMainLoading(false);
+        setPageProfileLoading(false);
       }
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    
-    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!    
+    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
     if (searchText != "" && !loading) {
       async function fetchData() {
         setLoading(true);
@@ -59,21 +91,9 @@ const HomeMain = (props) => {
         // const params = new URLSearchParams(queryParams);
         if (
           localStorage.getItem(`${queryParams}_main`) != null ||
-          localStorage.getItem(`${queryParams}_main`) != null
+          localStorage.getItem(`${queryParams}_profile`) != null
         ) {
-          console.log("retrieving localStorage data");
-
-          const storedMain = localStorage.getItem(`${queryParams}_main`);
-          const storedProfile = localStorage.getItem(`${queryParams}_profile`);
-
-          console.log(storedMain);
-          setMainData(JSON.parse(storedMain));
-          setProfileData(JSON.parse(storedProfile));
-
-          setTimeout(() => {
-            setLoading(false);
-            setUserAcquired(true);
-          }, 500);
+          retrieveDataFromLocal();
         } else {
           console.log("fetching API data");
 
@@ -82,9 +102,13 @@ const HomeMain = (props) => {
               .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`)
               .then((res) => setMainData(res.data));
             const profileResponseData = await axios
-              .get(`${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`)
+              .get(
+                `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`
+              )
               .then((res) => setProfileData(res.data));
             setLoading(false);
+            setPageMainLoading(false);
+            setPageProfileLoading(false);
             setUserAcquired(true);
           } catch (error) {
             if (error === null) {
@@ -96,8 +120,10 @@ const HomeMain = (props) => {
 
               console.log(loadError);
               setShowLoadError(true);
+              clearLocalStorage();
               setLoading(false);
-
+              setPageMainLoading(false);
+              setPageProfileLoading(false);
               setTimeout(() => {
                 setShowLoadError(false);
                 setUserAcquired(false);
@@ -113,73 +139,103 @@ const HomeMain = (props) => {
   }, [searchText]);
 
   useEffect(() => {
-    if(searchText != "" && searchText != null){
-      localStorage.setItem(`${searchText}_main`, JSON.stringify(mainData));
-      console.log(mainData);
+    if (localStorage.getItem(`${searchText}_main`) === null) {
+      if (searchText != "" && searchText != null) {
+        localStorage.setItem(`${searchText}_main`, JSON.stringify(mainData));
+        setPageMainLoading(false);
+        setMainDataLoaded(true);
+        console.log("set false ACTUAL")
+        console.log("LOAD 1 DONE");
+      }
+    } else {
+      console.log("set false 2")
+      setPageMainLoading(false);
+      setMainDataLoaded(true);
     }
+
   }, [mainData]);
 
   useEffect(() => {
-    if(searchText != "" && searchText != null){
-      localStorage.setItem(`${searchText}_profile`, JSON.stringify(profileData));
-      console.log(profileData);
+    if (localStorage.getItem(`${searchText}_profile`) === null) {
+      if (searchText != "" && searchText != null) {
+        localStorage.setItem(
+          `${searchText}_profile`,
+          JSON.stringify(profileData)
+        );
+        console.log("set false ACTUAL")
+        setPageProfileLoading(false);
+        setProfileDataLoaded(true);
+        console.log("LOAD 2 DONE");
+      }
+    } else {
+      console.log("set false 2")
+      setPageProfileLoading(false);
+      setProfileDataLoaded(true);
     }
+    
+
   }, [profileData]);
+
+  useEffect(() => {
+    if(mainDataLoaded && profileDataLoaded) {
+      setLoaded(true);
+      setLoading(false);
+    }
+  }, [mainDataLoaded, profileDataLoaded]);
+
   
+
   const handleUserForget = () => {
     setSearchText("");
   };
 
-  const handleDrawerOpen = () => {
-    setSideDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setSideDrawerOpen(false);
-  };
-
   const HomeComponent = () => {
-    if (userAquired) {
-      return (
-        <HomeLoaded
-          handleInputFromMainSearch={handleInputFromMainSearch}
-          lvhAnimeArray={mainData}
-          profileData={profileData}
-          loading={loading}
-        />
-      );
-    } else {
+   
+    if (loading || !userAcquired) {
       return (
         <HomeSearchPage
-          handleInputFromMainSearch={handleInputFromMainSearch}
+          handleInputFromMainSearch={(value) =>
+            handleInputFromMainSearch(value)
+          }
           error={loadError}
           showError={showLoadError}
           loading={loading}
+          userAcquired={userAcquired}
+          loaded={loaded}
+          pageMainLoad={pageMainLoad}
+          pageProfileLoad={pageProfileLoad}
         />
       );
+    } else {
+      if(loaded){
+        return (
+          <HomeLoaded
+            // handleInputFromMainSearch={handleInputFromMainSearch}
+            lvhAnimeArray={mainData}
+            profileData={profileData}
+          />
+        );
+      }
     }
   };
   return (
     <>
-    <Helmet>
-      <title>Aniview - Home</title>
-      <meta name="description" content="Aniview is a MyAnimeList.net companion which fetches and shows your MAL anime stats and curated recommendations."></meta>
-      <link rel="canonical" href="/home" />
-    </Helmet>
-      <AppbarMain
-        clearCurrentlyLoadedProfile={clearCurrentlyLoadedProfile}
-        handleInputFromMainSearch={handleInputFromMainSearch}
-        userAcquired={userAquired}
-        drawerOpen={sideDrawerOpen}
-        searchText={searchText}
-        handleUserForget={handleUserForget}
-        handleDrawerOpen={handleDrawerOpen}
-        handleDrawerClose={handleDrawerClose}
-      />
+      <CssBaseline />
+      <Helmet>
+        <title>Aniview - Home</title>
+        <meta
+          name="description"
+          content="Aniview is a MyAnimeList.net companion which fetches and shows your MAL anime stats and curated recommendations."
+        ></meta>
+        <link rel="canonical" href="/home" />
+      </Helmet>
       <Box sx={{ display: "flex" }}>
         <HomeComponent />
       </Box>
-      <Footer userAcquired={userAquired} handleLightModeChange={(value) => props.handleLightModeChange(value)}/>
+      <Footer
+        userAcquired={userAcquired}
+        handleLightModeChange={(value) => handleLightModeChange(value)}
+      />
     </>
   );
 };

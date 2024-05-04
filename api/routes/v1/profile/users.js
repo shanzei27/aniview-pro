@@ -19,7 +19,11 @@ router.get("/:user_name", async (req, res, next) => {
   const username = req.params.user_name;
   console.log(username);
   const userHistoryData = await fetchUserHistory(username);
-  const userGeneralData = await fetchUserGeneralsViaJikan(username);
+  let userGeneralData = {};
+  //waiting half a second to prevent Jikan api rate limit
+  setTimeout(async () => {
+    userGeneralData = await fetchUserGeneralsViaJikan(username);
+  }, "500");
   const userStatsData = await fetchUserStatsViaJikan(username);
   const processedList = await processHistory(userHistoryData["data"]);
   res.send({

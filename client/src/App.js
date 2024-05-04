@@ -1,23 +1,23 @@
-import './App.css';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import { green, purple } from '@mui/material/colors';
-
+import "./App.css";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { green, purple } from "@mui/material/colors";
+import AppbarMain from "./components/Appbar.js";
 //pages
-import HomeMain from './pages/HomeMain.js';
-import About from './pages/About.js';
-import Feedback from './pages/Feedback.js';
-import { useState } from 'react';
+import HomeMain from "./pages/HomeMain.js";
+import About from "./pages/About.js";
+import Feedback from "./pages/Feedback.js";
+import { useState } from "react";
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     background: {
       default: "#282c34",
     },
     primary: {
       main: "#009688",
-      nav:  "#262626",
+      nav: "#262626",
     },
     secondary: {
       main: "#00989B",
@@ -27,14 +27,14 @@ const darkTheme = createTheme({
     },
     text: {
       // primary: "#ffffff",     ???
-       dark: "#000"
-     }
+      dark: "#000",
+    },
   },
   typography: {
     lead: {
       fontSize: 52,
       fontWeight: 700,
-      fontFamily: "Oxygen"
+      fontFamily: "Oxygen",
     },
     h1: {
       fontSize: 44,
@@ -45,7 +45,7 @@ const darkTheme = createTheme({
     },
     h3: {
       fontSize: 32,
-      fontFamily: "Oxygen"
+      fontFamily: "Oxygen",
     },
     h5: {
       padding: 4,
@@ -67,13 +67,12 @@ const darkTheme = createTheme({
       fontWeight: 500,
     },
     button: {
-      fontStyle: 'bold',
+      fontStyle: "bold",
       fontSize: 16,
       fontWeight: 600,
     },
     fontFamily: "Roboto",
   },
-
 });
 
 const lightTheme = createTheme({
@@ -87,14 +86,14 @@ const lightTheme = createTheme({
     },
   },
   palette: {
-    mode: 'light',
+    mode: "light",
     background: {
       default: "#fff",
-      dark: "#fff"
+      dark: "#fff",
     },
     primary: {
       main: "#009688",
-      nav:  "#005e78",
+      nav: "#005e78",
     },
     secondary: {
       main: "#00989B",
@@ -103,15 +102,15 @@ const lightTheme = createTheme({
       main: green[800],
     },
     text: {
-     // primary: "#ffffff",     ???
-      dark: "#000"
-    }
+      // primary: "#ffffff",     ???
+      dark: "#000",
+    },
   },
   typography: {
     lead: {
       fontSize: 52,
       fontWeight: 700,
-      fontFamily: "Oxygen"
+      fontFamily: "Oxygen",
     },
     h1: {
       fontSize: 36,
@@ -122,7 +121,7 @@ const lightTheme = createTheme({
     },
     h3: {
       fontSize: 32,
-      fontFamily: "Oxygen"
+      fontFamily: "Oxygen",
     },
     h5: {
       padding: 4,
@@ -144,7 +143,7 @@ const lightTheme = createTheme({
       fontWeight: 500,
     },
     button: {
-      fontStyle: 'bold',
+      fontStyle: "bold",
       fontSize: 16,
       fontWeight: 600,
     },
@@ -154,25 +153,95 @@ const lightTheme = createTheme({
 
 function App() {
   const [light, setLight] = useState(false);
+  const [searchText, setSearchText] = useState(""); // changing triggers profile reload and rerender
+  const [loading, setLoading] = useState(false);
+  const [userAcquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
+  const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
 
   const handleLightModeChange = (value) => {
-    setLight(prevMode => !prevMode);
-  }
+    setLight((prevMode) => !prevMode);
+  };
+
+  const handleInputFromMainSearch = (text) => {
+    if (!loading) {
+      setSearchText(text);
+    }
+  };
+
+  const handleDrawerOpen = () => {
+    setSideDrawerOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setSideDrawerOpen(false);
+  };
 
   return (
     <BrowserRouter>
-    <div className='App'>
-      <ThemeProvider theme={light ? lightTheme : darkTheme}>      
-      <main>
-        <Routes>
-          <Route path="/" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange()}/>} />
-          <Route path="/home" element={<HomeMain handleLightModeChange={(value) => handleLightModeChange()}/>} />
-          <Route path="/about" element={<About handleLightModeChange={(value) => handleLightModeChange()}/>} />
-          <Route path="/feedback" element={<Feedback handleLightModeChange={(value) => handleLightModeChange()}/>} />
-        </Routes>
-      </main>
-      </ThemeProvider>
-    </div>
+      <div className="App">
+        <ThemeProvider theme={light ? lightTheme : darkTheme}>
+          <main>
+            <AppbarMain
+              handleInputFromMainSearch={handleInputFromMainSearch}
+              userAcquired={userAcquired}
+              drawerOpen={sideDrawerOpen}
+              searchText={searchText}
+              handleDrawerOpen={handleDrawerOpen}
+              handleDrawerClose={handleDrawerClose}
+            />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomeMain
+                    searchText={searchText}
+                    setSearchText={setSearchText}
+                    loading={loading}
+                    setLoading={setLoading}
+                    userAcquired={userAcquired}
+                    setUserAcquired={setUserAcquired}
+                    drawerOpen={sideDrawerOpen}
+                    handleLightModeChange={(value) => handleLightModeChange()}
+                    handleInputFromMainSearch={handleInputFromMainSearch}
+                  />
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  <HomeMain
+                  searchText={searchText}
+                  setSearchText={setSearchText}
+                  loading={loading}
+                  setLoading={setLoading}
+                  userAcquired={userAcquired}
+                  setUserAcquired={setUserAcquired}
+                  drawerOpen={sideDrawerOpen}
+                  handleLightModeChange={(value) => handleLightModeChange()}
+                  handleInputFromMainSearch={handleInputFromMainSearch}
+                />
+                }
+              />
+              <Route
+                path="/about"
+                element={
+                  <About
+                    handleLightModeChange={(value) => handleLightModeChange()}
+                  />
+                }
+              />
+              <Route
+                path="/feedback"
+                element={
+                  <Feedback
+                    handleLightModeChange={(value) => handleLightModeChange()}
+                  />
+                }
+              />
+            </Routes>
+          </main>
+        </ThemeProvider>
+      </div>
     </BrowserRouter>
   );
 }

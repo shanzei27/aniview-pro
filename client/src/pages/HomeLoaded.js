@@ -1,17 +1,8 @@
-import React, { useState, useEffect, useReducer } from "react";
-import MALIntegration from "../services/MALIntegration";
+import React, { useState, useEffect } from "react";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-
-//api functions
-import ControlRow from "../components/ControlRow";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import DrawerLeft from "../components/DrawerLeft/DrawerLeft";
 import LikeVsHateRow from "../components/LikeVsHateSection/LikeVsHateRow";
 import ProfilePage from "../components/Profile";
@@ -81,7 +72,6 @@ const HomeLander = (props) => {
     props.lvhAnimeArray["userHates"]
   );
   const [historyData, setHistoryData] = useState([]);
-  const [profileData, setProfileData] = useState(props.profileData);
 
   useEffect(() => {
     const preProcessData = props.lvhAnimeArray["historyPage"];
@@ -133,7 +123,7 @@ const HomeLander = (props) => {
   const WindowComponent = () => {
     switch (openWindow) {
       case "overview":
-        return <ProfilePage data={profileData} type={openWindow} />;
+        return <ProfilePage data={props.profileData} type={openWindow} />;
       case "history":
         return <HistoryPage data={historyData} type={openWindow} />;
       case "lvhUserLikes":

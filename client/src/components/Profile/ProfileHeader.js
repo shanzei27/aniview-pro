@@ -73,6 +73,7 @@ const ProgressLine = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const ProfileHeader = ({ pageData }) => {
+  //debugger
   const [checked, setChecked] = useState(false); //fade animation
 
   useEffect(() => {
@@ -231,8 +232,9 @@ const ProfileHeader = ({ pageData }) => {
                   >
                     {pageData.recent_activity.map((item) => (
                       <Box
+                        key={item.name}
                         sx={{
-                          width: {sm:"100%", md:"50%"},
+                          width: { sm: "100%", md: "50%" },
                           height: "45px",
                           display: "flex",
                           flexDirection: "column",
@@ -253,25 +255,33 @@ const ProfileHeader = ({ pageData }) => {
                           <BarAnimeName variant="caption">
                             {item.name}{" "}
                           </BarAnimeName>
-                          <Box  sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            borderTopLeftRadius: 8,
-                            justifyContent: "flex-end",
-                            width:"10%",
-                            backgroundColor: "#2c3495",
-                            paddingRight: "4px"
-                          }}>       <Tooltip title="Episode progress">
-                            <BarAnimeScore variant="caption">
-                              ({item.progress}/{item.total_episodes === 0 ? "?" : item.total_episodes})
-                            </BarAnimeScore>  </Tooltip>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              borderTopLeftRadius: 8,
+                              justifyContent: "flex-end",
+                              width: "10%",
+                              backgroundColor: "#2c3495",
+                              paddingRight: "4px",
+                            }}
+                          >
+                            {" "}
+                            <Tooltip title="Episode progress">
+                              <BarAnimeScore variant="caption">
+                                ({item.progress}/
+                                {item.total_episodes === 0
+                                  ? "?"
+                                  : item.total_episodes}
+                                )
+                              </BarAnimeScore>{" "}
+                            </Tooltip>
                           </Box>
                         </Box>
                         <ProgressLine
                           variant="determinate"
                           value={(item.progress / item.total_episodes) * 100}
                         />
-                      
                       </Box>
                     ))}
                   </Box>

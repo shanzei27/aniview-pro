@@ -7,14 +7,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
-import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
-import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
-import Slide from "@mui/material/Slide";
 import Grow from "@mui/material/Grow";
 import Loader from "react-spinners/MoonLoader";
-import { light } from "@mui/material/styles/createPalette";
 import Divider from "@mui/material/Divider";
 import { config } from "../config/config";
 
@@ -97,7 +93,7 @@ const getRandomCoverImage = () => {
 };
 
 const HomeSearchPage = (props) => {
-  let [coverImage, setCoverImage] = useState("");
+  const [coverImage, setCoverImage] = useState("");
   const [barText, setBarText] = useState("");
   const [errorBannerHeight, setErrorBannerHeight] = useState(0);
   const errorRef = React.useRef(null);
@@ -125,7 +121,7 @@ const HomeSearchPage = (props) => {
     <>
       <CssBaseline />
 
-      {props.loading && (
+      {(!props.loaded && props.loading) && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
           <Grid item xs={10}>
             <Item>
@@ -136,7 +132,7 @@ const HomeSearchPage = (props) => {
         </StyledGrid>
       )}
 
-      {!props.loading && (
+      {(!props.loading) && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
           <Grid sx={{ height: {xs:"50%", sm:"100%"} }} item xs={12} sm={5.5}>
             <Item>

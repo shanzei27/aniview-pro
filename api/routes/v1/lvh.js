@@ -1,6 +1,6 @@
-var express = require("express");
-var router = express.Router();
-const { fetchMALUserCompletedList, getTopMALAnimes } = require("../../services/api");
+const express = require("express");
+const router = express.Router();
+const { fetchMALUserCompletedList, getTopMALAnimes, getMALUserInfo } = require("../../services/api");
 const { shuffleArray } = require("../../utils");
 
 //score threshold vars
@@ -67,7 +67,6 @@ router.get("/:searchText", async (req, res, next) => {
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
       historyPage: historyData,
-      rawData: malUserData,
       recommendations: {
         r1: popularUnwatchedMatches
       },
@@ -88,11 +87,10 @@ async function initRecommendationGen() {
     const animeGenres = anime["genres"].map((e) => e.name);
     if (animeGenres.filter(value => mostPreferredGenres.includes(value)).length > 0) {
       if(!userWatchedIDs.includes(anime["mal_id"])){
-        popularUnwatchedMatches.push(anime);
-
-        if(popularUnwatchedMatches.length >= 5){
-          break;
-        }
+        popularUnwatchedMatches.push(anime);      
+      }
+      if(popularUnwatchedMatches.length === 5){
+        break;
       }
     }
   }
@@ -202,7 +200,7 @@ async function initUserDataHandling() {
     }
   }
   userPrefGenres = userPrefGenres.flat();
-  userPrefGenres = userPrefGenres.map((e) => e.name);
+  userPrefGenres = userPrefGenres.map((e) => e.hasOwnProperty("name") ? e.name : "");
   mostPreferredGenres = getMostFoundElFromArr(userPrefGenres, 6);
   console.log("end of UserDataHandling");
 }

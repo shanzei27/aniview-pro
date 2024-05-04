@@ -4,7 +4,6 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { styled, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import AppbarMain from "../components/Appbar";
 import textUtils from "../utils/textUtils";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Link from "@mui/material/Link";
@@ -55,9 +54,6 @@ const About = (props) => {
   return (
     <>
       <CssBaseline />
-      <AppbarMain
-        handleLightModeChange={(value) => props.handleLightModeChange(value)}
-      />
       <StyledGrid container spacing={2}>
         <Grid item xs={11} sx={{ width: "100%" }}>
           <Item>

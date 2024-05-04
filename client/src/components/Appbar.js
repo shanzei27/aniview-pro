@@ -112,7 +112,7 @@ function AppbarMain(props) {
   const { pathname } = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [barText, setBarText] = React.useState(props.searchText);
+  const [barText, setBarText] = React.useState(props.searchText);     // changing only effects search bar text
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -131,37 +131,24 @@ function AppbarMain(props) {
 
   const handleSearchBarClear = (e) => {
     setBarText("");
-   // props.clearCurrentlyLoadedProfile();
+    // props.clearCurrentlyLoadedProfile();
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const selections = {
-      lvh: true,
-      recommendations: true,
-      history: true,
-    };
-    props.handleInputFromMainSearch(barText, selections);
+    props.handleInputFromMainSearch(barText);
+  };
+
+  const getAppBarStyle = () => {
+    return ( {backgroundImage: `radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% )`,
+    backgroundColor: "#005e78",
+    zIndex: (theme) => theme.zIndex.drawer + 1,
+    marginBottom: "20px",})
   };
 
   return (
     <>
-      <AppBarTop
-        maxWidth="95%"
-        position="fixed"
-        sx={{
-          backgroundImage:
-            pathname === "/" || pathname === "/home" || props.userAcquired
-              ? theme.palette.primary.nav
-              : `radial-gradient( circle farthest-corner at 10% 20%,  rgba(0,152,155,1) 0.1%, rgba(0,94,120,1) 94.2% )`,
-          backgroundColor:
-            pathname === "/" || pathname === "/home" || props.userAcquired
-              ? theme.palette.primary.nav
-              : "#005e78",
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          marginBottom: "20px",
-        }}
-      >
+      <AppBarTop maxWidth="95%" position="fixed" sx={getAppBarStyle()}>
         <Container maxWidth="85%">
           <Toolbar sx={{ display: "flex", justifyContent: "space-evenly" }}>
             <IconButton
@@ -198,14 +185,14 @@ function AppbarMain(props) {
                       variant="outlined"
                       endAdornment={
                         <InputAdornment position="end">
-                            <IconButton
-                              onClick={(e) => {
-                                handleSearchBarClear();
-                              }}
-                              variant="contained"
-                            >
-                              <CloseIcon />
-                            </IconButton>
+                          <IconButton
+                            onClick={(e) => {
+                              handleSearchBarClear();
+                            }}
+                            variant="contained"
+                          >
+                            <CloseIcon />
+                          </IconButton>
                         </InputAdornment>
                       }
                     />{" "}
