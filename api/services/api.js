@@ -1,35 +1,40 @@
 const axios = require("axios");
 
 async function fetchUserGeneralsViaJikan(username) {
-  const responseData = await axios.get(
-    `https://api.jikan.moe/v4/users/${username}`
-  );
-  return responseData.data;
+  return axios
+    .get(`https://api.jikan.moe/v4/users/${username}`)
+    .then((promise) => promise.data)
+    .catch((e) => {
+      console.error(e);
+    });
 }
 
 async function fetchUserStatsViaJikan(username) {
-  const responseData = await axios.get(
-    `https://api.jikan.moe/v4/users/${username}/statistics`
-  );
-  return responseData.data;
+  return axios
+    .get(`https://api.jikan.moe/v4/users/${username}/statistics`)
+    .then((promise) => promise.data)
+    .catch((e) => {
+      console.error(e);
+    });
 }
 
 async function fetchUserHistory(username) {
   console.log("exec start with ::" + username);
-
-  const responseData = await axios.get(
-    `https://api.jikan.moe/v4/users/${username}/history`
-  );
-
-  return responseData.data;
+  return axios
+    .get(`https://api.jikan.moe/v4/users/${username}/history`)
+    .then((promise) => promise.data)
+    .catch((e) => {
+      console.error(e);
+    });
 }
 
 async function getTopMALAnimes() {
-  const responseData = await axios.get(
-    'https://api.jikan.moe/v4/top/anime?sfw'
-  );
-
-  return responseData.data;
+  return axios
+  .get("https://api.jikan.moe/v4/top/anime?sfw")
+  .then((promise) => promise.data)
+  .catch((e) => {
+    console.error(e);
+  });
 }
 
 async function fetchMALAnime(id) {
