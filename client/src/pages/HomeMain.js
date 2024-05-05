@@ -88,6 +88,7 @@ const HomeMain = ({
           retrieveDataFromLocal();
         } else {
           console.log("fetching API data");
+          console.log("url: "+process.env.REACT_APP_API_URL);
 
           try {
             const responseData = await axios
