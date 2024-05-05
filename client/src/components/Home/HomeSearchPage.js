@@ -176,7 +176,7 @@ const HomeSearchPage = (props) => {
                     right: 0,
                     display: { xs: "none", sm: "block" },
                   }}
-                  alt="The house from the offer."
+                  alt={coverImage}
                   src={coverImage}
                 />
                 <Search
