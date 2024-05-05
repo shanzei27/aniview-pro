@@ -62,11 +62,14 @@ router.get("/:searchText", async (req, res, next) => {
   } else {
     await initUserDataHandling();
     await initLVHArrayCreation();
-  //  await initRecommendationGen();
+    await initRecommendationGen();
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
       historyPage: historyData,
+      recommendations: {
+        r1: popularUnwatchedMatches
+      }
       // rawDataPub: animeGeneralStatsDataObj
     });
   }

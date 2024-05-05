@@ -18,17 +18,17 @@ router.get("/", async (req, res, next) => {
 router.get("/:user_name", async (req, res, next) => {
   const username = req.params.user_name;
   console.log(username);
-  const userGeneralData = await fetchUserGeneralsViaJikan(username);
- // const userHistoryData = await fetchUserHistory(username);
+  const userHistoryData = await fetchUserHistory(username);
+  let userGeneralData = {};
   //waiting half a second to prevent Jikan api rate limit
   setTimeout(async () => {
-    
+    userGeneralData = await fetchUserGeneralsViaJikan(username);
   }, "500");
   const userStatsData = await fetchUserStatsViaJikan(username);
- // const processedList = await processHistory(userHistoryData["data"]);
+  const processedList = await processHistory(userHistoryData["data"]);
   res.send({
     username: username,
-   // user_history: userHistoryData["data"],
+    user_history: userHistoryData["data"],
     last_online: userGeneralData["data"]["last_online"],
     image_url: userGeneralData["data"]["images"]["webp"]["image_url"],
     top_row: {
@@ -37,7 +37,7 @@ router.get("/:user_name", async (req, res, next) => {
       days_watched: userStatsData["data"]["anime"]["days_watched"],
       mean_score: userStatsData["data"]["anime"]["mean_score"],
     },
-  //  recent_activity: processedList,
+    recent_activity: processedList,
   });
 });
 
