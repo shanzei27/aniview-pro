@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Router, useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -159,6 +159,7 @@ const AppBarTop = styled(MuiAppBar, {
 
 function AppbarMain(props) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -182,6 +183,12 @@ function AppbarMain(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     props.handleInputFromMainSearch(barText);
+  };
+
+  const forgetProfile = () => {
+    localStorage.clear();
+    navigate("/");
+    window.location.reload();
   };
 
   const getAppBarStyle = () => {
@@ -310,10 +317,10 @@ function AppbarMain(props) {
                       },
                     }}
                   >
-                    <MenuItem onClick={handleSettingsClose}>
+                    <MenuItem disabled={true} onClick={handleSettingsClose}>
                       Refresh profile
                     </MenuItem>
-                    <MenuItem onClick={handleSettingsClose}>
+                    <MenuItem onClick={() => {forgetProfile(); handleSettingsClose()}}>
                       Forget profile
                     </MenuItem>
 

@@ -163,9 +163,9 @@ function App() {
   };
 
   const handleInputFromMainSearch = (text) => {
-    if (!loading) {
+
       setSearchText(text);
-    }
+
   };
 
   const handleDrawerOpen = () => {

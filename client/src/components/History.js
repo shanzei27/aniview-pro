@@ -62,7 +62,7 @@ const History = (props) => {
   return (
     <>
       <StyledGrid container spacing={2}>
-        <Grid item>
+        <Grid item xs={12}>
           <ChartContainer>
             <BarChart
               dataset={pageData}

@@ -75,6 +75,7 @@ const HomeMain = ({
     // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
     if (searchText != "" && !loading) {
       async function fetchData() {
+        setLoaded(false);
         setLoading(true);
         setUserAcquired(false);
         localStorage.setItem("lastuser", searchText);
@@ -99,6 +100,7 @@ const HomeMain = ({
               )
               .then((res) => setProfileData(res.data));
             setLoading(false);
+            setLoaded(true);
             setUserAcquired(true);
           } catch (error) {
             if (error === null) {
