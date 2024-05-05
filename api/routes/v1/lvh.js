@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { fetchMALUserCompletedList, getTopMALAnimes, getMALUserInfo } = require("../../services/api");
+const { fetchMALUserCompletedList, getTopMALAnimes } = require("../../services/api");
 const { shuffleArray } = require("../../utils");
 
 //score threshold vars
@@ -62,18 +62,11 @@ router.get("/:searchText", async (req, res, next) => {
   } else {
     await initUserDataHandling();
     await initLVHArrayCreation();
-    await initRecommendationGen();
+  //  await initRecommendationGen();
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
       historyPage: historyData,
-      recommendations: {
-        r1: popularUnwatchedMatches
-      },
-      userPrefs: {
-        genres: userPrefGenres,
-        topRatedGenres: mostPreferredGenres
-      },
       // rawDataPub: animeGeneralStatsDataObj
     });
   }
