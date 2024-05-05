@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { config } from "../config/config";
 import Tooltip from "@mui/material/Tooltip";
+import Footer from "../components/Footer";
 
 const Heading = styled(Typography)(({ theme }) => ({}));
 
@@ -122,6 +123,7 @@ const About = (props) => {
           </Item>
         </Grid>
       </StyledGrid>
+      <Footer />
     </>
   );
 };

@@ -3,11 +3,11 @@ import { styled, alpha, useTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import DrawerLeft from "../components/DrawerLeft/DrawerLeft";
-import LikeVsHateRow from "../components/LikeVsHateSection/LikeVsHateRow";
-import ProfilePage from "../components/Profile";
-import HistoryPage from "../components/History";
-import Recommendations from "../components/Recommendations";
+import DrawerLeft from "../DrawerLeft/DrawerLeft";
+import LikeVsHateRow from "../LikeVsHateSection/LikeVsHateRow";
+import ProfilePage from "../Profile";
+import HistoryPage from "../History";
+import Recommendations from "../Recommendations";
 
 const drawerWidth = 200;
 

@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import { sendContactForm } from "../services/api";
 import { FormControl } from "@mui/material";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const Heading = styled(Typography)(({ theme }) => ({}));
 
@@ -179,6 +180,7 @@ const Feedback = (props) => {
           </Item>
         </Grid>
       </StyledGrid>
+      <Footer />
     </>
   );
 };

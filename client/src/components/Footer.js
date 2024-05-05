@@ -19,7 +19,7 @@ const Footer = (props) => {
           bottom: 0,
         }}
       >
-        <Typography>Copyright © 2024 Aniview</Typography>
+        <Typography>Copyright © 2024 Aniview | UNDER DEVELOPMENT - Things might break or not function as intended.</Typography>
       </footer>
     </>
   );

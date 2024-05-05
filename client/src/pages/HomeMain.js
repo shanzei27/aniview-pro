@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import HomeLoaded from "./HomeLoaded";
-import HomeSearchPage from "./HomeSearchPage";
+import HomeLoaded from "../components/Home/HomeLoaded";
+import HomeSearchPage from "../components/Home/HomeSearchPage";
 import axios from "axios";
 import testData from "../config/test_data";
 import Footer from "../components/Footer";
@@ -88,7 +88,6 @@ const HomeMain = ({
           retrieveDataFromLocal();
         } else {
           console.log("fetching API data");
-          console.log("url: "+process.env.REACT_APP_API_URL);
 
           try {
             const responseData = await axios
@@ -134,10 +133,9 @@ const HomeMain = ({
         setMainDataLoaded(true);
       }
     } else {
-      console.log("set false 2")
+      console.log("set false 2");
       setMainDataLoaded(true);
     }
-
   }, [mainData]);
 
   useEffect(() => {
@@ -152,25 +150,20 @@ const HomeMain = ({
     } else {
       setProfileDataLoaded(true);
     }
-    
-
   }, [profileData]);
 
   useEffect(() => {
-    if(mainDataLoaded && profileDataLoaded) {
+    if (mainDataLoaded && profileDataLoaded) {
       setLoaded(true);
       setLoading(false);
     }
   }, [mainDataLoaded, profileDataLoaded]);
-
-  
 
   const handleUserForget = () => {
     setSearchText("");
   };
 
   const HomeComponent = () => {
-   
     if (loading || !userAcquired) {
       return (
         <HomeSearchPage
@@ -185,7 +178,7 @@ const HomeMain = ({
         />
       );
     } else {
-      if(loaded){
+      if (loaded) {
         return (
           <HomeLoaded
             // handleInputFromMainSearch={handleInputFromMainSearch}
@@ -210,10 +203,7 @@ const HomeMain = ({
       <Box sx={{ display: "flex" }}>
         <HomeComponent />
       </Box>
-      <Footer
-        userAcquired={userAcquired}
-        handleLightModeChange={(value) => handleLightModeChange(value)}
-      />
+      <Footer />
     </>
   );
 };
