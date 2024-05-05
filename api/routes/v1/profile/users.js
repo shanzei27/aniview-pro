@@ -17,27 +17,23 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:user_name", async (req, res, next) => {
   const username = req.params.user_name;
-  console.log(username);
   const userHistoryData = await fetchUserHistory(username);
-  let userGeneralData = {};
-  //waiting half a second to prevent Jikan api rate limit
-  setTimeout(async () => {
-    userGeneralData = await fetchUserGeneralsViaJikan(username);
-  }, "500");
+  const userGeneralData = await fetchUserGeneralsViaJikan(username);
   const userStatsData = await fetchUserStatsViaJikan(username);
   const processedList = await processHistory(userHistoryData["data"]);
+
   res.send({
     username: username,
-    user_history: userHistoryData["data"],
-    last_online: userGeneralData["data"]["last_online"],
-    image_url: userGeneralData["data"]["images"]["webp"]["image_url"],
+    user_history: userHistoryData["data"] != undefined ? userHistoryData["data"] : {},
+    last_online: userGeneralData["data"] != undefined ? userGeneralData["data"]["last_online"]  : "",
+    image_url: userGeneralData["data"] != undefined ? userGeneralData["data"]["images"]["webp"]["image_url"]  : "",
     top_row: {
-      num_watching: userStatsData["data"]["anime"]["watching"],
-      num_completed: userStatsData["data"]["anime"]["completed"],
-      days_watched: userStatsData["data"]["anime"]["days_watched"],
-      mean_score: userStatsData["data"]["anime"]["mean_score"],
+      num_watching: userStatsData["data"] != undefined ? userStatsData["data"]["anime"]["watching"]  : "",
+      num_completed: userStatsData["data"] != undefined ? userStatsData["data"]["anime"]["completed"]  : "",
+      days_watched: userStatsData["data"] != undefined ? userStatsData["data"]["anime"]["days_watched"]  : "",
+      mean_score: userStatsData["data"] != undefined ? userStatsData["data"]["anime"]["mean_score"]  : "",
     },
-    recent_activity: processedList,
+    recent_activity: processedList != undefined ? processedList : [],
   });
 });
 
