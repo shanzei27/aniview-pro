@@ -24,7 +24,7 @@ router.get("/:user_name", async (req, res, next) => {
 
   res.send({
     username: username,
-    user_history: userHistoryData["data"] != undefined ? userHistoryData["data"] : {},
+   // user_history: userHistoryData["data"] != undefined ? userHistoryData["data"] : {},
     last_online: userGeneralData["data"] != undefined ? userGeneralData["data"]["last_online"]  : "unknown",
     image_url: userGeneralData["data"] != undefined ? userGeneralData["data"]["images"]["webp"]["image_url"]  : "",
     top_row: {
@@ -47,7 +47,7 @@ async function processHistory(userHistoryData) {
       const animeObj = {
         name: entries["entry"]["name"],
         progress: entries["increment"],
-        total_episodes: animeData.hasOwnProperty("num_episodes") ? ["num_episodes"] : "?",
+        total_episodes: animeData.hasOwnProperty("num_episodes") ? animeData["num_episodes"] : "?",
       };
       //console.log(animeObj);
       //pushing the mal_id to visited array to ignore it from now on
