@@ -14,29 +14,13 @@ const publicScoreGoodThreshold = 7.25;
 const hateLikeThreshold = 1.25;
 const userPrefThreshold = 8; // to determine which are user preferences - to derive recommendations
 
-let requestLoadProgress = 0;
-
-//storage vars
-let userWatchedIDs = [];
-let userPrefAnimes = [];
-let userPrefGenres = [];
-let mostPreferredGenres = [];
-let popularUnwatchedMatches = [];
-let malRecommendedMatches = [];
-let malUserData = [];
-let animeGeneralStatsDataObj = {};
-let lvhAnimeObject = {
-  data: [],
-  count: 0,
-};
-let hvlAnimeObject = {
-  data: [],
-  count: 0,
-};
-// history page
-let historyData = {
-  bar_1: {},
-};
+router.get("/_loadprogress", async (req, res, next) => {
+  res.send({
+    data: {
+      progress: requestLoadProgress,
+    },
+  });
+});
 
 router.get("/", async (req, res, next) => {
   const data = "test api responded";
@@ -46,6 +30,29 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/:searchText", async (req, res, next) => {
+  //session storage vars
+  let requestLoadProgress = 0;
+  let userWatchedIDs = [];
+  let userPrefAnimes = [];
+  let userPrefGenres = [];
+  let mostPreferredGenres = [];
+  let popularUnwatchedMatches = [];
+  let malRecommendedMatches = [];
+  let malUserData = [];
+  let animeGeneralStatsDataObj = {};
+  let lvhAnimeObject = {
+    data: [],
+    count: 0,
+  };
+  let hvlAnimeObject = {
+    data: [],
+    count: 0,
+  };
+  // history page
+  let historyData = {
+    bar_1: {},
+  };
+
   malUserData = [];
   animeGeneralStatsDataObj = {};
   lvhAnimeObject = {
@@ -67,9 +74,14 @@ router.get("/:searchText", async (req, res, next) => {
       error: "not_found",
     });
   } else {
-    await initUserDataHandling();
-    await initLVHArrayCreation();
-    await initRecommendationGen();
+    // overall request load progress calc based on vals in right:
+    await initUserDataHandling(userWatchedIDs, userPrefGenres, userPrefAnimes, historyData, malUserData, animeGeneralStatsDataObj); // x1
+    requestLoadProgress += 20;
+    await initLVHArrayCreation(malUserData, animeGeneralStatsDataObj, lvhAnimeObject, hvlAnimeObject); // x1
+    requestLoadProgress += 20;
+    await initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferredGenres, popularUnwatchedMatches, malRecommendedMatches); // x2  + 1 in /user/profile endpoint = 5 i.e. 100/5 => progress %
+    requestLoadProgress += 40;
+    requestLoadProgress += 20; // move this to user/profile req later
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
@@ -83,7 +95,7 @@ router.get("/:searchText", async (req, res, next) => {
   }
 });
 
-async function initRecommendationGen() {
+async function initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferredGenres, popularUnwatchedMatches, malRecommendedMatches) {
   // get top 100 highly rated MAL animes list and shuffle
   const topMALAnimes = await getTopMALAnimes();
   shuffleArray(topMALAnimes["data"]);
@@ -108,7 +120,7 @@ async function initRecommendationGen() {
 
   for (animeID of userPrefAnimes) {
     const matchingRecs = await getRecsForAnime(animeID);
-    const unwatchedMatch = matchingRecs["data"].find(e => {
+    const unwatchedMatch = matchingRecs["data"].find((e) => {
       return !userWatchedIDs.includes(e["entry"]["mal_id"]);
     });
     malRecommendedMatches.push(unwatchedMatch);
@@ -121,7 +133,7 @@ async function initRecommendationGen() {
 
 // ------------ API Process -------------------
 
-async function initUserDataHandling() {
+async function initUserDataHandling(userWatchedIDs, userPrefGenres, userPrefAnimes, historyData, malUserData, animeGeneralStatsDataObj) {
   console.log("init UserDataHandling");
   // let userPrefAnimes = [];
   // let userPrefGenres = [];
@@ -230,7 +242,7 @@ async function initUserDataHandling() {
   console.log("end of UserDataHandling");
 }
 
-async function initLVHArrayCreation() {
+async function initLVHArrayCreation(malUserData, animeGeneralStatsDataObj, lvhAnimeObject, hvlAnimeObject) {
   console.log("init LVH array creation");
 
   malUserData["data"].forEach(async (element) => {

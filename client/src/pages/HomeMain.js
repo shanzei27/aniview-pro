@@ -29,9 +29,11 @@ const HomeMain = ({
 }) => {
   // const [searchText, setSearchText] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [loadingAPI, setLoadingAPI] = useState(false);
   const [mainDataLoaded, setMainDataLoaded] = useState(false);
   const [profileDataLoaded, setProfileDataLoaded] = useState(false);
   const [showLoadError, setShowLoadError] = useState(false);
+  const [apiLoadProgress, setAPILoadProgress] = useState(0);
   const [loadError, setLoadError] = useState({
     message: "",
   });
@@ -89,11 +91,12 @@ const HomeMain = ({
           retrieveDataFromLocal();
         } else {
           console.log("fetching API data");
-
+          setLoadingAPI(true);
           try {
             const responseData = await axios
               .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`)
               .then((res) => setMainData(res.data));
+
             const profileResponseData = await axios
               .get(
                 `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`
@@ -102,6 +105,7 @@ const HomeMain = ({
             setLoading(false);
             setLoaded(true);
             setUserAcquired(true);
+            setLoadingAPI(false);
           } catch (error) {
             if (error === null) {
               setLoadError({
@@ -127,6 +131,24 @@ const HomeMain = ({
       if (searchText) fetchData();
     }
   }, [searchText]);
+
+  useEffect(() => {
+    if(loadingAPI){
+      async function getAPILoadProgress() {
+        const progress = await axios
+          .get("process.env.REACT_APP_API_URL}/v1/lvh/_loadprogress")
+          .then((res) => setAPILoadProgress(res.data.progress));
+          console.log(progress);
+      }
+  
+      getAPILoadProgress();
+      const interval = setInterval(() => getAPILoadProgress(), 2500);
+  
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [loadingAPI]);
 
   useEffect(() => {
     if (localStorage.getItem(`${searchText}_main`) === null) {
