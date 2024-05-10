@@ -14,6 +14,8 @@ const publicScoreGoodThreshold = 7.25;
 const hateLikeThreshold = 1.25;
 const userPrefThreshold = 8; // to determine which are user preferences - to derive recommendations
 
+const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
 router.get("/_loadprogress", async (req, res, next) => {
   res.send({
     data: {

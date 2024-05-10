@@ -94,13 +94,30 @@ const HomeMain = ({
           setLoadingAPI(true);
           try {
             const responseData = await axios
-              .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`)
+              .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`, {
+                onDownloadProgress: (progressEvent) => {
+                  console.log(progressEvent)
+                  let percentCompleted = Math.round(
+                    (progressEvent.loaded * 100) / progressEvent.total
+                  ); 
+                  console.log("%1: "+percentCompleted);
+                },
+              })
               .then((res) => setMainData(res.data));
 
             const profileResponseData = await axios
               .get(
                 `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`
-              )
+                , {
+                  onDownloadProgress: (progressEvent) => {
+                  console.log(progressEvent)
+
+                    let percentCompleted = Math.round(
+                      (progressEvent.loaded * 100) / progressEvent.total
+                    ); 
+                    console.log("%2: "+percentCompleted);
+                  },
+                })
               .then((res) => setProfileData(res.data));
             setLoading(false);
             setLoaded(true);
@@ -132,23 +149,23 @@ const HomeMain = ({
     }
   }, [searchText]);
 
-  useEffect(() => {
-    if(loadingAPI){
-      async function getAPILoadProgress() {
-        const progress = await axios
-          .get("process.env.REACT_APP_API_URL}/v1/lvh/_loadprogress")
-          .then((res) => setAPILoadProgress(res.data.progress));
-          console.log(progress);
-      }
+  // useEffect(() => {
+  //   if(loadingAPI){
+  //     async function getAPILoadProgress() {
+  //       const progress = await axios
+  //         .get("process.env.REACT_APP_API_URL}/v1/lvh/_loadprogress")
+  //         .then((res) => setAPILoadProgress(res.data.progress));
+  //         console.log(progress);
+  //     }
   
-      getAPILoadProgress();
-      const interval = setInterval(() => getAPILoadProgress(), 2500);
+  //     getAPILoadProgress();
+  //     const interval = setInterval(() => getAPILoadProgress(), 2500);
   
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [loadingAPI]);
+  //     return () => {
+  //       clearInterval(interval);
+  //     };
+  //   }
+  // }, [loadingAPI]);
 
   useEffect(() => {
     if (localStorage.getItem(`${searchText}_main`) === null) {

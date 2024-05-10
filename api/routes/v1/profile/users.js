@@ -8,6 +8,8 @@ const {
   fetchMALAnime,
 } = require("../../../services/api");
 
+const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
+
 router.get("/", async (req, res, next) => {
   const data = "users api responded; request with an username";
   res.send({
@@ -17,15 +19,18 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:user_name", async (req, res, next) => {
   const username = req.params.user_name;
+  await sleep(1000);
   const userHistoryData = await fetchUserHistory(username);
+  await sleep(500);
   const userGeneralData = await fetchUserGeneralsViaJikan(username);
+  await sleep(500);
   const userStatsData = await fetchUserStatsViaJikan(username);
   const processedList = await processHistory(userHistoryData["data"]);
 
   res.send({
     username: username,
    // user_history: userHistoryData["data"] != undefined ? userHistoryData["data"] : {},
-    last_online: userGeneralData["data"] != undefined ? userGeneralData["data"]["last_online"]  : "unknown",
+    last_online: (userGeneralData != undefined && userGeneralData["data"] != undefined) ? userGeneralData["data"]["last_online"]  : "unknown",
     image_url: userGeneralData["data"] != undefined ? userGeneralData["data"]["images"]["webp"]["image_url"]  : "",
     top_row: {
       num_watching: userStatsData["data"] != undefined ? userStatsData["data"]["anime"]["watching"]  : "",
