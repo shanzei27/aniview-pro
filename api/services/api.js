@@ -37,6 +37,15 @@ async function getTopMALAnimes() {
   });
 }
 
+async function getRecsForAnime(id) {
+  return axios
+  .get(`https://api.jikan.moe/v4/anime/${id}/recommendations`)
+  .then((promise) => promise.data)
+  .catch((e) => {
+    console.error(e);
+  });
+}
+
 async function fetchMALAnime(id) {
   const headers = {
     "X-MAL-CLIENT-ID": process.env.REACT_APP_CLIENT_ID,
@@ -81,6 +90,7 @@ module.exports = {
   fetchUserGeneralsViaJikan,
   fetchUserStatsViaJikan,
   fetchUserHistory,
+  getRecsForAnime,
   getTopMALAnimes,
   fetchMALAnime,
   fetchMALUserCompletedList,

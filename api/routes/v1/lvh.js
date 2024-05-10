@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { fetchMALUserCompletedList, getTopMALAnimes } = require("../../services/api");
+const {
+  fetchMALUserCompletedList,
+  getTopMALAnimes,
+  getRecsForAnime,
+} = require("../../services/api");
 const { shuffleArray } = require("../../utils");
 
 //score threshold vars
@@ -8,7 +12,9 @@ const publicScoreBadThreshold = 7.25; //score to determine worse than avg anime 
 const likeHateThreshold = 0.45; //score threshold to check
 const publicScoreGoodThreshold = 7.25;
 const hateLikeThreshold = 1.25;
-const userPrefThreshold = 8;    // to determine which are user preferences - to derive recommendations
+const userPrefThreshold = 8; // to determine which are user preferences - to derive recommendations
+
+let requestLoadProgress = 0;
 
 //storage vars
 let userWatchedIDs = [];
@@ -16,6 +22,7 @@ let userPrefAnimes = [];
 let userPrefGenres = [];
 let mostPreferredGenres = [];
 let popularUnwatchedMatches = [];
+let malRecommendedMatches = [];
 let malUserData = [];
 let animeGeneralStatsDataObj = {};
 let lvhAnimeObject = {
@@ -68,26 +75,46 @@ router.get("/:searchText", async (req, res, next) => {
       userHates: hvlAnimeObject,
       historyPage: historyData,
       recommendations: {
-        r1: popularUnwatchedMatches
-      }
+        r1: popularUnwatchedMatches,
+        r2: malRecommendedMatches,
+      },
       // rawDataPub: animeGeneralStatsDataObj
     });
   }
 });
 
 async function initRecommendationGen() {
+  // get top 100 highly rated MAL animes list and shuffle
   const topMALAnimes = await getTopMALAnimes();
   shuffleArray(topMALAnimes["data"]);
 
   for (anime of topMALAnimes["data"]) {
     const animeGenres = anime["genres"].map((e) => e.name);
-    if (animeGenres.filter(value => mostPreferredGenres.includes(value)).length > 0) {
-      if(!userWatchedIDs.includes(anime["mal_id"])){
-        popularUnwatchedMatches.push(anime);      
+    if (
+      animeGenres.filter((value) => mostPreferredGenres.includes(value))
+        .length > 0
+    ) {
+      if (!userWatchedIDs.includes(anime["mal_id"])) {
+        popularUnwatchedMatches.push(anime);
       }
-      if(popularUnwatchedMatches.length >= 5){
+      if (popularUnwatchedMatches.length >= 5) {
         break;
       }
+    }
+  }
+
+  //shuffling user pref anime IDs array before picking the first 5 to find recs
+  shuffleArray(userPrefAnimes);
+
+  for (animeID of userPrefAnimes) {
+    const matchingRecs = await getRecsForAnime(animeID);
+    const unwatchedMatch = matchingRecs["data"].find(e => {
+      return !userWatchedIDs.includes(e["entry"]["mal_id"]);
+    });
+    malRecommendedMatches.push(unwatchedMatch);
+
+    if (malRecommendedMatches.length >= 5) {
+      break;
     }
   }
 }
@@ -112,10 +139,10 @@ async function initUserDataHandling() {
 
   for (let i = 0; i < malUserData["data"].length; i++) {
     const animeID = malUserData["data"][i]["node"]["id"];
-    userWatchedIDs.push(animeID);     // stored for later use in recommendation gen
+    userWatchedIDs.push(animeID); // stored for later use in recommendation gen
     const animeGeneralStats = malUserData["data"][i]["node"]; //await fetchMALAnime(animeID);
 
-    if(malUserData["data"][i]["list_status"]["score"] >= userPrefThreshold){
+    if (malUserData["data"][i]["list_status"]["score"] >= userPrefThreshold) {
       userPrefAnimes.push(animeID);
       userPrefGenres.push(animeGeneralStats["genres"]);
     }
@@ -196,7 +223,9 @@ async function initUserDataHandling() {
     }
   }
   userPrefGenres = userPrefGenres.flat();
-  userPrefGenres = userPrefGenres.map((e) => e.hasOwnProperty("name") ? e.name : "");
+  userPrefGenres = userPrefGenres.map((e) =>
+    e.hasOwnProperty("name") ? e.name : ""
+  );
   mostPreferredGenres = getMostFoundElFromArr(userPrefGenres, 6);
   console.log("end of UserDataHandling");
 }
@@ -230,7 +259,7 @@ async function initLVHArrayCreation() {
 
         hvlAnimeObject["data"].push(processedObjHVL);
         hvlAnimeObject["count"] = hvlAnimeObject["data"].length;
-       // console.log("MATCH FOUND :: " + processedObjHVL["node"]["title"]);
+        // console.log("MATCH FOUND :: " + processedObjHVL["node"]["title"]);
       }
     }
   });
@@ -243,8 +272,8 @@ function getMostFoundElFromArr(arr, n) {
   const count = {};
 
   // Count occurrences of each string
-  arr.forEach(str => {
-      count[str] = (count[str] || 0) + 1;
+  arr.forEach((str) => {
+    count[str] = (count[str] || 0) + 1;
   });
 
   // Convert the object into an array of [string, count] pairs
@@ -254,7 +283,7 @@ function getMostFoundElFromArr(arr, n) {
   countArray.sort((a, b) => b[1] - a[1]);
   const topN = countArray.slice(0, n);
 
-  return topN.map(pair => pair[0]);
+  return topN.map((pair) => pair[0]);
 }
 
 module.exports = router;
