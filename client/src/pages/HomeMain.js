@@ -91,15 +91,18 @@ const HomeMain = ({
           retrieveDataFromLocal();
         } else {
           console.log("fetching API data");
+          let totalBytes = 0;
           setLoadingAPI(true);
           try {
             const responseData = await axios
               .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`, {
                 onDownloadProgress: (progressEvent) => {
                   console.log(progressEvent)
+                  totalBytes += progressEvent.total;
                   let percentCompleted = Math.round(
                     (progressEvent.loaded * 100) / progressEvent.total
                   ); 
+                  setAPILoadProgress(apiLoadProgress+(percentCompleted/2));
                   console.log("%1: "+percentCompleted);
                 },
               })
@@ -111,15 +114,19 @@ const HomeMain = ({
                 , {
                   onDownloadProgress: (progressEvent) => {
                   console.log(progressEvent)
-
+                  totalBytes += progressEvent.total;
                     let percentCompleted = Math.round(
                       (progressEvent.loaded * 100) / progressEvent.total
                     ); 
+                    setAPILoadProgress(apiLoadProgress+(percentCompleted/2));
                     console.log("%2: "+percentCompleted);
                   },
                 })
               .then((res) => setProfileData(res.data));
-            setLoading(false);
+            
+            setTimeout(() => {
+              setLoading(false);
+            }, 200);
             setLoaded(true);
             setUserAcquired(true);
             setLoadingAPI(false);
@@ -196,7 +203,9 @@ const HomeMain = ({
   useEffect(() => {
     if (mainDataLoaded && profileDataLoaded) {
       setLoaded(true);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 200);
     }
   }, [mainDataLoaded, profileDataLoaded]);
 
@@ -216,6 +225,7 @@ const HomeMain = ({
           loading={loading}
           userAcquired={userAcquired}
           loaded={loaded}
+          progress={apiLoadProgress}
         />
       );
     } else {

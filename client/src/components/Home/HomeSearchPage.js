@@ -11,7 +11,9 @@ import Paper from "@mui/material/Paper";
 import Alert from "@mui/material/Alert";
 import Grow from "@mui/material/Grow";
 import Loader from "react-spinners/PulseLoader";
+import LinearProgress from "@mui/material/LinearProgress";
 import Divider from "@mui/material/Divider";
+import PropTypes from 'prop-types';
 import { config } from "../../config/config";
 
 const Search = styled(Paper)(({ theme }) => ({
@@ -62,6 +64,29 @@ const Item = styled(Box)(({ theme }) => ({
   width: "100%",
   height: "100%",
 }));
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+  value: PropTypes.number.isRequired,
+};
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -121,20 +146,28 @@ const HomeSearchPage = (props) => {
     <>
       <CssBaseline />
 
-      {(!props.loaded && props.loading) && (
+      {!props.loaded && props.loading && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
           <Grid item xs={10}>
             <Item>
-              <Loader color="#36d7b7" />
+              {/* <Loader color="#36d7b7" /> */}
+              <Box sx={{ width: "50%" }}>
+                <LinearProgress color="secondary" variant="determinate" value={props.progress}/>
+              </Box>
               <LoadingText>This will take a few seconds</LoadingText>
             </Item>
           </Grid>
         </StyledGrid>
       )}
 
-      {(!props.loading) && (
+      {!props.loading && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
-          <Grid sx={{ height: {xs:"50%", sm:"100%"} }} item xs={12} sm={5.5}>
+          <Grid
+            sx={{ height: { xs: "50%", sm: "100%" } }}
+            item
+            xs={12}
+            sm={5.5}
+          >
             <Item>
               <Typography variant="lead" sx={{ paddingBottom: 2 }}>
                 Enter MyAnimeList username
@@ -154,7 +187,12 @@ const HomeSearchPage = (props) => {
               transform: `rotate(-8deg)`,
             }}
           />
-          <Grid sx={{  height: {xs:"50%", sm:"100%"} }} item xs={12} sm={5.5}>
+          <Grid
+            sx={{ height: { xs: "50%", sm: "100%" } }}
+            item
+            xs={12}
+            sm={5.5}
+          >
             <Item>
               <Box
                 sx={{
