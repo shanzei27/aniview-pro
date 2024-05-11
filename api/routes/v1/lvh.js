@@ -33,7 +33,6 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:searchText", async (req, res, next) => {
   //session storage vars
-  let requestLoadProgress = 0;
   let userWatchedIDs = [];
   let userPrefAnimes = [];
   let userPrefGenres = [];
@@ -76,14 +75,29 @@ router.get("/:searchText", async (req, res, next) => {
       error: "not_found",
     });
   } else {
-    // overall request load progress calc based on vals in right:
-    await initUserDataHandling(userWatchedIDs, userPrefGenres, userPrefAnimes, historyData, malUserData, animeGeneralStatsDataObj); // x1
-    requestLoadProgress += 20;
-    await initLVHArrayCreation(malUserData, animeGeneralStatsDataObj, lvhAnimeObject, hvlAnimeObject); // x1
-    requestLoadProgress += 20;
-    await initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferredGenres, popularUnwatchedMatches, malRecommendedMatches); // x2  + 1 in /user/profile endpoint = 5 i.e. 100/5 => progress %
-    requestLoadProgress += 40;
-    requestLoadProgress += 20; // move this to user/profile req later
+    await initUserDataHandling(
+      userWatchedIDs,
+      userPrefGenres,
+      userPrefAnimes,
+      historyData,
+      malUserData,
+      animeGeneralStatsDataObj,
+      mostPreferredGenres
+    );
+    await initLVHArrayCreation(
+      malUserData,
+      animeGeneralStatsDataObj,
+      lvhAnimeObject,
+      hvlAnimeObject
+    );
+    await initRecommendationGen(
+      userWatchedIDs,
+      userPrefAnimes,
+      userPrefGenres,
+      mostPreferredGenres,
+      popularUnwatchedMatches,
+      malRecommendedMatches
+    );
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
@@ -97,10 +111,25 @@ router.get("/:searchText", async (req, res, next) => {
   }
 });
 
-async function initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferredGenres, popularUnwatchedMatches, malRecommendedMatches) {
+async function initRecommendationGen(
+  userWatchedIDs,
+  userPrefAnimes,
+  userPrefGenres,
+  mostPreferredGenres,
+  popularUnwatchedMatches,
+  malRecommendedMatches
+) {
   // get top 100 highly rated MAL animes list and shuffle
   const topMALAnimes = await getTopMALAnimes();
   shuffleArray(topMALAnimes["data"]);
+
+  userPrefGenres = userPrefGenres.flat();
+  userPrefGenres = userPrefGenres.map((e) =>
+    e.hasOwnProperty("name") ? e.name : ""
+  );
+  mostPreferredGenres = mostPreferredGenres.concat(
+    getMostFoundElFromArr(userPrefGenres, 6)
+  );
 
   for (anime of topMALAnimes["data"]) {
     const animeGenres = anime["genres"].map((e) => e.name);
@@ -116,7 +145,6 @@ async function initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferr
       }
     }
   }
-
   //shuffling user pref anime IDs array before picking the first 5 to find recs
   shuffleArray(userPrefAnimes);
 
@@ -135,7 +163,15 @@ async function initRecommendationGen(userWatchedIDs, userPrefAnimes, mostPreferr
 
 // ------------ API Process -------------------
 
-async function initUserDataHandling(userWatchedIDs, userPrefGenres, userPrefAnimes, historyData, malUserData, animeGeneralStatsDataObj) {
+async function initUserDataHandling(
+  userWatchedIDs,
+  userPrefGenres,
+  userPrefAnimes,
+  historyData,
+  malUserData,
+  animeGeneralStatsDataObj,
+  mostPreferredGenres
+) {
   console.log("init UserDataHandling");
   // let userPrefAnimes = [];
   // let userPrefGenres = [];
@@ -236,15 +272,16 @@ async function initUserDataHandling(userWatchedIDs, userPrefGenres, userPrefAnim
       // console.log("fetched 1 public anime");
     }
   }
-  userPrefGenres = userPrefGenres.flat();
-  userPrefGenres = userPrefGenres.map((e) =>
-    e.hasOwnProperty("name") ? e.name : ""
-  );
-  mostPreferredGenres = getMostFoundElFromArr(userPrefGenres, 6);
+
   console.log("end of UserDataHandling");
 }
 
-async function initLVHArrayCreation(malUserData, animeGeneralStatsDataObj, lvhAnimeObject, hvlAnimeObject) {
+async function initLVHArrayCreation(
+  malUserData,
+  animeGeneralStatsDataObj,
+  lvhAnimeObject,
+  hvlAnimeObject
+) {
   console.log("init LVH array creation");
 
   malUserData["data"].forEach(async (element) => {
