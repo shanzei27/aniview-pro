@@ -21,32 +21,42 @@ const LikeVsHateRow = (props) => {
 
   return (
     <>
-      <Grid container spacing={2}>
-        {pageData != undefined &&
-          paginatedData.map((animeItem, i) => {
-            //console.log(animeItem)
-            return (
-              <Grid
-                sx={{
-                  display: "flex",
-
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-                item
-                xs={12}
-                sm={10}
-                md={6}
-                lg={4}
-                xl={3}
-                key={i}
-              >
-                <Item key={i}>
-                  <LikeVsHateItem data={animeItem} type={props.type} />
-                </Item>
-              </Grid>
-            );
-          })}
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "70vh",
+            alignItems: "flex-start",
+          }}
+        >
+          <Grid container spacing={2}>
+            {pageData != undefined &&
+              paginatedData.map((animeItem, i) => {
+                //console.log(animeItem)
+                return (
+                  <Grid
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    item
+                    xs={12}
+                    sm={10}
+                    md={6}
+                    lg={4}
+                    xl={3}
+                    key={i}
+                  >
+                    <Item key={i}>
+                      <LikeVsHateItem data={animeItem} type={props.type} />
+                    </Item>
+                  </Grid>
+                );
+              })}
+          </Grid>
+        </Box>
         <Box
           sx={{
             display: "flex",
@@ -61,7 +71,7 @@ const LikeVsHateRow = (props) => {
             getData={props.getData}
           />
         </Box>
-      </Grid>
+      </Box>
     </>
   );
 };

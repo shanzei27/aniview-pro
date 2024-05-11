@@ -98,7 +98,7 @@ const LikeVsHateItem = (props) => {
   //const anime = api[animeID];
   //const imageSrc = process.env.PUBLIC_URL + anime["image_uri"]+'.jpg';
   //  console.log(props.data);
-  const imageSrc = props.data["node"]["main_picture"]["large"];
+  const imageSrc = props.data["node"]["main_picture"]["medium"];
 
   const imageIcon = (
     <Link
