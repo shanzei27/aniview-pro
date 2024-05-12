@@ -6,6 +6,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import textUtils from "../utils/textUtils";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import HomeIcon from '@mui/icons-material/Home';
 import Link from "@mui/material/Link";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
@@ -100,6 +101,16 @@ const About = (props) => {
                   src="https://jikan.moe/assets/images/logo/jikan.logo.png"
                 />
                 <Typography>{"\u00A0"}Jikan API</Typography>
+              </StyledButton>
+            </Tooltip>
+            <Tooltip title="My personal site">
+              <StyledButton
+                href="https://www.shanjei.com"
+                variant="body2"
+                underline="none"
+              >
+                <HomeIcon />
+                <Typography>{"\u00A0"}homepage</Typography>
               </StyledButton>
             </Tooltip>
           </Box>

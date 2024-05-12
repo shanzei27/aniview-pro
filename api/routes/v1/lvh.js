@@ -159,7 +159,7 @@ async function initRecommendationGen(
     const unwatchedMatch = matchingRecs["data"].find((e) => {
       return !userWatchedIDs.includes(e["entry"]["mal_id"]);
     });
-    console.log(unwatchedMatch);
+
     if (unwatchedMatch != null || unwatchedMatch != undefined) {
       const anime = await fetchMALAnime(unwatchedMatch.entry["mal_id"]);
       animeRecommendations.push({

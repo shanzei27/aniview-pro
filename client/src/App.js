@@ -7,7 +7,7 @@ import AppbarMain from "./components/Appbar.js";
 import HomeMain from "./pages/HomeMain.js";
 import About from "./pages/About.js";
 import Feedback from "./pages/Feedback.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const darkTheme = createTheme({
   palette: {
@@ -50,7 +50,7 @@ const darkTheme = createTheme({
     h5: {
       padding: 4,
       color: "#000",
-      fontSize: 18,
+      fontSize: 17,
       fontWeight: 600,
     },
     subtitle1: {
@@ -157,15 +157,30 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [userAcquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
   const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
+  const [showSnackMessage, setShowSnackMessage] = useState(false);
+  const [forgottenProfile, setForgottenProfile] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("Profile forgotten");
+
+  useEffect(() => {
+    const lastForgotten = localStorage.getItem("lastforgotten");
+    if (lastForgotten === "true") {
+      setShowSnackMessage(true);
+      setTimeout(() => {
+        setShowSnackMessage(false);
+      }, "6000");
+    }
+  }, []);
 
   const handleLightModeChange = (value) => {
     setLight((prevMode) => !prevMode);
   };
 
   const handleInputFromMainSearch = (text) => {
+    setSearchText(text);
+  };
 
-      setSearchText(text);
-
+  const handleForgetProfile = () => {
+    setShowSnackMessage(true);
   };
 
   const handleDrawerOpen = () => {
@@ -189,6 +204,7 @@ function App() {
               handleDrawerOpen={handleDrawerOpen}
               handleDrawerClose={handleDrawerClose}
               handleLightModeChange={handleLightModeChange}
+              handleForgetProfile={handleForgetProfile}
             />
             <Routes>
               <Route
@@ -204,6 +220,8 @@ function App() {
                     drawerOpen={sideDrawerOpen}
                     handleLightModeChange={(value) => handleLightModeChange()}
                     handleInputFromMainSearch={handleInputFromMainSearch}
+                    showSnackMessage={showSnackMessage}
+                    snackMessage={snackMessage}
                   />
                 }
               />
@@ -211,16 +229,18 @@ function App() {
                 path="/home"
                 element={
                   <HomeMain
-                  searchText={searchText}
-                  setSearchText={setSearchText}
-                  loading={loading}
-                  setLoading={setLoading}
-                  userAcquired={userAcquired}
-                  setUserAcquired={setUserAcquired}
-                  drawerOpen={sideDrawerOpen}
-                  handleLightModeChange={(value) => handleLightModeChange()}
-                  handleInputFromMainSearch={handleInputFromMainSearch}
-                />
+                    searchText={searchText}
+                    setSearchText={setSearchText}
+                    loading={loading}
+                    setLoading={setLoading}
+                    userAcquired={userAcquired}
+                    setUserAcquired={setUserAcquired}
+                    drawerOpen={sideDrawerOpen}
+                    handleLightModeChange={(value) => handleLightModeChange()}
+                    handleInputFromMainSearch={handleInputFromMainSearch}
+                    showSnackMessage={showSnackMessage}
+                    snackMessage={snackMessage}
+                  />
                 }
               />
               <Route

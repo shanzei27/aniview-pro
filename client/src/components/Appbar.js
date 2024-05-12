@@ -185,7 +185,9 @@ function AppbarMain(props) {
   };
 
   const forgetProfile = () => {
+    props.handleForgetProfile();
     localStorage.clear();
+    localStorage.setItem("lastforgotten", "true");
     navigate("/");
     window.location.reload();
   };
@@ -214,7 +216,7 @@ function AppbarMain(props) {
               <MenuIcon />
             </IconButton>
             <LogoContainer>
-              <Box sx={{ position: "relative"}}>
+              <Box sx={{ position: "relative" }}>
                 <NavLink style={{ textDecoration: "none" }} to={"/home"}>
                   <LogoText>{config.site_name}</LogoText>
                 </NavLink>
@@ -257,7 +259,12 @@ function AppbarMain(props) {
               </form>
             )}
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-end"}}>
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                justifyContent: "flex-end",
+              }}
+            >
               {pages.map((page) => (
                 <NavLink
                   to={`/` + page.toLowerCase()}

@@ -8,6 +8,7 @@ import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
 import { openInNewTab } from "../../utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import LaunchIcon from "@mui/icons-material/Launch";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import GradeIcon from "@mui/icons-material/Grade";
 import Fade from "@mui/material/Fade";
@@ -81,7 +82,11 @@ const ProfileHeader = ({ pageData }) => {
   }, []);
 
   const userImage = (
-    <Link onClick={() => openInNewTab(pageData.profile_url)}>
+    <Link
+      onClick={() =>
+        openInNewTab(`https://myanimelist.net/profile/${pageData.username}`)
+      }
+    >
       <CardMedia
         component="img"
         style={{
@@ -120,9 +125,30 @@ const ProfileHeader = ({ pageData }) => {
                   alignItems: "center",
                 }}
               >
-                <Box style={{ height: "80px" }}>
-                  <Typography variant="h2">{pageData.username}</Typography>
-                </Box>
+                <Link
+                  sx={{ textDecoration: "none" }}
+                  onClick={() =>
+                    openInNewTab(
+                      `https://myanimelist.net/profile/${pageData.username}`
+                    )
+                  }
+                >
+                  <Box
+                    style={{
+                      height: "80px",
+                      display: "flex",
+                      width: "20%",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography variant="h2" sx={{ cursor: "pointer" }}>
+                      {pageData.username}
+                    </Typography>
+                    <LaunchIcon
+                      sx={{ marginTop: 1, marginLeft: 1, cursor: "pointer" }}
+                    />
+                  </Box>
+                </Link>
               </Grid>
               <Grid
                 item

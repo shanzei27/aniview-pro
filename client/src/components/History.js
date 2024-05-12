@@ -38,7 +38,7 @@ const ChartContainer = styled(Paper)(({ theme }) => ({
 const History = (props) => {
   const [pageData, setPageData] = useState([...props.data]);
 
-  const valueFormatter = (value) => `${value}hrs`;
+  const valueFormatter = (value) => `${value}hrs (${(value/24).toFixed(2)} days)`;
   const chartSetting = {
     yAxis: [
       {
@@ -63,7 +63,7 @@ const History = (props) => {
     <>
       <StyledGrid container spacing={2}>
         <Grid item xs={12}>
-          <ChartContainer>
+          <ChartContainer sx={{whiteSpace: 'pre'}}>
             <BarChart
               dataset={pageData}
               yAxis={[{ dataKey: "hours_watched" }]}

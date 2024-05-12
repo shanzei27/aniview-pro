@@ -7,7 +7,7 @@ import HomeSearchPage from "../components/Home/HomeSearchPage";
 import axios from "axios";
 import testData from "../config/test_data";
 import Footer from "../components/Footer";
-import Loader from "react-spinners/MoonLoader";
+import Snackbar from "@mui/material/Snackbar";
 import { Helmet } from "react-helmet-async";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -26,6 +26,8 @@ const HomeMain = ({
   setUserAcquired,
   handleLightModeChange,
   handleInputFromMainSearch,
+  showSnackMessage,
+  snackMessage,
 }) => {
   // const [searchText, setSearchText] = useState("");
   const [loaded, setLoaded] = useState(false);
@@ -97,33 +99,34 @@ const HomeMain = ({
             const responseData = await axios
               .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`, {
                 onDownloadProgress: (progressEvent) => {
-                  console.log(progressEvent)
+                  console.log(progressEvent);
                   totalBytes += progressEvent.total;
                   let percentCompleted = Math.round(
                     (progressEvent.loaded * 100) / progressEvent.total
-                  ); 
-                  setAPILoadProgress(apiLoadProgress+(percentCompleted/2));
-                  console.log("%1: "+percentCompleted);
+                  );
+                  setAPILoadProgress(apiLoadProgress + percentCompleted / 2);
+                  console.log("%1: " + percentCompleted);
                 },
               })
               .then((res) => setMainData(res.data));
 
             const profileResponseData = await axios
               .get(
-                `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`
-                , {
+                `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`,
+                {
                   onDownloadProgress: (progressEvent) => {
-                  console.log(progressEvent)
-                  totalBytes += progressEvent.total;
+                    console.log(progressEvent);
+                    totalBytes += progressEvent.total;
                     let percentCompleted = Math.round(
                       (progressEvent.loaded * 100) / progressEvent.total
-                    ); 
-                    setAPILoadProgress(apiLoadProgress+(percentCompleted/2));
-                    console.log("%2: "+percentCompleted);
+                    );
+                    setAPILoadProgress(apiLoadProgress + percentCompleted / 2);
+                    console.log("%2: " + percentCompleted);
                   },
-                })
+                }
+              )
               .then((res) => setProfileData(res.data));
-            
+
             setTimeout(() => {
               setLoading(false);
             }, 200);
@@ -164,10 +167,10 @@ const HomeMain = ({
   //         .then((res) => setAPILoadProgress(res.data.progress));
   //         console.log(progress);
   //     }
-  
+
   //     getAPILoadProgress();
   //     const interval = setInterval(() => getAPILoadProgress(), 2500);
-  
+
   //     return () => {
   //       clearInterval(interval);
   //     };
@@ -216,17 +219,24 @@ const HomeMain = ({
   const HomeComponent = () => {
     if (loading || !userAcquired) {
       return (
-        <HomeSearchPage
-          handleInputFromMainSearch={(value) =>
-            handleInputFromMainSearch(value)
-          }
-          error={loadError}
-          showError={showLoadError}
-          loading={loading}
-          userAcquired={userAcquired}
-          loaded={loaded}
-          progress={apiLoadProgress}
-        />
+        <>
+          <HomeSearchPage
+            handleInputFromMainSearch={(value) =>
+              handleInputFromMainSearch(value)
+            }
+            error={loadError}
+            showError={showLoadError}
+            loading={loading}
+            userAcquired={userAcquired}
+            loaded={loaded}
+            progress={apiLoadProgress}
+          />
+          <Snackbar
+            open={showSnackMessage}
+            autoHideDuration={6000}
+            message={snackMessage}
+          />
+        </>
       );
     } else {
       if (loaded) {
