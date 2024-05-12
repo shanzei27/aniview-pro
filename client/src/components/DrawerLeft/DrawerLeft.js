@@ -23,6 +23,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import RecommendIcon from "@mui/icons-material/Recommend";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import drawerLeftTabs from "../../config/drawer_left_tabs";
+import Stack from '@mui/material/Stack';
 
 const drawerWidth = 240;
 
@@ -158,8 +159,19 @@ export default function DrawerLeft(props) {
               </ListItem>
             ))}
           </List>
+
           <Divider />
         </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <List component={Stack} direction="row">
+          {drawerLeftTabs["C"].map((data, index) => (
+            <ListItem key={data.text} disablePadding>
+              <ListItemButton id={data.key}>
+                <ListItemText  primaryTypographyProps={{fontSize: '12px', textAlign: 'center', fontWeight: 400}} primary={data.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
     </>
   );

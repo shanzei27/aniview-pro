@@ -16,6 +16,16 @@ const drawerLeftTabs = {
       key: "lvhUserHates",
     },
   ],
+  C: [
+    {
+      text: "Changelog",
+      link: "",
+    },
+    {
+      text: "Github",
+      link: ""
+    }
+  ]
 };
 
 export default drawerLeftTabs;
