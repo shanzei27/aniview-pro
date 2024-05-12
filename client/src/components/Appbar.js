@@ -61,7 +61,7 @@ const Search = styled("div")(({ theme }) => ({
 const LogoContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
+  justifyContent: "left",
   width: "15%",
 }));
 
@@ -201,8 +201,8 @@ function AppbarMain(props) {
 
   return (
     <>
-      <AppBarTop maxWidth="95%" position="fixed" sx={getAppBarStyle()}>
-        <Container maxWidth="85%">
+      <AppBarTop maxWidth="100%" position="fixed" sx={getAppBarStyle()}>
+        <Container maxWidth="100%">
           <Toolbar sx={{ display: "flex", justifyContent: "space-evenly" }}>
             <IconButton
               color="inherit"
@@ -214,7 +214,7 @@ function AppbarMain(props) {
               <MenuIcon />
             </IconButton>
             <LogoContainer>
-              <Box sx={{ position: "relative" }}>
+              <Box sx={{ position: "relative"}}>
                 <NavLink style={{ textDecoration: "none" }} to={"/home"}>
                   <LogoText>{config.site_name}</LogoText>
                 </NavLink>
@@ -257,7 +257,7 @@ function AppbarMain(props) {
               </form>
             )}
             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, justifyContent: "flex-end"}}>
               {pages.map((page) => (
                 <NavLink
                   to={`/` + page.toLowerCase()}

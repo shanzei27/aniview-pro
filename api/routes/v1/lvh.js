@@ -4,6 +4,7 @@ const {
   fetchMALUserCompletedList,
   getTopMALAnimes,
   getRecsForAnime,
+  fetchMALAnime,
 } = require("../../services/api");
 const { shuffleArray } = require("../../utils");
 
@@ -37,7 +38,7 @@ router.get("/:searchText", async (req, res, next) => {
   let userPrefAnimes = [];
   let userPrefGenres = [];
   let mostPreferredGenres = [];
-  let popularUnwatchedMatches = [];
+  let animeRecommendations = [];
   let malRecommendedMatches = [];
   let malUserData = [];
   let animeGeneralStatsDataObj = {};
@@ -95,17 +96,14 @@ router.get("/:searchText", async (req, res, next) => {
       userPrefAnimes,
       userPrefGenres,
       mostPreferredGenres,
-      popularUnwatchedMatches,
+      animeRecommendations,
       malRecommendedMatches
     );
     res.send({
       userLikes: lvhAnimeObject,
       userHates: hvlAnimeObject,
       historyPage: historyData,
-      recommendations: {
-        r1: popularUnwatchedMatches,
-        r2: malRecommendedMatches,
-      },
+      recommendations: animeRecommendations,
       // rawDataPub: animeGeneralStatsDataObj
     });
   }
@@ -116,9 +114,10 @@ async function initRecommendationGen(
   userPrefAnimes,
   userPrefGenres,
   mostPreferredGenres,
-  popularUnwatchedMatches,
+  animeRecommendations,
   malRecommendedMatches
 ) {
+  console.log("init RecGen");
   // get top 100 highly rated MAL animes list and shuffle
   const topMALAnimes = await getTopMALAnimes();
   shuffleArray(topMALAnimes["data"]);
@@ -138,9 +137,16 @@ async function initRecommendationGen(
         .length > 0
     ) {
       if (!userWatchedIDs.includes(anime["mal_id"])) {
-        popularUnwatchedMatches.push(anime);
+        animeRecommendations.push({
+          title: anime["title"],
+          image_url: anime["images"]["webp"]["large_image_url"],
+          id: anime["mal_id"],
+          score: anime["score"],
+          episodes: anime["episodes"],
+          reason_for_rec: "popular"
+        });
       }
-      if (popularUnwatchedMatches.length >= 5) {
+      if (animeRecommendations.length >= 5) {
         break;
       }
     }
@@ -153,12 +159,24 @@ async function initRecommendationGen(
     const unwatchedMatch = matchingRecs["data"].find((e) => {
       return !userWatchedIDs.includes(e["entry"]["mal_id"]);
     });
-    malRecommendedMatches.push(unwatchedMatch);
-
-    if (malRecommendedMatches.length >= 5) {
+    console.log(unwatchedMatch);
+    if (unwatchedMatch != null || unwatchedMatch != undefined) {
+      const anime = await fetchMALAnime(unwatchedMatch.entry["mal_id"]);
+      animeRecommendations.push({
+        title: anime["title"],
+        image_url: anime["main_picture"]["medium"],
+        id: anime["id"],
+        score: anime["mean"],
+        episodes: anime["num_episodes"],
+        reason_for_rec: "mal_rec"
+      });
+    }
+    if (animeRecommendations.length >= 11) {
       break;
     }
   }
+  animeRecommendations = shuffleArray(animeRecommendations);
+  console.log("end of RecGen");
 }
 
 // ------------ API Process -------------------

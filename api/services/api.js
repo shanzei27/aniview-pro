@@ -51,7 +51,7 @@ async function fetchMALAnime(id) {
   };
 
   return axios
-    .get(`https://api.myanimelist.net/v2/anime/${id}?fields=num_episodes`, {
+    .get(`https://api.myanimelist.net/v2/anime/${id}?fields=num_episodes,mean`, {
       headers,
     })
     .then((promise) => promise.data)

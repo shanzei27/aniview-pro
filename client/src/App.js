@@ -50,8 +50,8 @@ const darkTheme = createTheme({
     h5: {
       padding: 4,
       color: "#000",
-      fontSize: 16,
-      fontWeight: 500,
+      fontSize: 18,
+      fontWeight: 600,
     },
     subtitle1: {
       fontSize: 12,

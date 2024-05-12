@@ -14,7 +14,7 @@ import Fade from "@mui/material/Fade";
 import { openInNewTab } from "../../utils/utils";
 import { styled } from "@mui/material/styles";
 
-const RecommendItem = ({data}) => {
+const RandomAnimeButton = ({data}) => {
    // debugger
   const [checked, setChecked] = useState(false); //fade animation
 
@@ -109,4 +109,4 @@ const RecommendItem = ({data}) => {
   );
 };
 
-export default RecommendItem;
+export default RandomAnimeButton;

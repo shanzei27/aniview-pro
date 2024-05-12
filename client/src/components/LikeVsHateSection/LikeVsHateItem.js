@@ -35,12 +35,14 @@ const LikeVsHateItem = (props) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        width: 300 * 0.5,
+        justifyContent: "center",
+        width: 300 * 0.6,
+        margin: "0 auto",
         overflow: "auto",
         color: "text.secondary",
       }}
     >
-      <Typography gutterBottom variant="h5" component="div">
+      <Typography gutterBottom variant="h5" component="div" className="contentBox">
         <Link
           style={{ textDecoration: "none", cursor: "pointer" }}
           onClick={() =>
@@ -110,7 +112,7 @@ const LikeVsHateItem = (props) => {
     >
       <CardMedia
         component="img"
-        sx={{ width: 151, cursor: "pointer" }}
+        sx={{ width: 130, cursor: "pointer" }}
         image={imageSrc}
         alt={props.data["node"]["title"]}
       />
@@ -118,14 +120,20 @@ const LikeVsHateItem = (props) => {
   );
   console.log(props.data["node"]["title"]);
   return (
-    <div>
+    <Box sx={{
+      '&:hover': {
+        transform: `scale(1.05)`,
+        transitionTimingFunction: 'ease-out',
+        transition: '0.1s'
+   },   
+    }}>
       <Fade in={checked}>
         <Card sx={{ display: "flex", height: 185, width: 300 }}>
           {item}
           <div sx={{ width: 300 * 0.5 }}>{imageIcon}</div>
         </Card>
       </Fade>
-    </div>
+    </Box>
   );
 };
 
