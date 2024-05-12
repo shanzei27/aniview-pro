@@ -19,11 +19,11 @@ const drawerLeftTabs = {
   C: [
     {
       text: "Changelog",
-      link: "",
+      link: "https://github.com/shanzei27/aniview-pro/blob/d46acfd6a34204b71e000fd27c6be93d5ebf38d2/CHANGELOG.md",
     },
     {
       text: "Github",
-      link: ""
+      link: "https://github.com/shanzei27/aniview-pro"
     }
   ]
 };
