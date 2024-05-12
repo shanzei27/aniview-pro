@@ -1,3 +1,3 @@
-const mainPages = ["Home", "About", "Feedback"];
+const mainPages = ["Home", "About"];
 
 export default mainPages;
