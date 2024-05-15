@@ -59,8 +59,14 @@ const HomeMain = ({
   useEffect(() => {
     if (searchText === "") {
       const lastUser = localStorage.getItem("lastuser");
+      //if lastuser key is not null & both prevUser data exists, set last user to load from local
       if (lastUser != null) {
-        setSearchText(lastUser);
+        if (
+          localStorage.getItem(`${lastUser}_main`) != null ||
+          localStorage.getItem(`${lastUser}_profile`) != null
+        ) {
+          setSearchText(lastUser);
+        }
       }
     }
   }, []);
