@@ -153,25 +153,25 @@ const lightTheme = createTheme({
 
 function App() {
   const [light, setLight] = useState(false);
-  const [searchText, setSearchText] = useState(""); // changing triggers profile reload and rerender
+  const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [userAcquired, setUserAcquired] = useState(false); // !! TESTING = TRUE / SWITCH BACK TO FALSE !!
+  const [userAcquired, setUserAcquired] = useState(false);
   const [sideDrawerOpen, setSideDrawerOpen] = useState(true);
   const [showSnackMessage, setShowSnackMessage] = useState(false);
-  const [forgottenProfile, setForgottenProfile] = useState(false);
   const [snackMessage, setSnackMessage] = useState("Profile forgotten");
 
   useEffect(() => {
     const lastForgotten = localStorage.getItem("lastforgotten");
     if (lastForgotten === "true") {
       setShowSnackMessage(true);
+      localStorage.clear();
       setTimeout(() => {
         setShowSnackMessage(false);
-      }, "6000");
+      }, "5000");
     }
   }, []);
 
-  const handleLightModeChange = (value) => {
+  const handleLightModeChange = () => {
     setLight((prevMode) => !prevMode);
   };
 
@@ -218,7 +218,6 @@ function App() {
                     userAcquired={userAcquired}
                     setUserAcquired={setUserAcquired}
                     drawerOpen={sideDrawerOpen}
-                    handleLightModeChange={(value) => handleLightModeChange()}
                     handleInputFromMainSearch={handleInputFromMainSearch}
                     showSnackMessage={showSnackMessage}
                     snackMessage={snackMessage}
@@ -236,29 +235,14 @@ function App() {
                     userAcquired={userAcquired}
                     setUserAcquired={setUserAcquired}
                     drawerOpen={sideDrawerOpen}
-                    handleLightModeChange={(value) => handleLightModeChange()}
                     handleInputFromMainSearch={handleInputFromMainSearch}
                     showSnackMessage={showSnackMessage}
                     snackMessage={snackMessage}
                   />
                 }
               />
-              <Route
-                path="/about"
-                element={
-                  <About
-                    handleLightModeChange={(value) => handleLightModeChange()}
-                  />
-                }
-              />
-              <Route
-                path="/feedback"
-                element={
-                  <Feedback
-                    handleLightModeChange={(value) => handleLightModeChange()}
-                  />
-                }
-              />
+              <Route path="/about" element={<About />} />
+              <Route path="/feedback" element={<Feedback />} />
             </Routes>
           </main>
         </ThemeProvider>

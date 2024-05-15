@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListSubheader from "@mui/material/ListSubheader";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -24,29 +17,9 @@ import RecommendIcon from "@mui/icons-material/Recommend";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import drawerLeftTabs from "../../config/drawer_left_tabs";
 import Stack from "@mui/material/Stack";
-import Link from "@mui/material/Link";
 import { openInNewTab } from "../../utils/utils";
 
 const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
 
 export default function DrawerLeft(props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -166,7 +139,7 @@ export default function DrawerLeft(props) {
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         <List component={Stack} direction="row">
-          {drawerLeftTabs["C"].map((data, index) => (
+          {drawerLeftTabs["C"].map((data) => (
             <ListItem
               key={data.text}
               disablePadding

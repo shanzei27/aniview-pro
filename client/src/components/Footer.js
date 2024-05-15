@@ -1,13 +1,8 @@
 import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
 
 const Footer = (props) => {
-  const theme = useTheme();
-
   return (
     <>
       <footer

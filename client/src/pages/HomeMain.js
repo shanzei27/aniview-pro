@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
 import HomeLoaded from "../components/Home/HomeLoaded";
 import HomeSearchPage from "../components/Home/HomeSearchPage";
 import axios from "axios";
-import testData from "../config/test_data";
 import Footer from "../components/Footer";
 import Snackbar from "@mui/material/Snackbar";
 import { Helmet } from "react-helmet-async";
 import CssBaseline from "@mui/material/CssBaseline";
-
-const LoadingText = styled(Typography)(({ theme }) => ({
-  color: "white",
-  fontSize: "16px",
-  marginTop: "15px",
-}));
 
 const HomeMain = ({
   searchText,
@@ -24,7 +15,6 @@ const HomeMain = ({
   setLoading,
   userAcquired,
   setUserAcquired,
-  handleLightModeChange,
   handleInputFromMainSearch,
   showSnackMessage,
   snackMessage,

@@ -10,11 +10,9 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Alert from "@mui/material/Alert";
 import Grow from "@mui/material/Grow";
-import Loader from "react-spinners/PulseLoader";
 import LinearProgress from "@mui/material/LinearProgress";
 import Divider from "@mui/material/Divider";
 import PropTypes from 'prop-types';
-import Snackbar from "@mui/material/Snackbar";
 import { config } from "../../config/config";
 
 const Search = styled(Paper)(({ theme }) => ({

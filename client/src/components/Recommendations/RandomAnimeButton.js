@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Box from "@mui/material/Box";
-import api from "../../config/temp_anime_api";
 import Link from "@mui/material/Link";
-import Grow from "@mui/material/Grow";
 import Fade from "@mui/material/Fade";
 import { openInNewTab } from "../../utils/utils";
-import { styled } from "@mui/material/styles";
 
 const RandomAnimeButton = ({data}) => {
-   // debugger
   const [checked, setChecked] = useState(false); //fade animation
 
   useEffect(() => {
@@ -69,9 +62,6 @@ const RandomAnimeButton = ({data}) => {
     </Box>
   );
 
-  //const anime = api[animeID];
-  //const imageSrc = process.env.PUBLIC_URL + anime["image_uri"]+'.jpg';
-  //  console.log(data);
   const imageSrc = data["image_url"];
 
   const imageIcon = (

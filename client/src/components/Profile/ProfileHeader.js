@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { Grid, Typography, dividerClasses } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
@@ -74,7 +74,6 @@ const ProgressLine = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const ProfileHeader = ({ pageData }) => {
-  //debugger
   const [checked, setChecked] = useState(false); //fade animation
 
   useEffect(() => {

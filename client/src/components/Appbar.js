@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink, Router, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -9,12 +9,12 @@ import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
 import Switch from "@mui/material/Switch";
-import { styled, alpha, useTheme } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import mainPages from "../config/main_pages";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import MuiAppBar from "@mui/material/AppBar";
 import { config } from "../config/config";
 import { Tooltip } from "@mui/material";
 import Menu from "@mui/material/Menu";
@@ -23,15 +23,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 const pages = [...mainPages];
 const drawerWidth = 240;
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
 
 const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -58,7 +49,7 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-const LogoContainer = styled(Box)(({ theme }) => ({
+const LogoContainer = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "left",
@@ -79,13 +70,13 @@ const StyledTextField = styled(OutlinedInput)(({ theme }) => ({
   },
 }));
 
-const LogoText = styled(Typography)(({ theme }) => ({
+const LogoText = styled(Typography)(() => ({
   color: "white",
   fontSize: "36px",
   fontFamily: "Permanent Marker",
 }));
 
-const VersionText = styled(Typography)(({ theme }) => ({
+const VersionText = styled(Typography)(() => ({
   color: "white",
   fontSize: "10px",
   position: "absolute",
@@ -157,11 +148,7 @@ const AppBarTop = styled(MuiAppBar, {
 }));
 
 function AppbarMain(props) {
-  const theme = useTheme();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [barText, setBarText] = React.useState(props.searchText); // changing only effects search bar text
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -174,9 +161,8 @@ function AppbarMain(props) {
     setAnchorEl(null);
   };
 
-  const handleSearchBarClear = (e) => {
+  const handleSearchBarClear = () => {
     setBarText("");
-    // props.clearCurrentlyLoadedProfile();
   };
 
   const submitHandler = (e) => {
@@ -241,7 +227,7 @@ function AppbarMain(props) {
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={(e) => {
+                            onClick={() => {
                               handleSearchBarClear();
                             }}
                             variant="contained"

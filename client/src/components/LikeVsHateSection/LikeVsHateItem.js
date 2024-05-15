@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import DifferenceIcon from "@mui/icons-material/Difference";
 import Box from "@mui/material/Box";
-import api from "../../config/temp_anime_api";
 import Link from "@mui/material/Link";
-import Grow from "@mui/material/Grow";
 import Fade from "@mui/material/Fade";
 import { openInNewTab } from "../../utils/utils";
-import { styled } from "@mui/material/styles";
 
 const LikeVsHateItem = (props) => {
   const [checked, setChecked] = useState(false); //fade animation
