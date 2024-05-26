@@ -232,8 +232,8 @@ function AppbarMain(props) {
                 <VersionText>v{config.version}</VersionText>
               </Box>
             </LogoContainer>
-            <Box sx={{ display: { xs: "flex", md: "none" }, width: "100%", flexGrow: 1 }}></Box>
-            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <Box sx={{ display: { xs: "flex", md: "none" }, width: "100%",flexGrow: 1 }}></Box>
+            <Box sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1, mr: -3 }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -273,6 +273,27 @@ function AppbarMain(props) {
                   </MenuItem>
                 </NavLink>
               ))}
+              <MenuItem disabled={true} onClick={handleSettingsClose}>
+                      Refresh profile
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        forgetProfile();
+                        handleSettingsClose();
+                      }}
+                    >
+                      Forget profile
+                    </MenuItem>
+
+                    <MenuItem
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                      }}
+                    >
+                      <LightModeSwitch onChange={props.handleLightModeChange} />
+                    </MenuItem>
             </Menu>
           </Box>
 

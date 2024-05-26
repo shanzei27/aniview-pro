@@ -1,6 +1,12 @@
 # Change Log
 All major changes to Aniview (A MAL companion for user anime stats).
  
+## [v1.1a] - 2024-05-26
+
+### Added
+- Mobile support
+- Minor UI improvements
+
 ## [v1.0a] - 2024-05-13
  
 Alpha preview with some base features and functional site.

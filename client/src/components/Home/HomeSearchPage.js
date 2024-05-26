@@ -12,7 +12,7 @@ import Alert from "@mui/material/Alert";
 import Grow from "@mui/material/Grow";
 import LinearProgress from "@mui/material/LinearProgress";
 import Divider from "@mui/material/Divider";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { config } from "../../config/config";
 
 const Search = styled(Paper)(({ theme }) => ({
@@ -87,23 +87,6 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.primary.main,
-  borderRadius: 10,
-  width: "60%",
-  display: "flex",
-  direction: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  flexWrap: "wrap",
-  listStyle: "none",
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-  },
-}));
-
 const LoadingText = styled(Typography)(({ theme }) => ({
   color: "white",
   fontSize: "16px",
@@ -151,9 +134,13 @@ const HomeSearchPage = (props) => {
             <Item>
               {/* <Loader color="#36d7b7" /> */}
               <Box sx={{ width: "50%" }}>
-                <LinearProgress color="secondary" variant="determinate" value={props.progress}/>
+                <LinearProgress
+                  color="secondary"
+                  variant="determinate"
+                  value={props.progress}
+                />
               </Box>
-              <LoadingText>This will take a few seconds</LoadingText>
+              <LoadingText>This will take a minute</LoadingText>
             </Item>
           </Grid>
         </StyledGrid>
@@ -162,12 +149,12 @@ const HomeSearchPage = (props) => {
       {!props.loading && (
         <StyledGrid container spacing={{ xs: 0, md: 2, lg: 4 }}>
           <Grid
-            sx={{ height: { xs: "50%", sm: "100%" } }}
+            sx={{ height: { xs: "50%", sm: "100%" }, width: "100%" }}
             item
             xs={12}
             sm={5.5}
           >
-            <Item>
+            <Item sx={{ marginTop: { xs: 5 } }}>
               <Typography variant="lead" sx={{ paddingBottom: 2 }}>
                 Enter MyAnimeList username
               </Typography>
@@ -260,7 +247,6 @@ const HomeSearchPage = (props) => {
           </Grid>
         </StyledGrid>
       )}
-
     </>
   );
 };
