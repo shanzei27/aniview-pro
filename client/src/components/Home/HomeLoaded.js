@@ -15,6 +15,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     display: "flex",
     width: "100%",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     padding: theme.spacing(2),
@@ -92,9 +93,9 @@ const HomeLander = (props) => {
   }, []);
 
   //----API END-------------------------------------------------------------------------------------
-  const handleSidebarLinkClick = (event) => {
-    setOpenWindow(event.currentTarget.id);
-    console.log(openWindow);
+  const handleSidebarLinkClick = (newWindow) => {
+    setOpenWindow(newWindow);
+    console.log(newWindow);
   };
 
   const handleOpenNavMenu = (event) => {
@@ -152,7 +153,7 @@ const HomeLander = (props) => {
       >
         <CssBaseline />
         <DrawerLeft handleSidebarLinkClick={handleSidebarLinkClick} />
-        <Main open={open}>
+        <Main open={open} sx={{ marginTop: {xs: 3}}}>
           <WindowComponent />
         </Main>
       </Box>

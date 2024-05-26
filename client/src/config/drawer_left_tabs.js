@@ -23,9 +23,24 @@ const drawerLeftTabs = {
     },
     {
       text: "Github",
-      link: "https://github.com/shanzei27/aniview-pro"
-    }
-  ]
+      link: "https://github.com/shanzei27/aniview-pro",
+    },
+  ],
+  mobile: [
+    { text: "Overview", icon: "overview", key: "overview" },
+    { text: "Recommendations", icon: "recommend", key: "recommendations" },
+    { text: "My History", icon: "history", key: "history" },
+    {
+      text: "Higher than MAL",
+      icon: "starFull",
+      key: "lvhUserLikes",
+    },
+    {
+      text: "Lower than MAL",
+      icon: "starHalf",
+      key: "lvhUserHates",
+    },
+  ],
 };
 
 export default drawerLeftTabs;

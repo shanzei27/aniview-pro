@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+import { Box, Tabs, Tab } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -21,17 +21,29 @@ import { openInNewTab } from "../../utils/utils";
 
 const drawerWidth = 240;
 
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
+
 export default function DrawerLeft(props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [open, setOpen] = React.useState(true);
+  const [tabValue, setTabValue] = React.useState(0);
   const theme = useTheme();
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   const buttonProps = (value) => ({
     selected: selectedIndex === value,
   });
 
   return (
-    <>
+    <Box>
       <Drawer
         variant="persistent"
         anchor="left"
@@ -72,7 +84,7 @@ export default function DrawerLeft(props) {
                   }}
                   id={data.key}
                   onClick={(e) => {
-                    props.handleSidebarLinkClick(e);
+                    props.handleSidebarLinkClick(e.currentTarget.id);
                     setSelectedIndex(index);
                   }}
                 >
@@ -121,7 +133,7 @@ export default function DrawerLeft(props) {
                   }}
                   id={data.key}
                   onClick={(e) => {
-                    props.handleSidebarLinkClick(e);
+                    props.handleSidebarLinkClick(e.currentTarget.id);
                     setSelectedIndex(index + 3);
                   }}
                 >
@@ -143,11 +155,7 @@ export default function DrawerLeft(props) {
             <ListItem
               key={data.text}
               disablePadding
-              onClick={() =>
-                openInNewTab(
-                  data.link
-                )
-              }
+              onClick={() => openInNewTab(data.link)}
             >
               <ListItemButton id={data.key}>
                 <ListItemText
@@ -163,6 +171,36 @@ export default function DrawerLeft(props) {
           ))}
         </List>
       </Drawer>
-    </>
+      <Box
+        sx={{
+          position: "absolute",
+          display: { xs: "flex", md: "none" },
+          borderBottom: 1,
+          borderColor: "divider",
+          height: 50,
+          width: "100vw"
+        }}
+      >
+        <Tabs
+          textColor="secondary"
+          indicatorColor="secondary"
+          value={tabValue}
+          onChange={handleTabChange}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+        >
+          {drawerLeftTabs["mobile"].map((data, index) => (
+            <Tab
+              key={data.key}
+              name={data.key}
+              label={data.text}
+              {...a11yProps(index)}
+              onClick={(e) => props.handleSidebarLinkClick(e.currentTarget.name)}
+            />
+          ))}
+        </Tabs>
+      </Box>
+    </Box>
   );
 }

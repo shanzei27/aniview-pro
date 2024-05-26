@@ -1,10 +1,15 @@
 import * as React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
+import {
+  Box,
+  Typography,
+  OutlinedInput,
+  Tabs,
+  Tab,
+} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "@mui/material/Button";
@@ -12,7 +17,6 @@ import Switch from "@mui/material/Switch";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import mainPages from "../config/main_pages";
 import MuiAppBar from "@mui/material/AppBar";
 import { config } from "../config/config";
@@ -20,6 +24,7 @@ import { Tooltip } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
+import drawerLeftTabs from "../config/drawer_left_tabs";
 
 const pages = [...mainPages];
 const drawerWidth = 240;
@@ -147,19 +152,37 @@ const AppBarTop = styled(MuiAppBar, {
   }),
 }));
 
+
 function AppbarMain(props) {
   const navigate = useNavigate();
   const [barText, setBarText] = React.useState(props.searchText); // changing only effects search bar text
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
   const settingsOpen = Boolean(anchorEl);
 
   const handleSettingsClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleSettingsClose = () => {
     setAnchorEl(null);
-  };
+  }
 
   const handleSearchBarClear = () => {
     setBarText("");
@@ -201,7 +224,7 @@ function AppbarMain(props) {
             >
               <MenuIcon />
             </IconButton>
-            <LogoContainer>
+            <LogoContainer sx={{ flexGrow: 1}}>
               <Box sx={{ position: "relative" }}>
                 <NavLink style={{ textDecoration: "none" }} to={"/home"}>
                   <LogoText>{config.site_name}</LogoText>
@@ -209,6 +232,50 @@ function AppbarMain(props) {
                 <VersionText>v{config.version}</VersionText>
               </Box>
             </LogoContainer>
+            <Box sx={{ display: { xs: "flex", md: "none" }, width: "100%", flexGrow: 1 }}></Box>
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {mainPages.map((item) => (
+                <NavLink
+                  component="div"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  to={item}
+                >
+                  <MenuItem key={item} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{item}</Typography>
+                  </MenuItem>
+                </NavLink>
+              ))}
+            </Menu>
+          </Box>
+
             {props.userAcquired && (
               <form onSubmit={submitHandler}>
                 <Tooltip title="Search a new MAL profile">
@@ -336,6 +403,8 @@ function AppbarMain(props) {
             </Box>
           </Toolbar>
         </Container>
+        
+
       </AppBarTop>
       <Toolbar />
     </>

@@ -26,7 +26,7 @@ const LikeVsHateRow = (props) => {
           sx={{
             display: "flex",
             width: "100%",
-            height: "70vh",
+            height: {xs: "100%", sm: "70vh"},
             alignItems: "flex-start",
           }}
         >

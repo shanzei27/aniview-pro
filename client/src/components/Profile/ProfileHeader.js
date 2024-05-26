@@ -58,6 +58,7 @@ const StyledGrid = styled(Grid)(({ theme }) => ({
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
+  width: "100%"
 }));
 
 const ProgressLine = styled(LinearProgress)(({ theme }) => ({
@@ -162,7 +163,8 @@ const ProfileHeader = ({ pageData }) => {
                 <Box
                   style={{
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: {xs: "center", sm: "space-between"},
+                    flexWrap: {xs: "wrap", sm: "nowrap"}
                   }}
                 >
                   <Tooltip title="Total animes completed">
