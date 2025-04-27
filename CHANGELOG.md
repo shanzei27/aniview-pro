@@ -1,6 +1,11 @@
 # Change Log
 All major changes to Aniview (A MAL companion for user anime stats).
- 
+
+## [v1.1a] - 2024-05-26
+
+### Fixed
+- Rendering partial data even when 1 of 2 apis fail (instead of not showing any result)
+
 ## [v1.1a] - 2024-05-26
 
 ### Added
