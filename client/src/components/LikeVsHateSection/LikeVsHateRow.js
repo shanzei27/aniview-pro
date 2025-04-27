@@ -16,8 +16,14 @@ const Item = styled(Box)(({ theme }) => ({
 }));
 
 const LikeVsHateRow = (props) => {
-  const [pageData, setPageData] = useState([...props.data["data"]]);
+  const [pageData, setPageData] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
+
+  useEffect(() => {
+    const data = props.data?.data ?? [];
+    setPageData(data);
+    setPaginatedData(data);
+  }, [props.data]);
 
   return (
     <>
@@ -31,9 +37,8 @@ const LikeVsHateRow = (props) => {
           }}
         >
           <Grid container spacing={2}>
-            {pageData != undefined &&
+            {pageData.length > 0 &&
               paginatedData.map((animeItem, i) => {
-                //console.log(animeItem)
                 return (
                   <Grid
                     sx={{
@@ -49,7 +54,7 @@ const LikeVsHateRow = (props) => {
                     xl={3}
                     key={i}
                   >
-                    <Item key={i}>
+                    <Item>
                       <LikeVsHateItem data={animeItem} type={props.type} />
                     </Item>
                   </Grid>
@@ -67,8 +72,7 @@ const LikeVsHateRow = (props) => {
         >
           <AppPagination
             data={props.data}
-            setPageData={(d) => setPaginatedData(d)}
-            getData={props.getData}
+            setPageData={setPaginatedData}
           />
         </Box>
       </Box>

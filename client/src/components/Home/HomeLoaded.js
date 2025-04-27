@@ -74,21 +74,24 @@ const HomeLander = (props) => {
   const [historyData, setHistoryData] = useState([]);
 
   useEffect(() => {
-    const preProcessData = props.lvhAnimeArray["historyPage"];
-    let bar1Array = [];
+    const preProcessData = props.lvhAnimeArray?.historyPage;
+    if (preProcessData) {
+      let bar1Array = [];
 
-    Object.keys(preProcessData["bar_1"]).forEach((key) => {
-      const value = preProcessData["bar_1"][key];
-      if (key != "0") {
-        bar1Array.push({
-          year: key,
-          hours_watched: value["hours_watched"],
-          animes_completed: value["animes_completed"],
-        });
-      }
+      Object.keys(preProcessData["bar_1"] ?? {}).forEach((key) => {
+        const value = preProcessData["bar_1"][key];
+        if (key !== "0") {
+          bar1Array.push({
+            year: key,
+            hours_watched: value["hours_watched"],
+            animes_completed: value["animes_completed"],
+          });
+        }
+      });
+
       setHistoryData(bar1Array);
       console.log(bar1Array);
-    });
+    }
   }, []);
 
   //----API END-------------------------------------------------------------------------------------
@@ -137,8 +140,6 @@ const HomeLander = (props) => {
             type={openWindow}
           />
         );
-      default:
-      // return <LikeVsHateRow data={ userLikesArray } type={ openWindow }/>
     }
   };
 
@@ -147,7 +148,7 @@ const HomeLander = (props) => {
       <Box
         sx={{
           display: "flex",
-          width: "100%"
+          width: "100%",
         }}
       >
         <CssBaseline />

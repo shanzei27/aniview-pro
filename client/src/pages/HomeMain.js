@@ -39,6 +39,10 @@ const HomeMain = ({
   const [loadError, setLoadError] = useState({
     message: "",
   });
+
+  const [mainDataError, setMainDataError] = useState(null);
+  const [profileDataError, setProfileDataError] = useState(null);
+
   const [mainData, setMainData] = useState({
     data: [],
     count: 0,
@@ -76,16 +80,14 @@ const HomeMain = ({
   }, []);
 
   useEffect(() => {
-    // !! below hits the MAL API for profile data | temporarily replaced with testData in config.js for testing !!
-    if (searchText != "" && !loading) {
+    if (searchText !== "" && !loading) {
       async function fetchData() {
         setLoaded(false);
         setLoading(true);
         setUserAcquired(false);
         localStorage.setItem("lastuser", searchText);
-        //   const url = require("url");
         const queryParams = searchText;
-        // const params = new URLSearchParams(queryParams);
+
         if (
           localStorage.getItem(`${queryParams}_main`) != null ||
           localStorage.getItem(`${queryParams}_profile`) != null
@@ -95,6 +97,7 @@ const HomeMain = ({
           console.log("fetching API data");
           let totalBytes = 0;
           setLoadingAPI(true);
+
           try {
             const responseData = await axios
               .get(`${process.env.REACT_APP_API_URL}/v1/lvh/${queryParams}`, {
@@ -108,24 +111,34 @@ const HomeMain = ({
                   console.log("%1: " + percentCompleted);
                 },
               })
-              .then((res) => setMainData(res.data));
+              .then((res) => setMainData(res.data))
+              .catch((error) => {
+                setMainDataError(error);
+                setLoading(false);
+                setLoadingAPI(false);
+                console.log("Main API Error:", error);
+              });
 
             const profileResponseData = await axios
               .get(
                 `${process.env.REACT_APP_API_URL}/v1/profile/users/${queryParams}`,
                 {
                   onDownloadProgress: (progressEvent) => {
-                    console.log(progressEvent);
                     totalBytes += progressEvent.total;
                     let percentCompleted = Math.round(
                       (progressEvent.loaded * 100) / progressEvent.total
                     );
                     setAPILoadProgress(apiLoadProgress + percentCompleted / 2);
-                    console.log("%2: " + percentCompleted);
                   },
                 }
               )
-              .then((res) => setProfileData(res.data));
+              .then((res) => setProfileData(res.data))
+              .catch((error) => {
+                setProfileDataError(error);
+                setLoading(false);
+                setLoadingAPI(false);
+                console.log("Profile API Error:", error);
+              });
 
             setTimeout(() => {
               setLoading(false);
@@ -140,7 +153,6 @@ const HomeMain = ({
               });
             } else {
               setLoadError(error);
-
               console.log(loadError);
               setShowLoadError(true);
               clearLocalStorage();
@@ -204,7 +216,7 @@ const HomeMain = ({
   }, [profileData]);
 
   useEffect(() => {
-    if (mainDataLoaded && profileDataLoaded) {
+    if (mainDataLoaded || profileDataLoaded) {
       setLoaded(true);
       setTimeout(() => {
         setLoading(false);
@@ -225,7 +237,7 @@ const HomeMain = ({
               handleInputFromMainSearch(value)
             }
             error={loadError}
-            showError={showLoadError}
+            showError={mainDataError && profileDataError}     //show error only if both api fails
             loading={loading}
             userAcquired={userAcquired}
             loaded={loaded}

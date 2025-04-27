@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { Grid, Typography, dividerClasses } from "@mui/material";
+import { Grid, Typography, Divider } from "@mui/material";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import CardMedia from "@mui/material/CardMedia";
-import { openInNewTab } from "../../utils/utils";
+import { openInNewTab, renderValue } from "../../utils/utils";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LaunchIcon from "@mui/icons-material/Launch";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -74,17 +74,23 @@ const ProgressLine = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const ProfileHeader = ({ pageData }) => {
-  //debugger
   const [checked, setChecked] = useState(false); //fade animation
 
   useEffect(() => {
     setChecked(true);
   }, []);
 
+  const username = pageData?.username || null;
+  const imageUrl = pageData?.image_url;
+  const numCompleted = renderValue(pageData?.top_row?.["num_completed"]);
+  const daysWatched = renderValue(pageData?.top_row?.["days_watched"]);
+  const meanScore = renderValue(pageData?.top_row?.["mean_score"]);
+  const recentActivity = pageData?.recent_activity || [];
+
   const userImage = (
     <Link
       onClick={() =>
-        openInNewTab(`https://myanimelist.net/profile/${pageData.username}`)
+        openInNewTab(`https://myanimelist.net/profile/${username}`)
       }
     >
       <CardMedia
@@ -94,8 +100,8 @@ const ProfileHeader = ({ pageData }) => {
           height: "25%",
           cursor: "pointer",
         }}
-        image={pageData.image_url}
-        alt={pageData.username}
+        image={imageUrl}
+        alt={username}
       />
     </Link>
   );
@@ -128,9 +134,7 @@ const ProfileHeader = ({ pageData }) => {
                 <Link
                   sx={{ textDecoration: "none" }}
                   onClick={() =>
-                    openInNewTab(
-                      `https://myanimelist.net/profile/${pageData.username}`
-                    )
+                    openInNewTab(`https://myanimelist.net/profile/${username}`)
                   }
                 >
                   <Box
@@ -142,7 +146,7 @@ const ProfileHeader = ({ pageData }) => {
                     }}
                   >
                     <Typography variant="h2" sx={{ cursor: "pointer" }}>
-                      {pageData.username}
+                      {username}
                     </Typography>
                     <LaunchIcon
                       sx={{ marginTop: 1, marginLeft: 1, cursor: "pointer" }}
@@ -180,14 +184,12 @@ const ProfileHeader = ({ pageData }) => {
                         </Typography>
                       </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        {pageData.top_row["num_completed"]}
+                        {numCompleted}
                       </Typography>
                     </StatContainer>
                   </Tooltip>
                   <Tooltip
-                    title={(() =>
-                      (pageData.top_row["days_watched"] * 24).toFixed(2) +
-                      " hours")()}
+                    title={(() => (daysWatched * 24).toFixed(2) + " hours")()}
                   >
                     <StatContainer>
                       <Box
@@ -202,7 +204,7 @@ const ProfileHeader = ({ pageData }) => {
                         </Typography>
                       </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        {pageData.top_row["days_watched"]} days
+                        {daysWatched} days
                       </Typography>
                     </StatContainer>
                   </Tooltip>
@@ -220,7 +222,7 @@ const ProfileHeader = ({ pageData }) => {
                         </Typography>
                       </Box>
                       <Typography variant="body1" sx={{ color: "#fff" }}>
-                        {pageData.top_row["mean_score"]}
+                        {meanScore}
                       </Typography>
                     </StatContainer>
                   </Tooltip>
@@ -256,7 +258,7 @@ const ProfileHeader = ({ pageData }) => {
                       width: "100%",
                     }}
                   >
-                    {pageData.recent_activity.map((item) => (
+                    {recentActivity.map((item) => (
                       <Box
                         key={item.name}
                         sx={{
@@ -279,7 +281,7 @@ const ProfileHeader = ({ pageData }) => {
                           }}
                         >
                           <BarAnimeName variant="caption">
-                            {item.name}{" "}
+                            {renderValue(item.name)}
                           </BarAnimeName>
                           <Box
                             sx={{
@@ -292,22 +294,25 @@ const ProfileHeader = ({ pageData }) => {
                               paddingRight: "4px",
                             }}
                           >
-                            {" "}
                             <Tooltip title="Episode progress">
-                              <BarAnimeScore variant="caption">
-                                ({item.progress}/
-                                {item.total_episodes === 0
-                                  ? "?"
-                                  : item.total_episodes}
-                                )
-                              </BarAnimeScore>{" "}
+                              {item.progress && item.total_episodes && (
+                                <BarAnimeScore variant="caption">
+                                  ({item.progress}/
+                                  {item.total_episodes === 0
+                                    ? "?"
+                                    : item.total_episodes}
+                                  )
+                                </BarAnimeScore>
+                              )}
                             </Tooltip>
                           </Box>
                         </Box>
-                        <ProgressLine
-                          variant="determinate"
-                          value={(item.progress / item.total_episodes) * 100}
-                        />
+                        {item.progress && item.total_episodes && (
+                          <ProgressLine
+                            variant="determinate"
+                            value={(item.progress / item.total_episodes) * 100}
+                          />
+                        )}
                       </Box>
                     ))}
                   </Box>

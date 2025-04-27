@@ -10,3 +10,7 @@ export const getPaginationData = (data, from, to) => {
 export const getRandomLogoIcon = () => {
   return "";
 }
+
+export const renderValue = (value) => {
+  return value === null || value === undefined ? "N.A." : value;
+};
